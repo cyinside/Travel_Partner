@@ -1,8 +1,8 @@
 var SceneEvent = /** @class */ (function () {
     function SceneEvent() {
-        this.sceneID = 0;
     }
     SceneEvent.CHANGE_SCENE = "CHANGE_SCENE";
+    SceneEvent.sceneID = 0;
     return SceneEvent;
 }());
 //# sourceMappingURL=SceneEvent.js.map

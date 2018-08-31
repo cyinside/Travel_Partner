@@ -1,1 +1,1 @@
-{"version":3,"file":"SceneEvent.js","sourceRoot":"","sources":["../../../../src/core/event/SceneEvent.ts"],"names":[],"mappings":"AAAA;IAAA;QAEW,YAAO,GAAU,CAAC,CAAC;IAC9B,CAAC;IAFiB,uBAAY,GAAU,cAAc,CAAC;IAEvD,iBAAC;CAAA,AAHD,IAGC"}
+{"version":3,"file":"SceneEvent.js","sourceRoot":"","sources":["../../../../src/core/event/SceneEvent.ts"],"names":[],"mappings":"AAAA;IAAA;IAGA,CAAC;IAFiB,uBAAY,GAAU,cAAc,CAAC;IACrC,kBAAO,GAAU,CAAC,CAAC;IACrC,iBAAC;CAAA,AAHD,IAGC"}

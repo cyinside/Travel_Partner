@@ -6,10 +6,12 @@ D 2x
 R 53D134F8 1.jpg
 R 0DA4F289 2.jpg
 R F78A0D20 3.jpg
+R 44A8569B 4.jpg
 D 3x
 R 0A2E8851 1.jpg
 R 82D90510 2.jpg
 R 870650DB 3.jpg
+R 73438298 4.jpg
 D comp
 P D12221A9 bg.png
 P 9401CC40 blank.png
@@ -56,7 +58,16 @@ P BA4924BC coinBg.png
 P 90A00208 coinIcon.png
 P 203F9767 leafBig.png
 P 38862CBB logBg.png
-P F0FD89D2 newInfo.png
+P F0FD89D2 newTip.png
+D inDoorScene
+P 355117D5 fire1.png
+P 0B6C8C55 fire3.png
+P 4972F4E4 fire4.png
+P 7D07C8FD fire5.png
+P CFB7B81F outsideBut.png
+P 4D7327C7 prepareBut.png
+P D3571397 storeBut.png
+P E4DD7E64 warnTip.png
 D settingLog
 P DCD5E630 btn_1.png
 P 59567EF5 btn_2.png

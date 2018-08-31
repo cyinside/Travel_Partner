@@ -25,9 +25,9 @@ var BottomUnit = /** @class */ (function (_super) {
     BottomUnit.prototype.onTouchHandle = function (e) {
         var _but = e.target;
         switch (_but) {
-            case this.storeBut:
-                GameEvent.LOG_name = 'Store';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+            case this.insideBut:
+                SceneEvent.sceneID = 2;
+                Global.dispatchEvent(SceneEvent.CHANGE_SCENE);
                 break;
         }
     };

@@ -16,6 +16,43 @@ module ui.Loading {
     }
 }
 
+module ui.indoor {
+    export class Bottom2UnitUI extends View {
+		public prepareBut.:Laya.Image;
+		public bookBut:Laya.Button;
+		public outsideBut:Laya.Image;
+		public storeBut:Laya.Image;
+
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.loadUI("indoor/Bottom2Unit");
+
+        }
+
+    }
+}
+
+module ui.indoor {
+    export class IndoorSceneUI extends View {
+		public bg4:Laya.Image;
+		public topUnit:TopUnit;
+		public bottom2Unit:Bottom2Unit;
+
+        constructor(){ super()}
+        createChildren():void {
+        			View.regComponent("TopUnit",TopUnit);
+			View.regComponent("Bottom2Unit",Bottom2Unit);
+
+            super.createChildren();
+            this.loadUI("indoor/IndoorScene");
+
+        }
+
+    }
+}
+
 module ui.log {
     export class InfoLogUI extends Dialog {
 		public infoText:Laya.Label;
@@ -25,6 +62,25 @@ module ui.log {
         
             super.createChildren();
             this.loadUI("log/InfoLog");
+
+        }
+
+    }
+}
+
+module ui.log {
+    export class LogViewUI extends View {
+		public settingLog:SettingLog;
+		public storeLog:ShoppingLog;
+
+        constructor(){ super()}
+        createChildren():void {
+        			View.regComponent("LogView",LogView);
+			View.regComponent("SettingLog",SettingLog);
+			View.regComponent("ShoppingLog",ShoppingLog);
+
+            super.createChildren();
+            this.loadUI("log/LogView");
 
         }
 
@@ -160,7 +216,8 @@ module ui.log.store {
 
 module ui.main {
     export class BottomUnitUI extends View {
-		public storeBut:Laya.Button;
+		public bookBut:Laya.Button;
+		public insideBut:Laya.Button;
 
         constructor(){ super()}
         createChildren():void {
@@ -180,12 +237,11 @@ module ui.main {
 		public bg1:Laya.Image;
 		public bg2:Laya.Image;
 		public bg3:Laya.Image;
+		public waveView:WaveView;
 		public coinBox:Laya.Box;
 		public LeafView:laya.particle.Particle2D;
 		public topUnit:TopUnit;
 		public bottomUnit:BottomUnit;
-		public settingLog:SettingLog;
-		public storeLog:ShoppingLog;
 
         constructor(){ super()}
         createChildren():void {
@@ -194,8 +250,6 @@ module ui.main {
 			View.regComponent("Particle2D",laya.particle.Particle2D);
 			View.regComponent("TopUnit",TopUnit);
 			View.regComponent("BottomUnit",BottomUnit);
-			View.regComponent("SettingLog",SettingLog);
-			View.regComponent("ShoppingLog",ShoppingLog);
 
             super.createChildren();
             this.loadUI("main/MainScene");

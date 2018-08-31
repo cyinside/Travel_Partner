@@ -7,6 +7,7 @@ class MainScene extends MainSceneUI {
 
     public sceneInit() {
         this.height = GameConfig.gameHeight;
+        this.width = GameConfig.gameWidth;
 
         //隐藏滚动条
         this.bgPanel.hScrollBarSkin = '';
@@ -19,8 +20,9 @@ class MainScene extends MainSceneUI {
         this.bg3.skin = res_v + '/3.jpg';
 
         if (GameConfig.res_Type == 3) {
-            this.topUnit.top = this.topUnit.top * 4;
+            this.topUnit.top = this.topUnit.top * 3.5;
             this.coinBox.top = this.coinBox.top + 150;
+            this.waveView.y = this.waveView.y + 150;
         }
 
         console.log(this.topUnit.top);
@@ -35,7 +37,7 @@ class MainScene extends MainSceneUI {
 
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
 
-        Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
+        // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
     }
 
     private onAssetsLoaded() {
@@ -134,27 +136,18 @@ class MainScene extends MainSceneUI {
         this.topUnit.textTweem_UP();
     }
 
-    // private num: number = 0;
     // private showLog() {
-    //     // this.settingLog.visible=true;
-    //     // this.settingLog.popup();
-
-    //     this.storeLog.visible = true;
-    //     this.storeLog.popup()
+    //     var name = GameEvent.LOG_name;
+    //     switch (name) {
+    //         case 'Store':
+    //             this.storeLog.visible = true;
+    //             this.storeLog.popup()
+    //             break;
+    //         case 'Setting':
+    //             this.settingLog.visible = true;
+    //             this.settingLog.popup()
+    //             break;
+    //     }
     // }
-
-    private showLog() {
-        var name = GameEvent.LOG_name;
-        switch (name) {
-            case 'Store':
-                this.storeLog.visible = true;
-                this.storeLog.popup()
-                break;
-            case 'Setting':
-                this.settingLog.visible = true;
-                this.settingLog.popup()
-                break;
-        }
-    }
 
 }

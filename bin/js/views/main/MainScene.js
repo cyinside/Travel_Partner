@@ -24,6 +24,7 @@ var MainScene = /** @class */ (function (_super) {
     }
     MainScene.prototype.sceneInit = function () {
         this.height = GameConfig.gameHeight;
+        this.width = GameConfig.gameWidth;
         //隐藏滚动条
         this.bgPanel.hScrollBarSkin = '';
         this.bgPanel.height = this.height;
@@ -32,8 +33,9 @@ var MainScene = /** @class */ (function (_super) {
         this.bg2.skin = res_v + '/2.jpg';
         this.bg3.skin = res_v + '/3.jpg';
         if (GameConfig.res_Type == 3) {
-            this.topUnit.top = this.topUnit.top * 4;
+            this.topUnit.top = this.topUnit.top * 3.5;
             this.coinBox.top = this.coinBox.top + 150;
+            this.waveView.y = this.waveView.y + 150;
         }
         console.log(this.topUnit.top);
         Laya.timer.once(300, this, function () {
@@ -42,7 +44,7 @@ var MainScene = /** @class */ (function (_super) {
         }); //先定滚动初始位置，再显示
         this.setCoin(GameSetting.coinNumber); //设定金币数量
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
-        Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
+        // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
     };
     MainScene.prototype.onAssetsLoaded = function () {
         this.LeafView.autoPlay = false;
@@ -126,26 +128,6 @@ var MainScene = /** @class */ (function (_super) {
     };
     MainScene.prototype.addCoinsNum = function () {
         this.topUnit.textTweem_UP();
-    };
-    // private num: number = 0;
-    // private showLog() {
-    //     // this.settingLog.visible=true;
-    //     // this.settingLog.popup();
-    //     this.storeLog.visible = true;
-    //     this.storeLog.popup()
-    // }
-    MainScene.prototype.showLog = function () {
-        var name = GameEvent.LOG_name;
-        switch (name) {
-            case 'Store':
-                this.storeLog.visible = true;
-                this.storeLog.popup();
-                break;
-            case 'Setting':
-                this.settingLog.visible = true;
-                this.settingLog.popup();
-                break;
-        }
     };
     return MainScene;
 }(MainSceneUI));

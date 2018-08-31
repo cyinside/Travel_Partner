@@ -15,9 +15,9 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":0,"x":0,"var":"storeBut","stateNum":"1","skin":"GameScene/btn_book.png","mouseEnabled":true,"hitTestPrior":true},
+            "props":{"y":0,"x":0,"var":"bookBut","stateNum":"1","skin":"GameScene/btn_book.png","mouseEnabled":true,"hitTestPrior":true},
             "nodeParent":1,
-            "label":"Button(storeBut)",
+            "label":"Button(bookBut)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
@@ -28,9 +28,9 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":145,"x":0,"stateNum":"1","skin":"GameScene/btn_test.png"},
+            "props":{"y":145,"x":0,"var":"insideBut","stateNum":"1","skin":"GameScene/btn_test.png"},
             "nodeParent":1,
-            "label":"Button",
+            "label":"Button(insideBut)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,

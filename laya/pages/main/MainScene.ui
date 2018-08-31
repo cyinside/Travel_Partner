@@ -79,9 +79,9 @@
                             "x":45,
                             "type":"UIView",
                             "source":"main/WaveView.ui",
-                            "props":{"y":1158,"x":839,"width":111,"runtime":"WaveView","pivotY":36,"pivotX":53,"height":111},
+                            "props":{"y":1158,"x":839,"width":111,"var":"waveView","runtime":"WaveView","pivotY":36,"pivotX":53,"height":111},
                             "nodeParent":9,
-                            "label":"UIView",
+                            "label":"UIView(waveView)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,
@@ -275,35 +275,6 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":13,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"UIView",
-            "source":"log/setting/SettingLog.ui",
-            "props":{"y":10,"x":813,"visible":false,"var":"settingLog","runtime":"SettingLog","popupCenter":true,"cacheAsBitmap":true},
-            "nodeParent":1,
-            "label":"UIView(settingLog)",
-            "isOpen":true,
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":39,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"UIView",
-            "source":"log/store/StoreLog.ui",
-            "props":{"y":9,"x":1422,"visible":false,"var":"storeLog","runtime":"ShoppingLog","popupCenter":true,"mouseEnabled":true,"cacheAsBitmap":true},
-            "nodeParent":1,
-            "label":"UIView(storeLog)",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":43,
             "child":[
                 ]
         }],

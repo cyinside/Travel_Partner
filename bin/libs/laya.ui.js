@@ -9065,7 +9065,9 @@ var Dialog=(function(_super){
 	/**关闭完成后，调用此方法（如果有关闭动画，则在动画完成后执行）
 	*@param type 如果是点击默认关闭按钮触发，则传入关闭按钮的名字(name)，否则为null。
 	*/
-	__proto.onClosed=function(type){}
+	__proto.onClosed=function(type){
+		
+	}
 	/**@private */
 	__proto._onMouseDown=function(e){
 		var point=this.getMousePoint();

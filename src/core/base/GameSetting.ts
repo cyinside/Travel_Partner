@@ -27,7 +27,7 @@ class GameSetting{
             {url:"res/atlas/settingLog.atlas",type:Laya.Loader.ATLAS},
             {url:"res/atlas/store.atlas",type:Laya.Loader.ATLAS},
             {url:"res/atlas/wave.atlas",type:Laya.Loader.ATLAS},
-
+            {url:"res/atlas/inDoorScene.atlas",type:Laya.Loader.ATLAS},
             // {url:'res/contData.json',type:Laya.Loader.JSON},
             {url:'main/BottomUnit.json',type:Laya.Loader.JSON},
             {url:'main/MainScene.json',type:Laya.Loader.JSON},
@@ -40,7 +40,9 @@ class GameSetting{
             {url:'log/store/ListItem.json',type:Laya.Loader.JSON},
             {url:'log/store/BuyConfirmLog.json',type:Laya.Loader.JSON},
             {url:'main/WaveView.json',type:Laya.Loader.JSON},
-
+            {url:'indoor/Bottom2Unit.json',type:Laya.Loader.JSON},
+            {url:'indoor/IndoorScene.json',type:Laya.Loader.JSON},
+            {url:'log/LogView.json',type:Laya.Loader.JSON},
             {url:'music.mp3',type:Laya.Loader.SOUND}
 		]
     }

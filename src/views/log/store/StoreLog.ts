@@ -23,7 +23,8 @@ class ShoppingLog extends StoreLogUI {
 
         this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
         this.m_list.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin)
-        this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd)
+        this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
+        // this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
 
         this.closeBut.name = Dialog.CLOSE;
 
@@ -44,13 +45,19 @@ class ShoppingLog extends StoreLogUI {
         this.dragHandle()
     }
 
+    // private touchOut(e: Laya.Event){
+    //     this.e_X = e.stageX;
+    //     // console.log('e:' + this.e_X)
+    //     this.dragHandle()
+    // }
+
     private dragHandle() {
         var _dis: number = this.e_X - this.b_X;
-        if (_dis > 0 && _dis > 10) {
+        if (_dis > 0 && _dis > 5) {
             // console.log('left');
             this.tweenPage('left')
         }
-        else if (_dis < 0 && _dis < -10) {
+        else if (_dis < 0 && _dis < -5) {
             // console.log('right')
             this.tweenPage('right')
         }
@@ -89,7 +96,7 @@ class ShoppingLog extends StoreLogUI {
                 if (this.now_index > 12) {
                     this.now_index = 12;
                 }
-                this.m_list.tweenTo(this.now_index, 300)  
+                this.m_list.tweenTo(this.now_index, 300)
                 // this.m_list.page += 1;
                 break;
         }

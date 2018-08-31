@@ -32,6 +32,42 @@ var ui;
     })(Loading = ui.Loading || (ui.Loading = {}));
 })(ui || (ui = {}));
 (function (ui) {
+    var indoor;
+    (function (indoor) {
+        var Bottom2UnitUI = /** @class */ (function (_super) {
+            __extends(Bottom2UnitUI, _super);
+            function Bottom2UnitUI() {
+                return _super.call(this) || this;
+            }
+            Bottom2UnitUI.prototype.createChildren = function () {
+                _super.prototype.createChildren.call(this);
+                this.loadUI("indoor/Bottom2Unit");
+            };
+            return Bottom2UnitUI;
+        }(View));
+        indoor.Bottom2UnitUI = Bottom2UnitUI;
+    })(indoor = ui.indoor || (ui.indoor = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var indoor;
+    (function (indoor) {
+        var IndoorSceneUI = /** @class */ (function (_super) {
+            __extends(IndoorSceneUI, _super);
+            function IndoorSceneUI() {
+                return _super.call(this) || this;
+            }
+            IndoorSceneUI.prototype.createChildren = function () {
+                View.regComponent("TopUnit", TopUnit);
+                View.regComponent("Bottom2Unit", Bottom2Unit);
+                _super.prototype.createChildren.call(this);
+                this.loadUI("indoor/IndoorScene");
+            };
+            return IndoorSceneUI;
+        }(View));
+        indoor.IndoorSceneUI = IndoorSceneUI;
+    })(indoor = ui.indoor || (ui.indoor = {}));
+})(ui || (ui = {}));
+(function (ui) {
     var log;
     (function (log) {
         var InfoLogUI = /** @class */ (function (_super) {
@@ -46,6 +82,26 @@ var ui;
             return InfoLogUI;
         }(Dialog));
         log.InfoLogUI = InfoLogUI;
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var LogViewUI = /** @class */ (function (_super) {
+            __extends(LogViewUI, _super);
+            function LogViewUI() {
+                return _super.call(this) || this;
+            }
+            LogViewUI.prototype.createChildren = function () {
+                View.regComponent("LogView", LogView);
+                View.regComponent("SettingLog", SettingLog);
+                View.regComponent("ShoppingLog", ShoppingLog);
+                _super.prototype.createChildren.call(this);
+                this.loadUI("log/LogView");
+            };
+            return LogViewUI;
+        }(View));
+        log.LogViewUI = LogViewUI;
     })(log = ui.log || (ui.log = {}));
 })(ui || (ui = {}));
 (function (ui) {
@@ -208,8 +264,6 @@ var ui;
                 View.regComponent("Particle2D", laya.particle.Particle2D);
                 View.regComponent("TopUnit", TopUnit);
                 View.regComponent("BottomUnit", BottomUnit);
-                View.regComponent("SettingLog", SettingLog);
-                View.regComponent("ShoppingLog", ShoppingLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("main/MainScene");
             };
