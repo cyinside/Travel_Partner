@@ -1,0 +1,1 @@
+{"type":"Dialog","props":{"width":750,"height":200},"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"settingLog/inputInfLog.png"}},{"type":"Label","props":{"y":85,"x":315,"var":"infoText","text":"信息信息","fontSize":30,"font":"Microsoft YaHei","color":"#56361f","align":"center"}}]}

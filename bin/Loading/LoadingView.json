@@ -1,0 +1,1 @@
+{"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Label","props":{"y":516,"x":251,"text":"Loading..","fontSize":60,"color":"#ffffff"}},{"type":"Label","props":{"y":673,"x":331,"var":"numText","text":"0%","fontSize":60,"color":"#ffffff"}}]}
