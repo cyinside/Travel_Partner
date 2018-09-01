@@ -43,7 +43,7 @@ class GameSetting {
             { url: 'log/store/BuyConfirmLog.json', type: Laya.Loader.JSON },
             { url: 'main/WaveView.json', type: Laya.Loader.JSON },
             { url: 'main/Tips.json', type: Laya.Loader.JSON },
-            { url: 'indoor/Tips1.json', type: Laya.Loader.JSON },
+            { url: 'indoor/Tips1.ani', type: Laya.Loader.JSON },
             { url: 'indoor/Bottom2Unit.json', type: Laya.Loader.JSON },
             { url: 'indoor/IndoorScene.json', type: Laya.Loader.JSON },
             { url: 'indoor/FireAni.json', type: Laya.Loader.JSON },

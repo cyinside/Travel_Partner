@@ -16,5 +16,14 @@
       "pkp_observed": 0.0,
       "sts_include_subdomains": false,
       "sts_observed": 1535781452.320106
+   },
+   "R5Cgrrq2KtrUOkBQncw7F0CtEUbYnSZHMQPifJrxd1Y=": {
+      "dynamic_spki_hashes_expiry": 0.0,
+      "expiry": 1535791959.285737,
+      "mode": "force-https",
+      "pkp_include_subdomains": false,
+      "pkp_observed": 0.0,
+      "sts_include_subdomains": false,
+      "sts_observed": 1535788359.285738
    }
 }
