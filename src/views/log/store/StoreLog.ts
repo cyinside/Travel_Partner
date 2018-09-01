@@ -11,7 +11,7 @@ class ShoppingLog extends StoreLogUI {
         this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
         this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
         this.m_list.cacheContent = true;
-        this.m_list.scrollBar.rollRatio = 0.8
+        this.m_list.scrollBar.rollRatio = 0.8;
 
         for (var m: number = 0; m < this.itemArr.length; m++) {
             this.itemArr[m].m_label.text = 'NO.' + m.toString();
@@ -46,6 +46,7 @@ class ShoppingLog extends StoreLogUI {
     }
 
     // private touchOut(e: Laya.Event){
+    //     // console.log('mouse out')
     //     this.e_X = e.stageX;
     //     // console.log('e:' + this.e_X)
     //     this.dragHandle()

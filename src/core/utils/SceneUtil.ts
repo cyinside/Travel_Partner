@@ -35,8 +35,8 @@ module SceneUtil {
     }
 
     export function changeScene(sceneID:number){
-        var data:SceneEvent = new SceneEvent();
-        data.sceneID = sceneID;
-        Global.dispatchEvent(SceneEvent.CHANGE_SCENE,data);
+        // var data:SceneEvent = new SceneEvent();
+        SceneEvent.sceneID = sceneID;
+        Global.dispatchEvent(SceneEvent.CHANGE_SCENE);
     }
 }

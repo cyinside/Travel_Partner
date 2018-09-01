@@ -40,13 +40,13 @@ class GameMain {
         // WX_SDK.getInstance().getStorage('msg')
 
         Laya.loader.load('Loading/LoadingView.json', Handler.create(this, this.loadingComp));
-        Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
+        // Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
 
         // Laya.URL.basePath = GameSetting.res_url;
 
-        // Laya.MiniAdpter.nativefiles=
-        //     'music.mp3'
-        // ]
+        Laya.MiniAdpter.nativefiles=[
+            'Loading/LoadingView.json'
+        ]
 
         // UIConfig.closeDialogOnSide = false;
     }
@@ -91,7 +91,7 @@ class GameMain {
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
 
-        SceneEvent.sceneID = 1;
+        SceneEvent.sceneID = 2;
         this.changeScene();
     }
 

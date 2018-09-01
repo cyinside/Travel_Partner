@@ -33,9 +33,9 @@ var SceneUtil;
     }
     SceneUtil.removeOtherSceneByTarget = removeOtherSceneByTarget;
     function changeScene(sceneID) {
-        var data = new SceneEvent();
-        data.sceneID = sceneID;
-        Global.dispatchEvent(SceneEvent.CHANGE_SCENE, data);
+        // var data:SceneEvent = new SceneEvent();
+        SceneEvent.sceneID = sceneID;
+        Global.dispatchEvent(SceneEvent.CHANGE_SCENE);
     }
     SceneUtil.changeScene = changeScene;
 })(SceneUtil || (SceneUtil = {}));

@@ -40,7 +40,7 @@ var ShoppingLog = /** @class */ (function (_super) {
         this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
         this.m_list.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin);
         this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
-        this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
+        // this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
         this.closeBut.name = Dialog.CLOSE;
         Global.addEventListener(GameEvent.SHWO_BUY_CONFIRM, this, this.showBuyConfirm);
         Global.addEventListener(GameEvent.SHWO_BUY_STATE, this, this.showBuyState);
@@ -54,11 +54,12 @@ var ShoppingLog = /** @class */ (function (_super) {
         // console.log('e:' + this.e_X)
         this.dragHandle();
     };
-    ShoppingLog.prototype.touchOut = function (e) {
-        this.e_X = e.stageX;
-        // console.log('e:' + this.e_X)
-        this.dragHandle();
-    };
+    // private touchOut(e: Laya.Event){
+    //     // console.log('mouse out')
+    //     this.e_X = e.stageX;
+    //     // console.log('e:' + this.e_X)
+    //     this.dragHandle()
+    // }
     ShoppingLog.prototype.dragHandle = function () {
         var _dis = this.e_X - this.b_X;
         if (_dis > 0 && _dis > 5) {

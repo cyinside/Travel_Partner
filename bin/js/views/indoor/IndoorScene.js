@@ -26,7 +26,7 @@ var IndoorScene = /** @class */ (function (_super) {
         this.bg4.skin = res_v + '/4.jpg';
         if (GameConfig.res_Type == 3) {
             this.topUnit.top = this.topUnit.top * 3.5;
-            // this.
+            this.FireAni.y = this.FireAni.y + 145;
         }
     };
     return IndoorScene;

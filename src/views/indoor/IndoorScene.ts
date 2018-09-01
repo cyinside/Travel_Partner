@@ -14,8 +14,7 @@ class IndoorScene extends indoorSceneUi{
 
         if (GameConfig.res_Type == 3) {
             this.topUnit.top = this.topUnit.top * 3.5;
-            // this.
+            this.FireAni.y=this.FireAni.y+145;
         }
-
     }
 }

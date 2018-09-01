@@ -1,6 +1,7 @@
 
 import View=laya.ui.View;
 import Dialog=laya.ui.Dialog;
+import EffectAnimation=laya.display.EffectAnimation
 module ui.Loading {
     export class LoadingViewUI extends View {
 		public numText:Laya.Label;
@@ -18,7 +19,7 @@ module ui.Loading {
 
 module ui.indoor {
     export class Bottom2UnitUI extends View {
-		public prepareBut.:Laya.Image;
+		public prepareBut:Laya.Image;
 		public bookBut:Laya.Button;
 		public outsideBut:Laya.Image;
 		public storeBut:Laya.Image;
@@ -35,15 +36,31 @@ module ui.indoor {
 }
 
 module ui.indoor {
+    export class FireAniUI extends View {
+
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.loadUI("indoor/FireAni");
+
+        }
+
+    }
+}
+
+module ui.indoor {
     export class IndoorSceneUI extends View {
 		public bg4:Laya.Image;
 		public topUnit:TopUnit;
 		public bottom2Unit:Bottom2Unit;
+		public FireAni:ui.indoor.FireAniUI;
 
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("TopUnit",TopUnit);
 			View.regComponent("Bottom2Unit",Bottom2Unit);
+			View.regComponent("ui.indoor.FireAniUI",ui.indoor.FireAniUI);
 
             super.createChildren();
             this.loadUI("indoor/IndoorScene");
@@ -237,17 +254,19 @@ module ui.main {
 		public bg1:Laya.Image;
 		public bg2:Laya.Image;
 		public bg3:Laya.Image;
-		public waveView:WaveView;
 		public coinBox:Laya.Box;
 		public LeafView:laya.particle.Particle2D;
+		public waveView:WaveView;
+		public tipsAni:Laya.Animation;
+		public indoorRect:Laya.Sprite;
 		public topUnit:TopUnit;
 		public bottomUnit:BottomUnit;
 
         constructor(){ super()}
         createChildren():void {
-        			View.regComponent("WaveView",WaveView);
-			View.regComponent("CoinsRole",CoinsRole);
+        			View.regComponent("CoinsRole",CoinsRole);
 			View.regComponent("Particle2D",laya.particle.Particle2D);
+			View.regComponent("WaveView",WaveView);
 			View.regComponent("TopUnit",TopUnit);
 			View.regComponent("BottomUnit",BottomUnit);
 

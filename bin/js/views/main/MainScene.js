@@ -32,10 +32,13 @@ var MainScene = /** @class */ (function (_super) {
         this.bg1.skin = res_v + '/1.jpg';
         this.bg2.skin = res_v + '/2.jpg';
         this.bg3.skin = res_v + '/3.jpg';
+        var _x = 150;
         if (GameConfig.res_Type == 3) {
             this.topUnit.top = this.topUnit.top * 3.5;
-            this.coinBox.top = this.coinBox.top + 150;
-            this.waveView.y = this.waveView.y + 150;
+            this.coinBox.top = this.coinBox.top + _x;
+            this.waveView.y = this.waveView.y + _x;
+            this.tipsAni.y = this.tipsAni.y + _x;
+            this.indoorRect.y = this.indoorRect.y + _x;
         }
         console.log(this.topUnit.top);
         Laya.timer.once(300, this, function () {
@@ -45,6 +48,14 @@ var MainScene = /** @class */ (function (_super) {
         this.setCoin(GameSetting.coinNumber); //设定金币数量
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
         // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
+        this.on(Laya.Event.CLICK, this, this.touchHandle);
+    };
+    MainScene.prototype.touchHandle = function (e) {
+        switch (e.target) {
+            case this.indoorRect:
+                SceneUtil.changeScene(2);
+                break;
+        }
     };
     MainScene.prototype.onAssetsLoaded = function () {
         this.LeafView.autoPlay = false;

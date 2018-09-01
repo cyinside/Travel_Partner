@@ -1,0 +1,1 @@
+{"type":"View","props":{"width":150,"height":150},"child":[{"type":"Animation","props":{"y":25,"x":24,"wrapMode":"2","source":"fire/fire0.png,fire/fire1.png,fire/fire2.png,fire/fire3.png,fire/fire4.png","interval":320,"autoPlay":true}}]}

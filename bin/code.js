@@ -56792,6 +56792,7 @@ var GameSetting = /** @class */ (function () {
             { url: 'indoor/Bottom2Unit.json', type: Laya.Loader.JSON },
             { url: 'indoor/IndoorScene.json', type: Laya.Loader.JSON },
             { url: 'log/LogView.json', type: Laya.Loader.JSON },
+            { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
             { url: 'music.mp3', type: Laya.Loader.SOUND }
         ];
     };
@@ -57985,7 +57986,7 @@ var ShoppingLog = /** @class */ (function (_super) {
         this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
         this.m_list.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin);
         this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
-        this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
+        // this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
         this.closeBut.name = Dialog.CLOSE;
         Global.addEventListener(GameEvent.SHWO_BUY_CONFIRM, this, this.showBuyConfirm);
         Global.addEventListener(GameEvent.SHWO_BUY_STATE, this, this.showBuyState);
@@ -57999,11 +58000,12 @@ var ShoppingLog = /** @class */ (function (_super) {
         // console.log('e:' + this.e_X)
         this.dragHandle();
     };
-    ShoppingLog.prototype.touchOut = function (e) {
-        this.e_X = e.stageX;
-        // console.log('e:' + this.e_X)
-        this.dragHandle();
-    };
+    // private touchOut(e: Laya.Event){
+    //     // console.log('mouse out')
+    //     this.e_X = e.stageX;
+    //     // console.log('e:' + this.e_X)
+    //     this.dragHandle()
+    // }
     ShoppingLog.prototype.dragHandle = function () {
         var _dis = this.e_X - this.b_X;
         if (_dis > 0 && _dis > 5) {
@@ -58424,7 +58426,7 @@ var GameMain = /** @class */ (function () {
         // Laya.DebugPanel.init();
         //性能面板
         Laya.Stat.show(0, 100);
-        // WX_SDK.getInstance().showConsol();
+        WX_SDK.getInstance().showConsol();
         // WX_SDK.getInstance().onShow(function(){
         //     SoundModel.getInstance().playBgMusic();//背景音乐播放
         // })
@@ -58433,9 +58435,9 @@ var GameMain = /** @class */ (function () {
         Laya.loader.load('Loading/LoadingView.json', Handler.create(this, this.loadingComp));
         Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
         // Laya.URL.basePath = GameSetting.res_url;
-        // Laya.MiniAdpter.nativefiles=
-        //     'music.mp3'
-        // ]
+        Laya.MiniAdpter.nativefiles = [
+            'Loading/LoadingView.json'
+        ];
         // UIConfig.closeDialogOnSide = false;
     }
     GameMain.prototype.loadingComp = function () {

@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var View = laya.ui.View;
 var Dialog = laya.ui.Dialog;
+var EffectAnimation = laya.display.EffectAnimation;
 var ui;
 (function (ui) {
     var Loading;
@@ -51,6 +52,23 @@ var ui;
 (function (ui) {
     var indoor;
     (function (indoor) {
+        var FireAniUI = /** @class */ (function (_super) {
+            __extends(FireAniUI, _super);
+            function FireAniUI() {
+                return _super.call(this) || this;
+            }
+            FireAniUI.prototype.createChildren = function () {
+                _super.prototype.createChildren.call(this);
+                this.loadUI("indoor/FireAni");
+            };
+            return FireAniUI;
+        }(View));
+        indoor.FireAniUI = FireAniUI;
+    })(indoor = ui.indoor || (ui.indoor = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var indoor;
+    (function (indoor) {
         var IndoorSceneUI = /** @class */ (function (_super) {
             __extends(IndoorSceneUI, _super);
             function IndoorSceneUI() {
@@ -59,6 +77,7 @@ var ui;
             IndoorSceneUI.prototype.createChildren = function () {
                 View.regComponent("TopUnit", TopUnit);
                 View.regComponent("Bottom2Unit", Bottom2Unit);
+                View.regComponent("ui.indoor.FireAniUI", ui.indoor.FireAniUI);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("indoor/IndoorScene");
             };
@@ -259,9 +278,9 @@ var ui;
                 return _super.call(this) || this;
             }
             MainSceneUI.prototype.createChildren = function () {
-                View.regComponent("WaveView", WaveView);
                 View.regComponent("CoinsRole", CoinsRole);
                 View.regComponent("Particle2D", laya.particle.Particle2D);
+                View.regComponent("WaveView", WaveView);
                 View.regComponent("TopUnit", TopUnit);
                 View.regComponent("BottomUnit", BottomUnit);
                 _super.prototype.createChildren.call(this);

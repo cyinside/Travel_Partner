@@ -26,8 +26,7 @@ var BottomUnit = /** @class */ (function (_super) {
         var _but = e.target;
         switch (_but) {
             case this.insideBut:
-                SceneEvent.sceneID = 2;
-                Global.dispatchEvent(SceneEvent.CHANGE_SCENE);
+                SceneUtil.changeScene(2);
                 break;
         }
     };
