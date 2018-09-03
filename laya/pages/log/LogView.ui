@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":1,
+    "selecteID":4,
     "props":{"width":750,"visible":true,"sceneColor":"#000000","runtime":"LogView","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -37,6 +37,20 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":3,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"UIView",
+            "source":"log/picture/PictureLog.ui",
+            "props":{"y":9,"x":1378,"visible":false,"var":"pictureLog","runtime":"PictureLog","popupCenter":true,"mouseEnabled":true,"cacheAsBitmap":true},
+            "nodeParent":1,
+            "label":"UIView(pictureLog)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":4,
             "child":[
                 ]
         }],

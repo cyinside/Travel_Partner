@@ -28,6 +28,10 @@ var BottomUnit = /** @class */ (function (_super) {
             case this.insideBut:
                 SceneUtil.changeScene(2);
                 break;
+            case this.bookBut:
+                GameEvent.LOG_name = 'Picture';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                break;
         }
     };
     return BottomUnit;

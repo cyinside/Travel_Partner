@@ -1,0 +1,32 @@
+{
+   "description": "",
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmxPn5BBgc8TkuK8tml9tL0GktFmuXY3fvkXFMXXBQ5oiiFQSiYIhBzDZKQsC00b5AHZHRH46SdRZU+QxMlifv86M8FLeaxSTfbLayYgvLGNJ3KMurYWCAg8s49dh2Bc0Jy6S6SXY4uOrKNAED7tbTuLmgb8KTPUJMe3xI/CRpLX+hBoYbrScfo3jmQ8QQ4MkoqCjKnl1DGNMSKCI29qKewS7L8XaQ5/+C/lZojnuEhqkZPCkBoykX8EmiyRLx6kj+jmK92p9JCccyWE6oOKudTya3uvDMCdC4koTE+XvXgwxDBVzfRk8cFBBcYoC7lsWQ/9ER7mzhGeTKWiDfAMl7QIDAQAB",
+   "manifest_version": 2,
+   "name": "Norwegian Fjord - Theme",
+   "theme": {
+      "colors": {
+         "bookmark_text": [ 18, 50, 114 ],
+         "button_background": [ 0, 0, 0, 0 ],
+         "frame": [ 66, 116, 201 ],
+         "ntp_background": [ 255, 255, 255 ],
+         "ntp_text": [ 255, 255, 255 ],
+         "tab_background_text": [ 64, 64, 64 ],
+         "tab_text": [ 0, 0, 0 ],
+         "toolbar": [ 255, 255, 255 ]
+      },
+      "images": {
+         "theme_frame": "images/theme_frame.png",
+         "theme_ntp_background": "images/theme_ntp_background.png",
+         "theme_toolbar": "images/theme_toolbar.png"
+      },
+      "properties": {
+         "ntp_background_alignment": "bottom",
+         "ntp_background_repeat": "no-repeat"
+      },
+      "tints": {
+         "buttons": [ 0, 0, 0 ]
+      }
+   },
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1"
+}

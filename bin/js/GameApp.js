@@ -32,9 +32,9 @@ var GameMain = /** @class */ (function () {
         Laya.loader.load('Loading/LoadingView.json', Handler.create(this, this.loadingComp));
         // Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
         // Laya.URL.basePath = GameSetting.res_url;
-        Laya.MiniAdpter.nativefiles = [
-            'Loading/LoadingView.json'
-        ];
+        // Laya.MiniAdpter.nativefiles = [
+        //     'Loading/LoadingView.json'
+        // ]
         // UIConfig.closeDialogOnSide = false;
     }
     GameMain.prototype.loadingComp = function () {
@@ -53,8 +53,10 @@ var GameMain = /** @class */ (function () {
         }
         this.mainScene = new MainScene;
         GameConfig.setAlign_center(this.mainScene);
+        Laya.stage.addChild(this.mainScene);
         this.indoorScene = new IndoorScene;
         GameConfig.setAlign_center(this.indoorScene);
+        this.indoorScene.alpha = 0;
         this.logView = new LogView;
         this.logView.visible = false;
         Laya.stage.addChild(this.logView);
@@ -62,27 +64,35 @@ var GameMain = /** @class */ (function () {
         // console.log(jsonData['giftInfo'][0].desc);
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
-        SceneEvent.sceneID = 2;
-        this.changeScene();
+        // SceneEvent.sceneID = 1;
+        // this.changeScene();
     };
     GameMain.prototype.changeScene = function () {
         var id = SceneEvent.sceneID;
         switch (id) {
             case 1:
                 if (Laya.stage.contains(this.indoorScene)) {
-                    Laya.stage.removeChild(this.indoorScene);
-                    this.indoorScene.visible = false;
+                    Laya.Tween.to(this.indoorScene, { alpha: 0 }, 400, Laya.Ease.sineIn, new Laya.Handler(this, function () {
+                        Laya.stage.removeChild(this.indoorScene);
+                        this.indoorScene.visible = false;
+                        // this.mainScene.alpha=1;
+                        this.mainScene.visible = true;
+                        Laya.stage.addChild(this.mainScene);
+                        Laya.Tween.to(this.mainScene, { alpha: 1 }, 400, Laya.Ease.sineIn);
+                    }));
                 }
-                this.mainScene.visible = true;
-                Laya.stage.addChild(this.mainScene);
                 break;
             case 2:
                 if (Laya.stage.contains(this.mainScene)) {
-                    Laya.stage.removeChild(this.mainScene);
-                    this.mainScene.visible = false;
+                    Laya.Tween.to(this.mainScene, { alpha: 0 }, 400, Laya.Ease.sineIn, new Laya.Handler(this, function () {
+                        Laya.stage.removeChild(this.mainScene);
+                        this.mainScene.visible = false;
+                        // this.indoorScene.alpha=1;
+                        this.indoorScene.visible = true;
+                        Laya.stage.addChild(this.indoorScene);
+                        Laya.Tween.to(this.indoorScene, { alpha: 1 }, 400, Laya.Ease.sineIn);
+                    }));
                 }
-                this.indoorScene.visible = true;
-                Laya.stage.addChild(this.indoorScene);
                 break;
         }
     };
@@ -97,6 +107,10 @@ var GameMain = /** @class */ (function () {
             case 'Setting':
                 this.logView.settingLog.visible = true;
                 this.logView.settingLog.popup();
+                break;
+            case 'Picture':
+                this.logView.pictureLog.visible = true;
+                this.logView.pictureLog.popup();
                 break;
         }
     };

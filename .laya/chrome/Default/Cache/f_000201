@@ -1,0 +1,504 @@
+﻿var newcomm = {
+	txtMore: function () {
+		var morebtn = '<div class="wrap-more"><a href="javascript:;" class="evt-more">显示全部</a></div>';
+		$('.wrap-issue').each(function () {
+			var $this = $(this),th = $this.height();
+			var len = $this.find(".evt-more").length;
+			if (th > 70 && len == 0) {
+				$this.find('p').css({'height': '66px','overflow': 'hidden'});
+				$this.append(morebtn).find('.evt-more').on('click', function () {
+					$this.css({'height': 'auto'}).find('p').css({'height': 'auto','overflow': 'visible'});
+					$(this).hide();
+					//resizeSwpHeight();
+				});
+			}
+		});
+	}
+};
+
+(function () {
+  function guanzhuJs(){
+    if($("#guanzhu_js").length==0){
+      var doc = document, script = doc.createElement('script'), heads = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+      script.id = 'guanzhu_js'; script.src = '//j.gamersky.com/web2015/ku/js/guanzhu.js?v='+dateFtt({f:5});
+      heads.appendChild(script);
+    }
+  }
+  
+	var isIE = location.protocol == 'https:' ? window.navigator.userAgent.indexOf("MSIE") !== -1 ? 'http:' : 'https:' : 'http:';
+	var cb = dateFtt({f:5}); //每5分钟改变传参
+  
+	var css = isIE + '//j.gamersky.com/web2015/comment/css/comment_s.css?v=' + cb;
+	var js1 = '//j.gamersky.com/web2015/comment/js/comment-logins.js?v=' + cb;
+	var js2 = '//j.gamersky.com/web2015/comment/js/comment-paging.js?v=' + cb;
+  
+	var generalId = $("#SOHUCS").attr("sid");
+	var checkIndex = 0;
+	var checkDate = "";
+	var isCheck = false;
+
+	if (isIE == "https:") {
+		if (window.applicationCache) { //如果支持html5
+			checkIndex = localStorage.getItem("checkIndex" + generalId); // localStorage.checkIndex;
+			checkDate = localStorage.checkDate;
+		}
+		if (checkDate != "") {
+			var date = new Date(checkDate);
+			var dateNow = new Date();
+			date.setHours(date.getHours() + 24);
+			if (date > dateNow) {
+				isCheck = true;
+			}
+		}
+		if (window.applicationCache) {
+			localStorage.checkDate = new Date();
+		}
+	}
+  
+	var cmttophtm = '<div id="cmt_top">';
+	cmttophtm += '<div class="cmt-top-title">';
+	cmttophtm += '<div class="join-tit">网友评论</div>';
+	cmttophtm += '<div class="join-num"><em class="join-num1">$jion</em>人参与，<em class="join-num2">$count</em>条评论</div>';
+	cmttophtm += '</div>';
+	cmttophtm += '<div class="cmt-top-cont">';
+	cmttophtm += '<div class="cmt-top-con">有不同的看法，写出来一起讨论吧</div>';
+	cmttophtm += '<div class="cmt-textarea none">';
+	cmttophtm += '<div class="textarea-b"><textarea class="textarea-fw"></textarea></div>';
+	cmttophtm += '<div class="cmt-action">';
+	cmttophtm += '<div class="cmt-login"></div>';
+	cmttophtm += '<div class="action-btn"><a class="cmt-btn" id="btnRelease" href="javascript:;" data-top="true" data-cmtnum="0" data-click="false">发布</a></div>';
+	cmttophtm += '<div class="action-code"></div>';
+	cmttophtm += '</div></div></div>';
+	cmttophtm += '<div class="cmt-alert none"></div>';
+	cmttophtm += '</div>';
+
+	$("<link>").attr({rel: "stylesheet",id: "comment_css",href: css}).appendTo("head");
+
+	$.fn.GetComment = function (options) {
+		return this.each(function () {
+			var $div = $(this);
+			var articleId = $div.attr("sid");
+			var pageIndex = 1;
+			var pageSize = 10;
+			var commnet = '';
+			$div.html('<div id="cmt_loading" style="padding:20px 0;text-align:center;"><img src="//image.gamersky.com/webimg15/comment/loading.gif"/></div>');
+
+			$.ajax({
+				type: "get",dataType: "jsonp",url: "//cm.gamersky.com/api/gethotcomment2",
+				data: {jsondata: JSON2.stringify({pageIndex: pageIndex,pageSize: pageSize,articleId: articleId,isHot: true})},
+				success: function (data) {
+					$div.html("");
+					var data = $.parseJSON(data.body);
+					$("#cmt_loading").remove();
+					if (pageIndex == 1) {
+						$div.append(data.Login);
+					}
+					if (data.IsClose) {
+						$div.append(data.Close);
+					}
+					$div.append('<div id="cmt_list"></div>');
+					commnet = '<div class="cmt-list-hot">';
+					commnet += '<div class="cmt-list-title"><strong class="title-name">热门评论</strong></div>';
+					if (data.HotComment != "") {
+						commnet += data.HotComment + data.Page;
+					}
+					commnet += "</div>";
+					if (data.Count > 0 || data.OneselfCount > 0) {
+						$("#cmt_list").append(commnet);
+					}
+					if (pageIndex + 1 > Math.ceil(data.Count / data.PageSize)) {
+						$(".cmt-list-hot .cmt-loadallbtn").addClass("cur").html("<span>全部加载完成</span>");
+					}
+					//评论切换JS 结束
+					$(".cmt-list-hot .cmt-loadallbtn").attr("data-url", "//cm.gamersky.com/api/gethotcomment2").GetHotCommentMore();
+					$("#cmt_list").GetWholeComment();
+					$div.after('<script src="' + js1 + '"></script><script src="' + js2 + '"></script>');
+          
+				}
+			});
+		});
+	};
+  
+	$.fn.GetWholeComment = function () {
+		var articleId = $("#SOHUCS").attr("sid");
+		var pageIndex = 1;
+		var pageSize = 10;
+		var commnet = '';
+		$.ajax({
+			type: "get",dataType: "jsonp",url: "//cm.gamersky.com/api/getnewestcomment2",
+			data: {jsondata: JSON2.stringify({pageIndex: pageIndex,pageSize: pageSize,articleId: articleId,isHot: true})},
+			success: function (data) {
+				var data = $.parseJSON(data.body);
+				$(".cmt-list-all").html("");
+				var commnetces = '<div class="cmt-list-all">';
+				commnetces += '<div class="cmt-list-title"><strong class="title-name">全部评论</strong>';
+				commnetces += '<div class="title-nav"><a href="javascript:;" class="cur">最新</a><i>|</i><a href="javascript:;">最早</a></div></div></div>';
+				if (checkIndex == 1 && isCheck) {
+					commnetces += '<div class="title-nav"><a href="javascript:;">最新</a><i>|</i><a href="javascript:;" class="cur">最早</a></div></div></div>';
+				}
+				if (data.Count == 0 && data.OneselfCount == 0) {
+					$("#cmt_list").html(data.NoComment);
+				}
+				if (data.Count > 0 || data.OneselfCount > 0) {
+					$("#cmt_list").append(commnetces).find(".cmt-list-all").append(data.NewComment + data.Page);
+					//处理评论格式
+					newcomm.txtMore();
+					cycm();
+					like();
+          
+          guanzhuJs(); //关注js调用
+				}
+
+				if (pageIndex + 1 > Math.ceil(data.Count / data.PageSize)) {
+					$(".cmt-list-all .cmt-loadallbtn").addClass("cur").html("<span>全部加载完成</span>");
+				}
+				$(".cmt-list-all .title-nav").on("click", "a", function (event) {
+					event.preventDefault();
+					var con = '',i = $(this).index();
+					$(this).addClass("cur").siblings().removeClass("cur");
+					localStorage.setItem("checkIndex" + generalId, i);
+					localStorage.checkDate = new Date();
+					if (i == 0) {
+						$("#cmt_list").NewestComment();
+					}
+					if (i == 2) {
+						$("#cmt_list").EarliestComment();
+					}
+				});
+				//这个可以放到内容加载完后执行
+				var setTimer,second = 200; //延迟0.2秒
+				$("#SOHUCS").on("mouseenter", ".build-floor", function () {
+					$(this).addClass("cur").find(".wrap-action").addClass("cur");
+				}).on("mouseleave", ".build-floor", function () {
+					$(this).removeClass("cur").find(".wrap-action").removeClass("cur");
+				}).on("mouseenter", ".evt-source", function () { //二维码显示效果
+					var $this = $(this);
+					setTimer = setTimeout(function () {
+							if ($this.find(".cmt-vcode").length == 0) {
+								$this.append('<div class="cmt-vcode"><img src="//image.gamersky.com/webimg15/comment/cmt-vcode.jpg" width="90" /></div>');
+							}
+						}, second);
+				}).on("mouseleave", ".evt-source,.cmt-vcode", function () {
+					$(this).find(".cmt-vcode").remove();
+					clearTimeout(setTimer);
+				}).on("click", ".cmt-commentbtn", function (event) { //发表评论定位
+					event.preventDefault();
+					$('html,body').stop().animate({scrollTop: $("#SOHUCS").offset().top}, 300);
+				});
+				//评论切换JS 结束
+				$(".cmt-list-all .cmt-loadallbtn").attr("data-url", "//cm.gamersky.com/api/getnewestcomment2").GetPCCommentMore();
+			}
+		});
+	};
+  
+	$.fn.NewestComment = function (options) {
+		return this.each(function () {
+			var $this = $(this);
+			var pageIndex = 1;
+			var pageSize = 10;
+			var articleId = $("#SOHUCS").attr("sid");
+			var commnet = '',Newcon = '',Newpage = '';
+			commnet = '<div class="cmt-list-title"><strong class="title-name">全部评论</strong>';
+			commnet += '<div class="title-nav"><a href="javascript:;" class="cur">最新</a><i>|</i><a href="javascript:;">最早</a></div></div></div>';
+			$.ajax({
+				type: "get",dataType: "jsonp",url: "//cm.gamersky.com/api/getnewestcomment2",
+				data: {jsondata: JSON2.stringify({pageIndex: pageIndex,pageSize: pageSize,articleId: articleId,isHot: true})},
+				success: function (data) {
+					$(".cmt-list-all").html("");
+					var data = $.parseJSON(data.body);
+					if (data.Count == 0 && data.OneselfCount == 0) {
+						$this.append(data.NoComment);
+						//处理评论格式
+					}
+					if (data.NewComment != null) {
+						Newcon = data.NewComment;
+						Newpage = data.Page;
+					} else {
+						Newcon = '<div class="cmt-alert"><span class="empty2">暂时没有最新评论</span></div>';
+						return;
+					}
+					$(".cmt-list-all").html(commnet + Newcon + Newpage);
+					if (pageIndex + 1 > Math.ceil(data.Count / data.PageSize)) {
+						$(".cmt-list-all .cmt-loadallbtn").addClass("cur").html("<span>全部加载完成</span>");
+					}
+					$(".cmt-list-all .title-nav").on("click", "a", function (event) {
+						event.preventDefault();
+						var con = '',i = $(this).index();
+						$(this).addClass("cur").siblings().removeClass("cur");
+						localStorage.setItem("checkIndex" + generalId, i);
+						localStorage.checkDate = new Date();
+						if (i == 0) {
+							$this.NewestComment();
+						}
+						if (i == 2) {
+							$this.EarliestComment();
+						}
+					});
+					//处理评论格式
+					newcomm.txtMore();
+					cycm();
+					like();
+
+					$(".cmt-list-all .cmt-loadallbtn").attr("data-url", "//cm.gamersky.com/api/getnewestcomment2").GetPCCommentMore();
+					$this.find(".cmt_page").PageList();
+				}
+			})
+		});
+	};
+
+	$.fn.EarliestComment = function (options) {
+		return this.each(function () {
+			var $this = $(this);
+			var pageIndex = 1;
+			var pageSize = 10;
+			var articleId = $("#SOHUCS").attr("sid");
+			var commnet = '',Newcon = '',Newpage = '';
+			commnet = '<div class="cmt-list-title"><strong class="title-name">全部评论</strong>';
+			commnet += '<div class="title-nav"><a href="javascript:;">最新</a><i>|</i><a href="javascript:;" class="cur">最早</a></div></div></div>';
+			//$("#cmt_list").html('<div id="cmt_loading" style="padding:20px 0;text-align:center;"><img src="//image.gamersky.com/webimg15/comment/loading.gif"/></div>');
+			$.ajax({
+				type: "get",dataType: "jsonp",url: "//cm.gamersky.com/api/getearliestcomment2",
+				data: {jsondata: JSON2.stringify({pageIndex: pageIndex,pageSize: pageSize,articleId: articleId,isHot: true})},
+				success: function (data) {
+					$(".cmt-list-all").html("");
+					var data = $.parseJSON(data.body);
+					//$("#cmt_loading").remove();
+					if (data.Count == 0 && data.OneselfCount == 0) {
+						$this.append(data.NoComment);
+						return;
+					}
+					if (data.NewComment != null) {
+						Newcon = data.NewComment;
+						Newpage = data.Page;
+					} else {
+						Newcon = '<div class="cmt-alert"><span class="empty2">暂时没有最早评论</span></div>';
+					}
+					$(".cmt-list-all").html(commnet + Newcon + Newpage);
+					if (pageIndex + 1 > Math.ceil(data.Count / data.PageSize)) {
+						$(".cmt-list-all .cmt-loadallbtn").addClass("cur").html("<span>全部加载完成</span>");
+					}
+					$(".cmt-list-all .title-nav").on("click", "a", function (event) {
+						event.preventDefault();
+						var con = '',i = $(this).index();
+						$(this).addClass("cur").siblings().removeClass("cur");
+						//localStorage.checkIndex = i;
+						localStorage.setItem("checkIndex" + generalId, i);
+						localStorage.checkDate = new Date();
+						if (i == 0) {
+							$this.NewestComment();
+						}
+						if (i == 2) {
+							$this.EarliestComment();
+						}
+					});
+					//处理评论格式
+					newcomm.txtMore();
+					cycm();
+					like();
+
+					$(".cmt-list-all .cmt-loadallbtn").attr("data-url", "//cm.gamersky.com/api/getearliestcomment2").GetPCCommentMore();
+					$this.find(".cmt_page").PageList();
+				}
+			})
+		});
+	};
+	$.fn.GetHotCommentMore = function (options) {
+		return this.each(function () {
+			var $this = $(this);
+			$this.click(function (event) {
+				event.preventDefault();
+				if ($this.hasClass("cur")) {
+					return;
+				}
+				$this.addClass("cur");
+				var articleId = $("#SOHUCS").attr("sid");
+				var pageIndex = parseInt($this.attr("pageIndex")) + 1;
+				var pageSize = parseInt($this.attr("data-pagesize"));
+				var oneselfCount = parseInt($this.attr("data-oneself"));
+				var count = parseInt($this.attr("data-count"));
+				var cmtid = $(".cmt-list-hot .cmt-list-cont:first").attr("cmtid"); //$(".ym-comm-new").attr("cmtid");
+				var lastcmtid = "";
+				var lastlegnth = $(".cmt-list-hot .cmt-list-cont").length;
+				$(".cmt-list-hot .cmt-list-cont").each(function (index, item) {
+					if (index >= lastlegnth - 20) {
+						lastcmtid += $(this).attr("cmtid") + ",";
+					}
+				});
+				if (oneselfCount > 0 && count == 0) {
+					count = 1;
+				}
+				if (pageIndex > Math.ceil(count / pageSize)) {
+					$this.addClass("cur").html("<span>全部加载完成</span>");
+					return;
+				}
+				$(".ym-comm-loading").show();
+				if ($this.attr("data-click") == "true") {
+					return;
+				}
+				$this.attr("data-click", "true");
+				var url = $this.attr("data-url");
+				$.ajax({
+					type: "get",dataType: "jsonp",url: url,
+					data: {jsondata: JSON2.stringify({pageIndex: pageIndex,pageSize: pageSize,articleId: articleId,lastcmtid: lastcmtid})},
+					success: function (data) {
+						$(".ym-comm-loading").hide();
+						$this.attr("data-click", "false").attr("pageIndex", pageIndex);
+						var data = $.parseJSON(data.body);
+						if (data.HotComment != "") {
+							$(".cmt-list-hot > .cmt-list-cont").last().after(data.HotComment);
+							$this.removeClass("cur");
+							//处理评论格式
+							newcomm.txtMore();
+							cycm();
+							like();
+
+						}
+						if (pageIndex == Math.ceil(count / pageSize)) {
+							$this.addClass("cur").html("<span>全部加载完成</span>");
+						}
+					}
+				});
+			});
+		});
+	};
+
+	$.fn.GetPCCommentMore = function (options) {
+		return this.each(function () {
+			var $this = $(this);
+			$this.click(function (event) {
+				event.preventDefault();
+				if ($this.hasClass("cur")) {
+					return;
+				}
+				$this.addClass("cur");
+				var articleId = $("#SOHUCS").attr("sid");
+				var pageIndex = parseInt($this.attr("pageIndex")) + 1;
+				var pageSize = parseInt($this.attr("data-pagesize"));
+				var oneselfCount = parseInt($this.attr("data-oneself"));
+				var count = parseInt($this.attr("data-count"));
+				var cmtid = $(".cmt-list-all .cmt-list-cont:first").attr("cmtid"); //$(".ym-comm-new").attr("cmtid");
+				if (oneselfCount > 0 && count == 0) {
+					count = 1;
+				}
+				if (pageIndex > Math.ceil(count / pageSize)) {
+					$this.addClass("cur").html("<span>全部加载完成</span>");
+					return;
+				}
+				$(".ym-comm-loading").show();
+				if ($this.attr("data-click") == "true") {
+					return;
+				}
+				$this.attr("data-click", "true");
+				var url = $this.attr("data-url");
+				$.ajax({
+					type: "get",dataType: "jsonp",url: url,
+					data: {jsondata: JSON2.stringify({pageIndex: pageIndex,pageSize: pageSize,articleId: articleId,count: count})},
+					success: function (data) {
+						$(".ym-comm-loading").hide();
+						$this.attr("data-click", "false").attr("pageIndex", pageIndex);
+						var data = $.parseJSON(data.body);
+						if (data.NewComment != "") {
+							$(".cmt-list-all > .cmt-list-cont").last().after(data.NewComment);
+							$this.removeClass("cur");
+							//处理评论格式
+							newcomm.txtMore();
+							cycm();
+							like();
+						}
+						if (pageIndex == Math.ceil(count / pageSize)) {
+							$this.addClass("cur").html("<span>全部加载完成</span>");
+						}
+					}
+				});
+			});
+		});
+	};
+
+	var cycm = function () {
+		var wrap = $("#SOHUCS").find(".cmt-msg-wrap .wrap-build");
+		wrap.each(function (index, element) {
+			$(element).find(".bulid-floor-hide").unbind("click").click(function () {
+				//请求隐藏列表的数据
+				var that = $(this);
+				var cmtid = that.parent().prev().attr("cmtid");
+				$.ajax({
+					type: "get",dataType: "jsonp",url: "//cm.gamersky.com/api/GetHideComment",
+					data: {jsondata: JSON2.stringify({cmtid: cmtid})},
+					success: function (responseJson) {
+						if (responseJson.status == "ok") {
+							var data = $.parseJSON(responseJson.body);
+							var html = "";
+							if (data.NewComment != null) {
+								html += data.NewComment;
+							}
+							that.prev().after(html);
+							that.hide();
+							like();
+
+							var comment = that.parent().find(".build-floor");
+							var ie6 = ! - [1, ] && !window.XMLHttpRequest;
+							comment.each(function () {
+								var $this = $(this).find(".wrap-issue").find(" p");
+								if ($this.height() > 132 && $(this).find(".wrap-more").length == 0) {
+									!ie6 && $this.parent().after('<div class="wrap-more"><a href="javascript:;" class="evt-more">显示全部</a></div>');
+								}
+							});
+
+							$("#SOHUCS").find(".wrap-reply,.cmt-alert").html('').removeClass("block").addClass("none");
+						}
+					}
+				});
+			});
+		});
+	};
+	var like = function () {
+		var support = "";
+		$("#SOHUCS").find(".evt-support").each(function () {
+			if ($(this).attr("hasit") != "false") {
+				if (support != "") {
+					support = support + ","
+				}
+				support = support + $(this).attr("cmtid");
+			}
+		});
+		$.ajax({
+			type: "get",dataType: "jsonp",url: "//cm.gamersky.com/api/getlike",
+			data: {jsondata: support},
+			success: function (data) {
+				if (data.status == "ok") {
+					var body = $.parseJSON(data.body);
+					$.each(body, function (index, value) {
+						var text = "顶[<i>" + value.count + "</i>]";
+						if (value.isExist) {
+							text = "顶<span>[<i>" + value.count + "</i>]</span>";
+						}
+						$("#SOHUCS").find(".evt-support[cmtid='" + value.commentId + "']").each(function () {
+							$(this).html(text);
+							$(this).attr("hasit", "false");
+						});
+					});
+				}
+			}
+		});
+	}
+
+	$.fn.bindFirst = function (name, fn) {
+		this.on(name, fn).trigger(name);
+		this.each(function () {
+			var handlers = $._data(this, 'events')[name.split('.')[0]];
+			var handler = handlers.pop();
+			handlers.splice(0, 0, handler);
+		});
+	};
+
+	$(document).ready(function () {
+		var isTrim = function (s) {return s.replace(/(^\s*)|(\s*$)/g, "");}; //清除空格
+		$(window).bindFirst('scroll', function (event) {
+			if ($(window).height() + $(document).scrollTop() >= $("#SOHUCS").offset().top) {
+				if (!isTrim($("#SOHUCS").html())) {
+					$("#SOHUCS").GetComment();
+				}
+			}
+		});
+	});
+})();

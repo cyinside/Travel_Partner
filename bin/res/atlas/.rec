@@ -70,6 +70,14 @@ P CFB7B81F outsideBut.png
 P 4D7327C7 prepareBut.png
 P D3571397 storeBut.png
 P E4DD7E64 warnTip.png
+D pictureLog
+P E5EA42C8 btn_delPic.png
+P 6902C1B4 btn_savePic.png
+P 24E996C9 btn_sharePic.png
+R 72EA2A40 picBg.png
+P 351F5398 picBg_min.png
+P 54C4E1C7 picTitle.png
+R 27291705 testPic.png
 D settingLog
 P DCD5E630 btn_1.png
 P 59567EF5 btn_2.png

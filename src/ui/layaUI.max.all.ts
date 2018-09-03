@@ -89,15 +89,51 @@ module ui.log {
     export class LogViewUI extends View {
 		public settingLog:SettingLog;
 		public storeLog:ShoppingLog;
+		public pictureLog:PictureLog;
 
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("LogView",LogView);
 			View.regComponent("SettingLog",SettingLog);
 			View.regComponent("ShoppingLog",ShoppingLog);
+			View.regComponent("PictureLog",PictureLog);
 
             super.createChildren();
             this.loadUI("log/LogView");
+
+        }
+
+    }
+}
+
+module ui.log.picture {
+    export class PicItemUI extends View {
+		public pictureRole:Laya.Image;
+
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.loadUI("log/picture/PicItem");
+
+        }
+
+    }
+}
+
+module ui.log.picture {
+    export class PictureLogUI extends Dialog {
+		public closeBut:Laya.Image;
+		public m_list:Laya.List;
+		public m_item:ui.log.picture.PicItemUI;
+
+        constructor(){ super()}
+        createChildren():void {
+        			View.regComponent("PictureLog",PictureLog);
+			View.regComponent("ui.log.picture.PicItemUI",ui.log.picture.PicItemUI);
+
+            super.createChildren();
+            this.loadUI("log/picture/PictureLog");
 
         }
 

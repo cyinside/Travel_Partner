@@ -115,12 +115,55 @@ var ui;
                 View.regComponent("LogView", LogView);
                 View.regComponent("SettingLog", SettingLog);
                 View.regComponent("ShoppingLog", ShoppingLog);
+                View.regComponent("PictureLog", PictureLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("log/LogView");
             };
             return LogViewUI;
         }(View));
         log.LogViewUI = LogViewUI;
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var picture;
+        (function (picture) {
+            var PicItemUI = /** @class */ (function (_super) {
+                __extends(PicItemUI, _super);
+                function PicItemUI() {
+                    return _super.call(this) || this;
+                }
+                PicItemUI.prototype.createChildren = function () {
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/picture/PicItem");
+                };
+                return PicItemUI;
+            }(View));
+            picture.PicItemUI = PicItemUI;
+        })(picture = log.picture || (log.picture = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var picture;
+        (function (picture) {
+            var PictureLogUI = /** @class */ (function (_super) {
+                __extends(PictureLogUI, _super);
+                function PictureLogUI() {
+                    return _super.call(this) || this;
+                }
+                PictureLogUI.prototype.createChildren = function () {
+                    View.regComponent("PictureLog", PictureLog);
+                    View.regComponent("ui.log.picture.PicItemUI", ui.log.picture.PicItemUI);
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/picture/PictureLog");
+                };
+                return PictureLogUI;
+            }(Dialog));
+            picture.PictureLogUI = PictureLogUI;
+        })(picture = log.picture || (log.picture = {}));
     })(log = ui.log || (ui.log = {}));
 })(ui || (ui = {}));
 (function (ui) {

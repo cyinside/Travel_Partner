@@ -50,9 +50,9 @@ var WX_SDK = /** @class */ (function () {
             x: 0,
             y: 0,
             width: 750,
-            height: 1335,
+            height: 1334,
             destWidth: 750,
-            destHeight: 1335,
+            destHeight: 1334,
             success: function (res) {
                 filePathUrl = res.tempFilePath;
                 if (saveToFile == true)

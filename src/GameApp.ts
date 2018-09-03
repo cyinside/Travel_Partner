@@ -44,9 +44,9 @@ class GameMain {
 
         // Laya.URL.basePath = GameSetting.res_url;
 
-        Laya.MiniAdpter.nativefiles=[
-            'Loading/LoadingView.json'
-        ]
+        // Laya.MiniAdpter.nativefiles = [
+        //     'Loading/LoadingView.json'
+        // ]
 
         // UIConfig.closeDialogOnSide = false;
     }
@@ -76,9 +76,11 @@ class GameMain {
 
         this.mainScene = new MainScene;
         GameConfig.setAlign_center(this.mainScene);
+        Laya.stage.addChild(this.mainScene);
 
         this.indoorScene = new IndoorScene;
         GameConfig.setAlign_center(this.indoorScene);
+        this.indoorScene.alpha = 0;
 
         this.logView = new LogView;
         this.logView.visible = false;
@@ -91,8 +93,8 @@ class GameMain {
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
 
-        SceneEvent.sceneID = 2;
-        this.changeScene();
+        // SceneEvent.sceneID = 1;
+        // this.changeScene();
     }
 
     private changeScene() {
@@ -100,21 +102,29 @@ class GameMain {
         switch (id) {
             case 1:
                 if (Laya.stage.contains(this.indoorScene)) {
-                    Laya.stage.removeChild(this.indoorScene);
-                    this.indoorScene.visible = false;
-                }
+                    Laya.Tween.to(this.indoorScene, { alpha: 0 }, 400, Laya.Ease.sineIn, new Laya.Handler(this, function () {
+                        Laya.stage.removeChild(this.indoorScene);
+                        this.indoorScene.visible = false;
 
-                this.mainScene.visible = true;
-                Laya.stage.addChild(this.mainScene);
+                        // this.mainScene.alpha=1;
+                        this.mainScene.visible = true;
+                        Laya.stage.addChild(this.mainScene);
+                        Laya.Tween.to(this.mainScene, { alpha: 1 }, 400, Laya.Ease.sineIn)
+                    }))
+                }
                 break;
             case 2:
                 if (Laya.stage.contains(this.mainScene)) {
-                    Laya.stage.removeChild(this.mainScene);
-                    this.mainScene.visible = false;
-                }
+                    Laya.Tween.to(this.mainScene, { alpha: 0 }, 400, Laya.Ease.sineIn, new Laya.Handler(this, function () {
+                        Laya.stage.removeChild(this.mainScene);
+                        this.mainScene.visible = false;
 
-                this.indoorScene.visible = true;
-                Laya.stage.addChild(this.indoorScene);
+                        // this.indoorScene.alpha=1;
+                        this.indoorScene.visible = true;
+                        Laya.stage.addChild(this.indoorScene);
+                        Laya.Tween.to(this.indoorScene, { alpha: 1 }, 400, Laya.Ease.sineIn)
+                    }))
+                }
                 break;
         }
     }
@@ -131,9 +141,12 @@ class GameMain {
                 this.logView.settingLog.visible = true;
                 this.logView.settingLog.popup()
                 break;
+            case 'Picture':
+                this.logView.pictureLog.visible = true;
+                this.logView.pictureLog.popup();
+                break;
         }
     }
-
 
     private changeHandle() {
         console.log('changeHandle');

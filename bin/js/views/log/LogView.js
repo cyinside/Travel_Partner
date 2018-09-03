@@ -22,6 +22,7 @@ var LogView = /** @class */ (function (_super) {
     LogView.prototype.LogViewInit = function () {
         this.settingLog.closeHandler = new Laya.Handler(this, this.closeHandle);
         this.storeLog.closeHandler = new Laya.Handler(this, this.closeHandle);
+        this.pictureLog.closeHandler = new Laya.Handler(this, this.closeHandle);
     };
     LogView.prototype.closeHandle = function () {
         console.log('close');
