@@ -8,10 +8,13 @@ var GameEvent = /** @class */ (function () {
         return GameEvent._instance;
     };
     GameEvent._instance = null;
+    GameEvent.SHOW_DELPIC_CONFIRM = 'show_delpic_confirm';
     GameEvent.SHWO_BUY_CONFIRM = 'show_buy_confirm';
     GameEvent.SHWO_BUY_STATE = 'show_buy_state';
     GameEvent.SHOW_LOG = 'show_log';
+    GameEvent.SAVE_PIC_COMP = 'save_pic_comp';
     GameEvent.LOG_name = '';
+    GameEvent.LOG_info = '';
     return GameEvent;
 }());
 //# sourceMappingURL=GameEvent.js.map

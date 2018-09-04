@@ -109,7 +109,7 @@ class GameMain {
                         // this.mainScene.alpha=1;
                         this.mainScene.visible = true;
                         Laya.stage.addChild(this.mainScene);
-                        Laya.Tween.to(this.mainScene, { alpha: 1 }, 400, Laya.Ease.sineIn)
+                        Laya.Tween.to(this.mainScene, { alpha: 1 }, 400, Laya.Ease.sineIn);
                     }))
                 }
                 break;
@@ -122,7 +122,7 @@ class GameMain {
                         // this.indoorScene.alpha=1;
                         this.indoorScene.visible = true;
                         Laya.stage.addChild(this.indoorScene);
-                        Laya.Tween.to(this.indoorScene, { alpha: 1 }, 400, Laya.Ease.sineIn)
+                        Laya.Tween.to(this.indoorScene, { alpha: 1 }, 400, Laya.Ease.sineIn);
                     }))
                 }
                 break;
@@ -130,22 +130,7 @@ class GameMain {
     }
 
     private showLog() {
-        this.logView.visible = true;
-        var name = GameEvent.LOG_name;
-        switch (name) {
-            case 'Store':
-                this.logView.storeLog.visible = true;
-                this.logView.storeLog.popup()
-                break;
-            case 'Setting':
-                this.logView.settingLog.visible = true;
-                this.logView.settingLog.popup()
-                break;
-            case 'Picture':
-                this.logView.pictureLog.visible = true;
-                this.logView.pictureLog.popup();
-                break;
-        }
+        this.logView.showLog();
     }
 
     private changeHandle() {

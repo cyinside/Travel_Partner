@@ -2,8 +2,8 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":1,
-    "selecteID":4,
-    "props":{"width":660,"sceneColor":"#000000","runtime":"PictureLog","height":1000},
+    "selecteID":13,
+    "props":{"y":0,"x":0,"width":730,"sceneColor":"#000000","runtime":"PictureLog","mouseEnabled":true,"height":1000,"cacheAsBitmap":true},
     "nodeParent":-1,
     "label":"Dialog",
     "isOpen":true,
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"width":660,"skin":"GameScene/logBg.png","sizeGrid":"20,20,21,20","height":1000},
+            "props":{"y":-2,"x":38,"width":660,"skin":"GameScene/logBg.png","sizeGrid":"20,20,21,20","height":1000,"cacheAsBitmap":true},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":134,"x":80,"skin":"settingLog/line1.png"},
+            "props":{"y":134,"x":115,"skin":"settingLog/line1.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -41,7 +41,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"var":"closeBut","top":20,"skin":"settingLog/closeBut.png","right":20,"mouseEnabled":true},
+            "props":{"var":"closeBut","top":20,"skin":"settingLog/closeBut.png","right":50,"mouseEnabled":true},
             "nodeParent":1,
             "label":"Image(closeBut)",
             "isDirectory":false,
@@ -54,7 +54,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":48,"x":272,"skin":"pictureLog/picTitle.png"},
+            "props":{"y":48,"x":307,"skin":"pictureLog/picTitle.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -67,7 +67,7 @@
         {
             "x":15,
             "type":"List",
-            "props":{"y":170,"x":19,"width":621,"var":"m_list","spaceY":10,"spaceX":10,"repeatY":3,"repeatX":8,"renderType":"render","mouseEnabled":true,"height":775,"hScrollBarSkin":"comp/hscroll.png"},
+            "props":{"y":163,"x":57,"width":621,"var":"m_list","spaceY":10,"spaceX":10,"selectEnable":true,"repeatY":3,"repeatX":8,"renderType":"render","mouseEnabled":true,"height":775,"hScrollBarSkin":"comp/hscroll.png"},
             "nodeParent":1,
             "label":"List(m_list)",
             "isOpen":true,
@@ -90,6 +90,60 @@
                     "child":[
                         ]
                 }]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":448,"x":667,"var":"rightBut","skin":"store/rightBut.png","mouseEnabled":true},
+            "nodeParent":1,
+            "label":"Image(rightBut)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":8,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":448,"x":-1,"var":"leftBut","skin":"store/leftBut.png","mouseEnabled":true},
+            "nodeParent":1,
+            "label":"Image(leftBut)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":9,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"UIView",
+            "source":"log/picture/PicInfo.ui",
+            "props":{"y":2,"x":771,"visible":false,"var":"picInfo","runtime":"PicInfo","popupCenter":true,"mouseEnabled":true,"cacheAsBitmap":true},
+            "nodeParent":1,
+            "label":"UIView(picInfo)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":10,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"UIView",
+            "source":"log/picture/PicDelConfrom.ui",
+            "props":{"y":605,"x":779,"visible":false,"var":"picDelConfrom","runtime":"PicDelConfirmLog","cacheAsBitmap":true},
+            "nodeParent":1,
+            "label":"UIView(picDelConfrom)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":11,
+            "child":[
+                ]
         }],
     "animations":[
         {

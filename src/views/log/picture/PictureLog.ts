@@ -15,12 +15,16 @@ class PictureLog extends PictureLogUI {
 
         this.m_list.array = this.itemArr;
         this.m_list.refresh();
+        this.on(Laya.Event.CLICK, this, this.touchHandle);
 
         this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
         this.m_list.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin)
         this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
 
         this.closeBut.name = Dialog.CLOSE;
+
+        Global.addEventListener(GameEvent.SHOW_DELPIC_CONFIRM,this,this.showDelCon);
+        Global.addEventListener(GameEvent.SAVE_PIC_COMP,this,this.showStateInfo);
     }
 
     private b_X: number = 0;
@@ -48,11 +52,12 @@ class PictureLog extends PictureLogUI {
         }
     }
 
-    
+
     private scrollPage: number = 0;
     private now_index: number = 0;
+    private max_index: number = 18;
     private tweenPage(side: string) {
-        var indexItem = 4;
+        var indexItem = 6;
         switch (side) {
             case 'left':
                 this.scrollPage -= 1;
@@ -66,8 +71,8 @@ class PictureLog extends PictureLogUI {
             case 'right':
                 this.scrollPage += 1;
                 this.now_index += indexItem;
-                if (this.now_index > 12) {
-                    this.now_index = 12;
+                if (this.now_index > this.max_index) {
+                    this.now_index = this.max_index;
                 }
                 this.m_list.tweenTo(this.now_index, 300)
                 // this.m_list.page += 1;
@@ -75,14 +80,41 @@ class PictureLog extends PictureLogUI {
         }
     }
 
+    private touchHandle(e: Laya.Event) {
+        var _target = e.target;
+        switch (_target) {
+            case this.rightBut:
+                this.tweenPage('right')
+                break;
+            case this.leftBut:
+                this.m_list.tweenTo(0, 300);
+                this.tweenPage('left')
+                break;
+        }
+    }
+
     private selectHandle(selectIdex) {
-        // for (var i: number = 0; i < this.itemArr.length; i++) {
-        //     this.itemArr[i].selectedBg.visible = false;
-        // }
         // console.log(selectIdex);
         // var item: any = this.itemArr[selectIdex];
-        // item.selectedBg.visible = true
+        this.picInfo.visible = true;
+        this.picInfo.popup();
+    }
 
+    private showDelCon(){
+        this.picDelConfrom.visible=true;
+        this.picDelConfrom.popup();
+    }
+
+    private showStateInfo(){
+        // this.infoLog.infoText.changeText('保存成功');
+        // this.infoLog.visible=true;
+        // this.infoLog.popup();
+
+        // this.infoLog.showInfo('保存成功')
+
+        GameEvent.LOG_info='保存成功';
+        GameEvent.LOG_name='Info'
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     }
 
 }

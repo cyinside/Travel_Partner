@@ -21,6 +21,7 @@ var PictureLog = /** @class */ (function (_super) {
         _this.e_X = 0;
         _this.scrollPage = 0;
         _this.now_index = 0;
+        _this.max_index = 18;
         _this.pictureLogInit();
         return _this;
     }
@@ -32,10 +33,13 @@ var PictureLog = /** @class */ (function (_super) {
         this.m_list.scrollBar.rollRatio = 0.8;
         this.m_list.array = this.itemArr;
         this.m_list.refresh();
+        this.on(Laya.Event.CLICK, this, this.touchHandle);
         this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
         this.m_list.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin);
         this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
         this.closeBut.name = Dialog.CLOSE;
+        Global.addEventListener(GameEvent.SHOW_DELPIC_CONFIRM, this, this.showDelCon);
+        Global.addEventListener(GameEvent.SAVE_PIC_COMP, this, this.showStateInfo);
     };
     PictureLog.prototype.touchBegin = function (e) {
         this.b_X = e.stageX;
@@ -58,7 +62,7 @@ var PictureLog = /** @class */ (function (_super) {
         }
     };
     PictureLog.prototype.tweenPage = function (side) {
-        var indexItem = 4;
+        var indexItem = 6;
         switch (side) {
             case 'left':
                 this.scrollPage -= 1;
@@ -72,21 +76,44 @@ var PictureLog = /** @class */ (function (_super) {
             case 'right':
                 this.scrollPage += 1;
                 this.now_index += indexItem;
-                if (this.now_index > 12) {
-                    this.now_index = 12;
+                if (this.now_index > this.max_index) {
+                    this.now_index = this.max_index;
                 }
                 this.m_list.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
                 break;
         }
     };
+    PictureLog.prototype.touchHandle = function (e) {
+        var _target = e.target;
+        switch (_target) {
+            case this.rightBut:
+                this.tweenPage('right');
+                break;
+            case this.leftBut:
+                this.m_list.tweenTo(0, 300);
+                this.tweenPage('left');
+                break;
+        }
+    };
     PictureLog.prototype.selectHandle = function (selectIdex) {
-        // for (var i: number = 0; i < this.itemArr.length; i++) {
-        //     this.itemArr[i].selectedBg.visible = false;
-        // }
         // console.log(selectIdex);
         // var item: any = this.itemArr[selectIdex];
-        // item.selectedBg.visible = true
+        this.picInfo.visible = true;
+        this.picInfo.popup();
+    };
+    PictureLog.prototype.showDelCon = function () {
+        this.picDelConfrom.visible = true;
+        this.picDelConfrom.popup();
+    };
+    PictureLog.prototype.showStateInfo = function () {
+        // this.infoLog.infoText.changeText('保存成功');
+        // this.infoLog.visible=true;
+        // this.infoLog.popup();
+        // this.infoLog.showInfo('保存成功')
+        GameEvent.LOG_info = '保存成功';
+        GameEvent.LOG_name = 'Info';
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     };
     return PictureLog;
 }(PictureLogUI));

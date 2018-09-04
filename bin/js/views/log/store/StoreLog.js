@@ -135,12 +135,9 @@ var ShoppingLog = /** @class */ (function (_super) {
     };
     ShoppingLog.prototype.showBuyState = function () {
         var nameText = this.titleInfo.text;
-        this.infoLog.infoText.changeText(nameText);
-        this.infoLog.visible = true;
-        this.infoLog.popup();
-        Laya.timer.once(2000, this, function () {
-            this.infoLog.close();
-        });
+        GameEvent.LOG_info = '购买成功' + nameText;
+        GameEvent.LOG_name = 'Info';
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     };
     return ShoppingLog;
 }(StoreLogUI));

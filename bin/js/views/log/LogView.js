@@ -28,6 +28,27 @@ var LogView = /** @class */ (function (_super) {
         console.log('close');
         this.visible = false;
     };
+    LogView.prototype.showLog = function () {
+        this.visible = true;
+        var name = GameEvent.LOG_name;
+        switch (name) {
+            case 'Store':
+                this.storeLog.visible = true;
+                this.storeLog.popup();
+                break;
+            case 'Setting':
+                this.settingLog.visible = true;
+                this.settingLog.popup();
+                break;
+            case 'Picture':
+                this.pictureLog.visible = true;
+                this.pictureLog.popup();
+                break;
+            case 'Info':
+                this.infoLog.showInfo(GameEvent.LOG_info);
+                break;
+        }
+    };
     return LogView;
 }(LogViewUI));
 //# sourceMappingURL=LogView.js.map

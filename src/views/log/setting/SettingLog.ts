@@ -44,8 +44,8 @@ class SettingLog extends SettingLogUI {
     private showInfo(){
         this.nameText.changeText(GameData.userName);
 
-        this.infoLog.visible=true;
-        this.infoLog.infoText.changeText('改名了！！');
-        this.infoLog.popup();
+        GameEvent.LOG_info='更改成功';
+        GameEvent.LOG_name='Info';
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     }
 }

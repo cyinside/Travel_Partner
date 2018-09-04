@@ -117,7 +117,7 @@ class ShoppingLog extends StoreLogUI {
         }
         console.log(selectIdex);
         var item: any = this.itemArr[selectIdex];
-        item.selectedBg.visible = true
+        item.selectedBg.visible = true;
 
         this.updateInfoText(selectIdex)
     }
@@ -138,12 +138,8 @@ class ShoppingLog extends StoreLogUI {
 
     private showBuyState() {
         var nameText: string = this.titleInfo.text;
-        this.infoLog.infoText.changeText(nameText)
-        this.infoLog.visible = true;
-        this.infoLog.popup();
-
-        Laya.timer.once(2000, this, function () {
-            this.infoLog.close();
-        })
+        GameEvent.LOG_info='购买成功'+nameText;
+        GameEvent.LOG_name='Info'
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     }
 }

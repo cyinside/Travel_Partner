@@ -34,6 +34,7 @@ var WX_SDK = /** @class */ (function () {
         });
     };
     WX_SDK.prototype.screenCapture = function (obj, _x, _y, saveToFile) {
+        if (saveToFile === void 0) { saveToFile = false; }
         /**
          * <p>截图返回URL，或保存到本地</p>
          * @param	obj  截取对象。
@@ -41,18 +42,19 @@ var WX_SDK = /** @class */ (function () {
          * @param	_y Y轴坐标。
          * @param	saveToFile 是否保存到本地
          */
-        if (saveToFile === void 0) { saveToFile = false; }
-        var htmlC = obj.drawToCanvas(750, 1335, _x, _y);
+        var _width = obj.width;
+        var _height = obj.height;
+        var htmlC = obj.drawToCanvas(_width, _height, _x, _y);
         var canvas = htmlC.getCanvas();
         var url = canvas.toDataURL();
         var filePathUrl = '';
         canvas.toTempFilePath({
             x: 0,
             y: 0,
-            width: 750,
-            height: 1334,
-            destWidth: 750,
-            destHeight: 1334,
+            width: _width,
+            height: _height,
+            destWidth: _width,
+            destHeight: _height,
             success: function (res) {
                 filePathUrl = res.tempFilePath;
                 if (saveToFile == true)
@@ -74,6 +76,7 @@ var WX_SDK = /** @class */ (function () {
             },
             success: function (e) {
                 console.log(e);
+                Global.dispatchEvent(GameEvent.SAVE_PIC_COMP); //保存图片成功
             }
         });
     };

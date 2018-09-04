@@ -76,7 +76,8 @@ module ui.log {
 
         constructor(){ super()}
         createChildren():void {
-        
+        			View.regComponent("infoLog",infoLog);
+
             super.createChildren();
             this.loadUI("log/InfoLog");
 
@@ -90,6 +91,7 @@ module ui.log {
 		public settingLog:SettingLog;
 		public storeLog:ShoppingLog;
 		public pictureLog:PictureLog;
+		public infoLog:infoLog;
 
         constructor(){ super()}
         createChildren():void {
@@ -97,9 +99,43 @@ module ui.log {
 			View.regComponent("SettingLog",SettingLog);
 			View.regComponent("ShoppingLog",ShoppingLog);
 			View.regComponent("PictureLog",PictureLog);
+			View.regComponent("infoLog",infoLog);
 
             super.createChildren();
             this.loadUI("log/LogView");
+
+        }
+
+    }
+}
+
+module ui.log.picture {
+    export class PicDelConfromUI extends Dialog {
+		public okBut:Laya.Button;
+		public cancelBut:Laya.Button;
+
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.loadUI("log/picture/PicDelConfrom");
+
+        }
+
+    }
+}
+
+module ui.log.picture {
+    export class PicInfoUI extends Dialog {
+		public pictureBig:Laya.Image;
+		public btn_delPic:Laya.Button;
+		public btn_savePic:Laya.Button;
+
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.loadUI("log/picture/PicInfo");
 
         }
 
@@ -126,11 +162,17 @@ module ui.log.picture {
 		public closeBut:Laya.Image;
 		public m_list:Laya.List;
 		public m_item:ui.log.picture.PicItemUI;
+		public rightBut:Laya.Image;
+		public leftBut:Laya.Image;
+		public picInfo:PicInfo;
+		public picDelConfrom:PicDelConfirmLog;
 
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("PictureLog",PictureLog);
 			View.regComponent("ui.log.picture.PicItemUI",ui.log.picture.PicItemUI);
+			View.regComponent("PicInfo",PicInfo);
+			View.regComponent("PicDelConfirmLog",PicDelConfirmLog);
 
             super.createChildren();
             this.loadUI("log/picture/PictureLog");
@@ -173,13 +215,11 @@ module ui.log.setting {
 		public locationText:Laya.Label;
 		public changeNameLog:ChangeNameLog;
 		public DelConfirmLog:DelConfirmLog;
-		public infoLog:ui.log.InfoLogUI;
 
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("ChangeNameLog",ChangeNameLog);
 			View.regComponent("DelConfirmLog",DelConfirmLog);
-			View.regComponent("ui.log.InfoLogUI",ui.log.InfoLogUI);
 
             super.createChildren();
             this.loadUI("log/setting/SettingLog");
@@ -250,14 +290,12 @@ module ui.log.store {
 		public titleInfo:Laya.Label;
 		public closeBut:Laya.Image;
 		public buyConfirmLog:BuyConfirmLog;
-		public infoLog:ui.log.InfoLogUI;
 
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("ShoppingLog",ShoppingLog);
 			View.regComponent("ListItem",ListItem);
 			View.regComponent("BuyConfirmLog",BuyConfirmLog);
-			View.regComponent("ui.log.InfoLogUI",ui.log.InfoLogUI);
 
             super.createChildren();
             this.loadUI("log/store/StoreLog");

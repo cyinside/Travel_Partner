@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":4,
+    "selecteID":5,
     "props":{"width":750,"visible":true,"sceneColor":"#000000","runtime":"LogView","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -51,6 +51,20 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":4,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"UIView",
+            "source":"log/InfoLog.ui",
+            "props":{"y":25,"x":2138,"visible":false,"var":"infoLog","runtime":"infoLog","popupCenter":true},
+            "nodeParent":1,
+            "label":"UIView(infoLog)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":5,
             "child":[
                 ]
         }],

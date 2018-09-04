@@ -56296,6 +56296,7 @@ var WX_SDK = /** @class */ (function () {
         });
     };
     WX_SDK.prototype.screenCapture = function (obj, _x, _y, saveToFile) {
+        if (saveToFile === void 0) { saveToFile = false; }
         /**
          * <p>截图返回URL，或保存到本地</p>
          * @param	obj  截取对象。
@@ -56303,18 +56304,19 @@ var WX_SDK = /** @class */ (function () {
          * @param	_y Y轴坐标。
          * @param	saveToFile 是否保存到本地
          */
-        if (saveToFile === void 0) { saveToFile = false; }
-        var htmlC = obj.drawToCanvas(750, 1335, _x, _y);
+        var _width = obj.width;
+        var _height = obj.height;
+        var htmlC = obj.drawToCanvas(_width, _height, _x, _y);
         var canvas = htmlC.getCanvas();
         var url = canvas.toDataURL();
         var filePathUrl = '';
         canvas.toTempFilePath({
             x: 0,
             y: 0,
-            width: 750,
-            height: 1335,
-            destWidth: 750,
-            destHeight: 1335,
+            width: _width,
+            height: _height,
+            destWidth: _width,
+            destHeight: _height,
             success: function (res) {
                 filePathUrl = res.tempFilePath;
                 if (saveToFile == true)
@@ -56336,6 +56338,7 @@ var WX_SDK = /** @class */ (function () {
             },
             success: function (e) {
                 console.log(e);
+                Global.dispatchEvent(GameEvent.SAVE_PIC_COMP); //保存图片成功
             }
         });
     };
@@ -56408,9 +56411,9 @@ var SceneUtil;
     }
     SceneUtil.removeOtherSceneByTarget = removeOtherSceneByTarget;
     function changeScene(sceneID) {
-        var data = new SceneEvent();
-        data.sceneID = sceneID;
-        Global.dispatchEvent(SceneEvent.CHANGE_SCENE, data);
+        // var data:SceneEvent = new SceneEvent();
+        SceneEvent.sceneID = sceneID;
+        Global.dispatchEvent(SceneEvent.CHANGE_SCENE);
     }
     SceneUtil.changeScene = changeScene;
 })(SceneUtil || (SceneUtil = {}));
@@ -56749,9 +56752,11 @@ var GameEvent = /** @class */ (function () {
         return GameEvent._instance;
     };
     GameEvent._instance = null;
+    GameEvent.SHOW_DELPIC_CONFIRM = 'show_delpic_confirm';
     GameEvent.SHWO_BUY_CONFIRM = 'show_buy_confirm';
     GameEvent.SHWO_BUY_STATE = 'show_buy_state';
     GameEvent.SHOW_LOG = 'show_log';
+    GameEvent.SAVE_PIC_COMP = 'save_pic_comp';
     GameEvent.LOG_name = '';
     return GameEvent;
 }());
@@ -56777,6 +56782,8 @@ var GameSetting = /** @class */ (function () {
             { url: "res/atlas/store.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/wave.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/inDoorScene.atlas", type: Laya.Loader.ATLAS },
+            { url: "res/atlas/fire.atlas", type: Laya.Loader.ATLAS },
+            { url: "res/atlas/pictureLog.atlas", type: Laya.Loader.ATLAS },
             // {url:'res/contData.json',type:Laya.Loader.JSON},
             { url: 'main/BottomUnit.json', type: Laya.Loader.JSON },
             { url: 'main/MainScene.json', type: Laya.Loader.JSON },
@@ -56788,9 +56795,16 @@ var GameSetting = /** @class */ (function () {
             { url: 'log/store/StoreLog.json', type: Laya.Loader.JSON },
             { url: 'log/store/ListItem.json', type: Laya.Loader.JSON },
             { url: 'log/store/BuyConfirmLog.json', type: Laya.Loader.JSON },
+            { url: 'log/picture/PicDelConfrom.json', type: Laya.Loader.JSON },
+            { url: 'log/picture/PicInfo.json', type: Laya.Loader.JSON },
+            { url: 'log/picture/PictureLog.json', type: Laya.Loader.JSON },
+            { url: 'log/picture/PicItem.json', type: Laya.Loader.JSON },
             { url: 'main/WaveView.json', type: Laya.Loader.JSON },
+            { url: 'main/Tips.json', type: Laya.Loader.JSON },
+            { url: 'indoor/Tips1.ani', type: Laya.Loader.JSON },
             { url: 'indoor/Bottom2Unit.json', type: Laya.Loader.JSON },
             { url: 'indoor/IndoorScene.json', type: Laya.Loader.JSON },
+            { url: 'indoor/FireAni.json', type: Laya.Loader.JSON },
             { url: 'log/LogView.json', type: Laya.Loader.JSON },
             { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
             { url: 'music.mp3', type: Laya.Loader.SOUND }
@@ -57321,6 +57335,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var View = laya.ui.View;
 var Dialog = laya.ui.Dialog;
+var EffectAnimation = laya.display.EffectAnimation;
 var ui;
 (function (ui) {
     var Loading;
@@ -57359,6 +57374,23 @@ var ui;
 (function (ui) {
     var indoor;
     (function (indoor) {
+        var FireAniUI = /** @class */ (function (_super) {
+            __extends(FireAniUI, _super);
+            function FireAniUI() {
+                return _super.call(this) || this;
+            }
+            FireAniUI.prototype.createChildren = function () {
+                _super.prototype.createChildren.call(this);
+                this.loadUI("indoor/FireAni");
+            };
+            return FireAniUI;
+        }(View));
+        indoor.FireAniUI = FireAniUI;
+    })(indoor = ui.indoor || (ui.indoor = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var indoor;
+    (function (indoor) {
         var IndoorSceneUI = /** @class */ (function (_super) {
             __extends(IndoorSceneUI, _super);
             function IndoorSceneUI() {
@@ -57367,6 +57399,7 @@ var ui;
             IndoorSceneUI.prototype.createChildren = function () {
                 View.regComponent("TopUnit", TopUnit);
                 View.regComponent("Bottom2Unit", Bottom2Unit);
+                View.regComponent("ui.indoor.FireAniUI", ui.indoor.FireAniUI);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("indoor/IndoorScene");
             };
@@ -57404,12 +57437,98 @@ var ui;
                 View.regComponent("LogView", LogView);
                 View.regComponent("SettingLog", SettingLog);
                 View.regComponent("ShoppingLog", ShoppingLog);
+                View.regComponent("PictureLog", PictureLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("log/LogView");
             };
             return LogViewUI;
         }(View));
         log.LogViewUI = LogViewUI;
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var picture;
+        (function (picture) {
+            var PicDelConfromUI = /** @class */ (function (_super) {
+                __extends(PicDelConfromUI, _super);
+                function PicDelConfromUI() {
+                    return _super.call(this) || this;
+                }
+                PicDelConfromUI.prototype.createChildren = function () {
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/picture/PicDelConfrom");
+                };
+                return PicDelConfromUI;
+            }(Dialog));
+            picture.PicDelConfromUI = PicDelConfromUI;
+        })(picture = log.picture || (log.picture = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var picture;
+        (function (picture) {
+            var PicInfoUI = /** @class */ (function (_super) {
+                __extends(PicInfoUI, _super);
+                function PicInfoUI() {
+                    return _super.call(this) || this;
+                }
+                PicInfoUI.prototype.createChildren = function () {
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/picture/PicInfo");
+                };
+                return PicInfoUI;
+            }(Dialog));
+            picture.PicInfoUI = PicInfoUI;
+        })(picture = log.picture || (log.picture = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var picture;
+        (function (picture) {
+            var PicItemUI = /** @class */ (function (_super) {
+                __extends(PicItemUI, _super);
+                function PicItemUI() {
+                    return _super.call(this) || this;
+                }
+                PicItemUI.prototype.createChildren = function () {
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/picture/PicItem");
+                };
+                return PicItemUI;
+            }(View));
+            picture.PicItemUI = PicItemUI;
+        })(picture = log.picture || (log.picture = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var picture;
+        (function (picture) {
+            var PictureLogUI = /** @class */ (function (_super) {
+                __extends(PictureLogUI, _super);
+                function PictureLogUI() {
+                    return _super.call(this) || this;
+                }
+                PictureLogUI.prototype.createChildren = function () {
+                    View.regComponent("PictureLog", PictureLog);
+                    View.regComponent("ui.log.picture.PicItemUI", ui.log.picture.PicItemUI);
+                    View.regComponent("PicInfo", PicInfo);
+                    View.regComponent("PicDelConfirmLog", PicDelConfirmLog);
+                    View.regComponent("infoLogUI", infoLogUI);
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/picture/PictureLog");
+                };
+                return PictureLogUI;
+            }(Dialog));
+            picture.PictureLogUI = PictureLogUI;
+        })(picture = log.picture || (log.picture = {}));
     })(log = ui.log || (ui.log = {}));
 })(ui || (ui = {}));
 (function (ui) {
@@ -57446,7 +57565,7 @@ var ui;
                 SettingLogUI.prototype.createChildren = function () {
                     View.regComponent("ChangeNameLog", ChangeNameLog);
                     View.regComponent("DelConfirmLog", DelConfirmLog);
-                    View.regComponent("ui.log.InfoLogUI", ui.log.InfoLogUI);
+                    View.regComponent("infoLogUI", infoLogUI);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/setting/SettingLog");
                 };
@@ -57531,7 +57650,7 @@ var ui;
                     View.regComponent("ShoppingLog", ShoppingLog);
                     View.regComponent("ListItem", ListItem);
                     View.regComponent("BuyConfirmLog", BuyConfirmLog);
-                    View.regComponent("ui.log.InfoLogUI", ui.log.InfoLogUI);
+                    View.regComponent("infoLogUI", infoLogUI);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/store/StoreLog");
                 };
@@ -57567,9 +57686,9 @@ var ui;
                 return _super.call(this) || this;
             }
             MainSceneUI.prototype.createChildren = function () {
-                View.regComponent("WaveView", WaveView);
                 View.regComponent("CoinsRole", CoinsRole);
                 View.regComponent("Particle2D", laya.particle.Particle2D);
+                View.regComponent("WaveView", WaveView);
                 View.regComponent("TopUnit", TopUnit);
                 View.regComponent("BottomUnit", BottomUnit);
                 _super.prototype.createChildren.call(this);
@@ -57684,12 +57803,47 @@ var IndoorScene = /** @class */ (function (_super) {
         this.bg4.skin = res_v + '/4.jpg';
         if (GameConfig.res_Type == 3) {
             this.topUnit.top = this.topUnit.top * 3.5;
-            // this.
+            this.FireAni.y = this.FireAni.y + 145;
         }
     };
     return IndoorScene;
 }(indoorSceneUi));
 //# sourceMappingURL=IndoorScene.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var infoLogUI = ui.log.InfoLogUI;
+var infoLog = /** @class */ (function (_super) {
+    __extends(infoLog, _super);
+    function infoLog() {
+        var _this = _super.call(this) || this;
+        _this.infoLogInit();
+        return _this;
+    }
+    infoLog.prototype.infoLogInit = function () {
+    };
+    infoLog.prototype.showInfo = function (text) {
+        this.infoText.changeText(text);
+        this.visible = true;
+        this.popup();
+        if (this.isPopup)
+            Laya.timer.once(2000, this, function () {
+                this.close();
+            });
+    };
+    return infoLog;
+}(infoLogUI));
+//# sourceMappingURL=InfoLog.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -57714,6 +57868,7 @@ var LogView = /** @class */ (function (_super) {
     LogView.prototype.LogViewInit = function () {
         this.settingLog.closeHandler = new Laya.Handler(this, this.closeHandle);
         this.storeLog.closeHandler = new Laya.Handler(this, this.closeHandle);
+        this.pictureLog.closeHandler = new Laya.Handler(this, this.closeHandle);
     };
     LogView.prototype.closeHandle = function () {
         console.log('close');
@@ -57722,6 +57877,215 @@ var LogView = /** @class */ (function (_super) {
     return LogView;
 }(LogViewUI));
 //# sourceMappingURL=LogView.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var PicDelConfirmLogUI = ui.log.picture.PicDelConfromUI;
+var PicDelConfirmLog = /** @class */ (function (_super) {
+    __extends(PicDelConfirmLog, _super);
+    function PicDelConfirmLog() {
+        var _this = _super.call(this) || this;
+        _this.PicDelConfirmInit();
+        return _this;
+    }
+    PicDelConfirmLog.prototype.PicDelConfirmInit = function () {
+        this.cancelBut.name = Dialog.CANCEL;
+    };
+    return PicDelConfirmLog;
+}(PicDelConfirmLogUI));
+//# sourceMappingURL=PicDelConfirmLog.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var PicInfoUI = ui.log.picture.PicInfoUI;
+var PicInfo = /** @class */ (function (_super) {
+    __extends(PicInfo, _super);
+    function PicInfo() {
+        var _this = _super.call(this) || this;
+        _this.picInfoInit();
+        return _this;
+    }
+    PicInfo.prototype.picInfoInit = function () {
+        this.on(Laya.Event.CLICK, this, this.touchHanle);
+    };
+    PicInfo.prototype.touchHanle = function (e) {
+        var _target = e.target;
+        switch (_target) {
+            case this.btn_delPic:
+                Global.dispatchEvent(GameEvent.SHOW_DELPIC_CONFIRM);
+                break;
+            case this.btn_savePic:
+                console.log('btn_savePic');
+                WX_SDK.getInstance().screenCapture(this.pictureBig, 0, 0, true);
+                break;
+        }
+    };
+    return PicInfo;
+}(PicInfoUI));
+//# sourceMappingURL=PicInfo.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var PicItemUI = ui.log.picture.PicItemUI;
+var PicItem = /** @class */ (function (_super) {
+    __extends(PicItem, _super);
+    function PicItem() {
+        var _this = _super.call(this) || this;
+        _this.picItemInit();
+        return _this;
+    }
+    PicItem.prototype.picItemInit = function () {
+    };
+    return PicItem;
+}(PicItemUI));
+//# sourceMappingURL=PicItem.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var PictureLogUI = ui.log.picture.PictureLogUI;
+var PictureLog = /** @class */ (function (_super) {
+    __extends(PictureLog, _super);
+    function PictureLog() {
+        var _this = _super.call(this) || this;
+        _this.itemArr = _this.m_list.cells;
+        _this.b_X = 0;
+        _this.e_X = 0;
+        _this.scrollPage = 0;
+        _this.now_index = 0;
+        _this.max_index = 18;
+        _this.pictureLogInit();
+        return _this;
+    }
+    PictureLog.prototype.pictureLogInit = function () {
+        this.m_list.scrollBar.hide = true; //隐藏列表的滚动条。
+        this.m_list.scrollBar.elasticBackTime = 200; //设置橡皮筋回弹时间。单位为毫秒。
+        this.m_list.scrollBar.elasticDistance = 30; //设置橡皮筋极限距离。
+        this.m_list.cacheContent = true;
+        this.m_list.scrollBar.rollRatio = 0.8;
+        this.m_list.array = this.itemArr;
+        this.m_list.refresh();
+        this.on(Laya.Event.CLICK, this, this.touchHandle);
+        this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
+        this.m_list.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin);
+        this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
+        this.closeBut.name = Dialog.CLOSE;
+        Global.addEventListener(GameEvent.SHOW_DELPIC_CONFIRM, this, this.showDelCon);
+        Global.addEventListener(GameEvent.SAVE_PIC_COMP, this, this.showStateInfo);
+    };
+    PictureLog.prototype.touchBegin = function (e) {
+        this.b_X = e.stageX;
+        // console.log('b:' + this.b_X)
+    };
+    PictureLog.prototype.touchEnd = function (e) {
+        this.e_X = e.stageX;
+        // console.log('e:' + this.e_X)
+        this.dragHandle();
+    };
+    PictureLog.prototype.dragHandle = function () {
+        var _dis = this.e_X - this.b_X;
+        if (_dis > 0 && _dis > 5) {
+            // console.log('left');
+            this.tweenPage('left');
+        }
+        else if (_dis < 0 && _dis < -5) {
+            // console.log('right')
+            this.tweenPage('right');
+        }
+    };
+    PictureLog.prototype.tweenPage = function (side) {
+        var indexItem = 6;
+        switch (side) {
+            case 'left':
+                this.scrollPage -= 1;
+                this.now_index -= indexItem;
+                if (this.now_index < 0) {
+                    this.now_index = 0;
+                }
+                this.m_list.tweenTo(this.now_index, 300);
+                // this.m_list.page += 1;
+                break;
+            case 'right':
+                this.scrollPage += 1;
+                this.now_index += indexItem;
+                if (this.now_index > this.max_index) {
+                    this.now_index = this.max_index;
+                }
+                this.m_list.tweenTo(this.now_index, 300);
+                // this.m_list.page += 1;
+                break;
+        }
+    };
+    PictureLog.prototype.touchHandle = function (e) {
+        var _target = e.target;
+        switch (_target) {
+            case this.rightBut:
+                this.tweenPage('right');
+                break;
+            case this.leftBut:
+                this.m_list.tweenTo(0, 300);
+                this.tweenPage('left');
+                break;
+        }
+    };
+    PictureLog.prototype.selectHandle = function (selectIdex) {
+        // console.log(selectIdex);
+        // var item: any = this.itemArr[selectIdex];
+        this.picInfo.visible = true;
+        this.picInfo.popup();
+    };
+    PictureLog.prototype.showDelCon = function () {
+        this.picDelConfrom.visible = true;
+        this.picDelConfrom.popup();
+    };
+    PictureLog.prototype.showStateInfo = function () {
+        // this.infoLog.infoText.changeText('保存成功');
+        // this.infoLog.visible=true;
+        // this.infoLog.popup();
+        this.infoLog.showInfo('保存成功');
+    };
+    return PictureLog;
+}(PictureLogUI));
+//# sourceMappingURL=PictureLog.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -58119,8 +58483,11 @@ var BottomUnit = /** @class */ (function (_super) {
         var _but = e.target;
         switch (_but) {
             case this.insideBut:
-                SceneEvent.sceneID = 2;
-                Global.dispatchEvent(SceneEvent.CHANGE_SCENE);
+                SceneUtil.changeScene(2);
+                break;
+            case this.bookBut:
+                GameEvent.LOG_name = 'Picture';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
                 break;
         }
     };
@@ -58206,10 +58573,13 @@ var MainScene = /** @class */ (function (_super) {
         this.bg1.skin = res_v + '/1.jpg';
         this.bg2.skin = res_v + '/2.jpg';
         this.bg3.skin = res_v + '/3.jpg';
+        var _x = 150;
         if (GameConfig.res_Type == 3) {
             this.topUnit.top = this.topUnit.top * 3.5;
-            this.coinBox.top = this.coinBox.top + 150;
-            this.waveView.y = this.waveView.y + 150;
+            this.coinBox.top = this.coinBox.top + _x;
+            this.waveView.y = this.waveView.y + _x;
+            this.tipsAni.y = this.tipsAni.y + _x;
+            this.indoorRect.y = this.indoorRect.y + _x;
         }
         console.log(this.topUnit.top);
         Laya.timer.once(300, this, function () {
@@ -58219,6 +58589,14 @@ var MainScene = /** @class */ (function (_super) {
         this.setCoin(GameSetting.coinNumber); //设定金币数量
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
         // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
+        this.on(Laya.Event.CLICK, this, this.touchHandle);
+    };
+    MainScene.prototype.touchHandle = function (e) {
+        switch (e.target) {
+            case this.indoorRect:
+                SceneUtil.changeScene(2);
+                break;
+        }
     };
     MainScene.prototype.onAssetsLoaded = function () {
         this.LeafView.autoPlay = false;
@@ -58426,18 +58804,18 @@ var GameMain = /** @class */ (function () {
         // Laya.DebugPanel.init();
         //性能面板
         Laya.Stat.show(0, 100);
-        WX_SDK.getInstance().showConsol();
+        // WX_SDK.getInstance().showConsol();
         // WX_SDK.getInstance().onShow(function(){
         //     SoundModel.getInstance().playBgMusic();//背景音乐播放
         // })
         // WX_SDK.getInstance().setStorage('test',{msg:'this is test'});
         // WX_SDK.getInstance().getStorage('msg')
         Laya.loader.load('Loading/LoadingView.json', Handler.create(this, this.loadingComp));
-        Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
+        // Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
         // Laya.URL.basePath = GameSetting.res_url;
-        Laya.MiniAdpter.nativefiles = [
-            'Loading/LoadingView.json'
-        ];
+        // Laya.MiniAdpter.nativefiles = [
+        //     'Loading/LoadingView.json'
+        // ]
         // UIConfig.closeDialogOnSide = false;
     }
     GameMain.prototype.loadingComp = function () {
@@ -58456,8 +58834,10 @@ var GameMain = /** @class */ (function () {
         }
         this.mainScene = new MainScene;
         GameConfig.setAlign_center(this.mainScene);
+        Laya.stage.addChild(this.mainScene);
         this.indoorScene = new IndoorScene;
         GameConfig.setAlign_center(this.indoorScene);
+        this.indoorScene.alpha = 0;
         this.logView = new LogView;
         this.logView.visible = false;
         Laya.stage.addChild(this.logView);
@@ -58465,27 +58845,35 @@ var GameMain = /** @class */ (function () {
         // console.log(jsonData['giftInfo'][0].desc);
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
-        SceneEvent.sceneID = 1;
-        this.changeScene();
+        // SceneEvent.sceneID = 1;
+        // this.changeScene();
     };
     GameMain.prototype.changeScene = function () {
         var id = SceneEvent.sceneID;
         switch (id) {
             case 1:
                 if (Laya.stage.contains(this.indoorScene)) {
-                    Laya.stage.removeChild(this.indoorScene);
-                    this.indoorScene.visible = false;
+                    Laya.Tween.to(this.indoorScene, { alpha: 0 }, 400, Laya.Ease.sineIn, new Laya.Handler(this, function () {
+                        Laya.stage.removeChild(this.indoorScene);
+                        this.indoorScene.visible = false;
+                        // this.mainScene.alpha=1;
+                        this.mainScene.visible = true;
+                        Laya.stage.addChild(this.mainScene);
+                        Laya.Tween.to(this.mainScene, { alpha: 1 }, 400, Laya.Ease.sineIn);
+                    }));
                 }
-                this.mainScene.visible = true;
-                Laya.stage.addChild(this.mainScene);
                 break;
             case 2:
                 if (Laya.stage.contains(this.mainScene)) {
-                    Laya.stage.removeChild(this.mainScene);
-                    this.mainScene.visible = false;
+                    Laya.Tween.to(this.mainScene, { alpha: 0 }, 400, Laya.Ease.sineIn, new Laya.Handler(this, function () {
+                        Laya.stage.removeChild(this.mainScene);
+                        this.mainScene.visible = false;
+                        // this.indoorScene.alpha=1;
+                        this.indoorScene.visible = true;
+                        Laya.stage.addChild(this.indoorScene);
+                        Laya.Tween.to(this.indoorScene, { alpha: 1 }, 400, Laya.Ease.sineIn);
+                    }));
                 }
-                this.indoorScene.visible = true;
-                Laya.stage.addChild(this.indoorScene);
                 break;
         }
     };
@@ -58500,6 +58888,10 @@ var GameMain = /** @class */ (function () {
             case 'Setting':
                 this.logView.settingLog.visible = true;
                 this.logView.settingLog.popup();
+                break;
+            case 'Picture':
+                this.logView.pictureLog.visible = true;
+                this.logView.pictureLog.popup();
                 break;
         }
     };

@@ -97,22 +97,7 @@ var GameMain = /** @class */ (function () {
         }
     };
     GameMain.prototype.showLog = function () {
-        this.logView.visible = true;
-        var name = GameEvent.LOG_name;
-        switch (name) {
-            case 'Store':
-                this.logView.storeLog.visible = true;
-                this.logView.storeLog.popup();
-                break;
-            case 'Setting':
-                this.logView.settingLog.visible = true;
-                this.logView.settingLog.popup();
-                break;
-            case 'Picture':
-                this.logView.pictureLog.visible = true;
-                this.logView.pictureLog.popup();
-                break;
-        }
+        this.logView.showLog();
     };
     GameMain.prototype.changeHandle = function () {
         console.log('changeHandle');

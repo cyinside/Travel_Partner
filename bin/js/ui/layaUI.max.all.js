@@ -95,6 +95,7 @@ var ui;
                 return _super.call(this) || this;
             }
             InfoLogUI.prototype.createChildren = function () {
+                View.regComponent("infoLog", infoLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("log/InfoLog");
             };
@@ -116,12 +117,53 @@ var ui;
                 View.regComponent("SettingLog", SettingLog);
                 View.regComponent("ShoppingLog", ShoppingLog);
                 View.regComponent("PictureLog", PictureLog);
+                View.regComponent("infoLog", infoLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("log/LogView");
             };
             return LogViewUI;
         }(View));
         log.LogViewUI = LogViewUI;
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var picture;
+        (function (picture) {
+            var PicDelConfromUI = /** @class */ (function (_super) {
+                __extends(PicDelConfromUI, _super);
+                function PicDelConfromUI() {
+                    return _super.call(this) || this;
+                }
+                PicDelConfromUI.prototype.createChildren = function () {
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/picture/PicDelConfrom");
+                };
+                return PicDelConfromUI;
+            }(Dialog));
+            picture.PicDelConfromUI = PicDelConfromUI;
+        })(picture = log.picture || (log.picture = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var picture;
+        (function (picture) {
+            var PicInfoUI = /** @class */ (function (_super) {
+                __extends(PicInfoUI, _super);
+                function PicInfoUI() {
+                    return _super.call(this) || this;
+                }
+                PicInfoUI.prototype.createChildren = function () {
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/picture/PicInfo");
+                };
+                return PicInfoUI;
+            }(Dialog));
+            picture.PicInfoUI = PicInfoUI;
+        })(picture = log.picture || (log.picture = {}));
     })(log = ui.log || (ui.log = {}));
 })(ui || (ui = {}));
 (function (ui) {
@@ -157,6 +199,8 @@ var ui;
                 PictureLogUI.prototype.createChildren = function () {
                     View.regComponent("PictureLog", PictureLog);
                     View.regComponent("ui.log.picture.PicItemUI", ui.log.picture.PicItemUI);
+                    View.regComponent("PicInfo", PicInfo);
+                    View.regComponent("PicDelConfirmLog", PicDelConfirmLog);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/picture/PictureLog");
                 };
@@ -200,7 +244,6 @@ var ui;
                 SettingLogUI.prototype.createChildren = function () {
                     View.regComponent("ChangeNameLog", ChangeNameLog);
                     View.regComponent("DelConfirmLog", DelConfirmLog);
-                    View.regComponent("ui.log.InfoLogUI", ui.log.InfoLogUI);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/setting/SettingLog");
                 };
@@ -285,7 +328,6 @@ var ui;
                     View.regComponent("ShoppingLog", ShoppingLog);
                     View.regComponent("ListItem", ListItem);
                     View.regComponent("BuyConfirmLog", BuyConfirmLog);
-                    View.regComponent("ui.log.InfoLogUI", ui.log.InfoLogUI);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/store/StoreLog");
                 };

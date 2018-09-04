@@ -41,6 +41,8 @@ class GameSetting {
             { url: 'log/store/StoreLog.json', type: Laya.Loader.JSON },
             { url: 'log/store/ListItem.json', type: Laya.Loader.JSON },
             { url: 'log/store/BuyConfirmLog.json', type: Laya.Loader.JSON },
+            { url: 'log/picture/PicDelConfrom.json', type: Laya.Loader.JSON },
+            { url: 'log/picture/PicInfo.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PictureLog.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicItem.json', type: Laya.Loader.JSON },
             { url: 'main/WaveView.json', type: Laya.Loader.JSON },

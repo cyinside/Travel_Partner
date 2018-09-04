@@ -2,6 +2,7 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":1,
+    "selecteID":25,
     "referenceLines":[
         {
             "value":1001,
@@ -223,21 +224,6 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":24,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"UIView",
-            "source":"log/InfoLog.ui",
-            "props":{"y":8,"x":1366,"visible":false,"var":"infoLog","popupCenter":true,"mouseEnabled":false,"cacheAsBitmap":true},
-            "nodeParent":1,
-            "label":"UIView(infoLog)",
-            "isOpen":true,
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":25,
             "child":[
                 ]
         }],

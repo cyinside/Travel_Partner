@@ -56,9 +56,9 @@ var SettingLog = /** @class */ (function (_super) {
     };
     SettingLog.prototype.showInfo = function () {
         this.nameText.changeText(GameData.userName);
-        this.infoLog.visible = true;
-        this.infoLog.infoText.changeText('改名了！！');
-        this.infoLog.popup();
+        GameEvent.LOG_info = '更改成功';
+        GameEvent.LOG_name = 'Info';
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     };
     return SettingLog;
 }(SettingLogUI));
