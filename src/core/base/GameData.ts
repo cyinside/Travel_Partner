@@ -9,4 +9,6 @@ class GameData{
     private static _instance = null;
 
     public static userName:string='一共7个字字字';
+    
+    public static storeDataArr:Array<any>=[];
 }

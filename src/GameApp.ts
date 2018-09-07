@@ -69,6 +69,8 @@ class GameMain {
     private indoorScene: IndoorScene;
     private logView: LogView;
     private onCreateScene(id: number) {
+        DataModel.getInstance().DataConfig();
+
         if (Laya.stage.contains(this.LoadView)) {
             Laya.stage.removeChild(this.LoadView);
             this.LoadView.visible = false;
@@ -87,8 +89,6 @@ class GameMain {
         Laya.stage.addChild(this.logView);
 
 
-        // var jsonData = Laya.Loader.getRes('res/contData.json');
-        // console.log(jsonData['giftInfo'][0].desc);
 
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);

@@ -1,23 +1,43 @@
 import StoreLogUI = ui.log.store.StoreLogUI;
-class ShoppingLog extends StoreLogUI {
+class StoreLog extends StoreLogUI {
     public constructor() {
         super();
-        this.shoppingLogInit();
+        this.StoreLogInit();
     }
 
     private itemArr: Array<any> = this.m_list.cells;
-    public shoppingLogInit() {
+    private storeData: Array<any> = GameData.storeDataArr["prop"];
+    public StoreLogInit() {
         this.m_list.scrollBar.hide = true;//隐藏列表的滚动条。
-        this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
-        this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
+        // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
+        // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
         this.m_list.cacheContent = true;
         this.m_list.scrollBar.rollRatio = 0.8;
 
+        var _imgUrl: string = '';
         for (var m: number = 0; m < this.itemArr.length; m++) {
-            this.itemArr[m].m_label.text = 'NO.' + m.toString();
+            if (m < 22) {
+                this.itemArr[m].priceText.text = this.storeData[m].price;
+                this.itemArr[m].m_label.text = this.storeData[m].name;
+
+                _imgUrl = 'storeItem/' + this.storeData[m].res + '.png';
+                this.itemArr[m].itemImg.skin = _imgUrl;
+
+                if (this.storeData[m].type == 1) {
+                    this.itemArr[m].itemBg.skin = 'store/itemBg1.png'
+                }
+            }
+
+            if (m > 21) {
+                this.itemArr[m].alpha = 0;
+            }// 隐藏最后两个多出item
         }
+
         this.m_list.array = this.itemArr;
-        this.m_list.refresh();
+
+        this.selectHandle(0);//默认选中;
+
+        // this.m_list.refresh();
         this.on(Laya.Event.CLICK, this, this.touchHandle);
         // this.m_list.scrollBar.changeHandler=new Laya.Handler(this,this.getListPos);
 
@@ -27,6 +47,8 @@ class ShoppingLog extends StoreLogUI {
         // this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
 
         this.closeBut.name = Dialog.CLOSE;
+
+        this.leftBut.visible = false;
 
         Global.addEventListener(GameEvent.SHWO_BUY_CONFIRM, this, this.showBuyConfirm);
         Global.addEventListener(GameEvent.SHWO_BUY_STATE, this, this.showBuyState);
@@ -88,15 +110,39 @@ class ShoppingLog extends StoreLogUI {
                 if (this.now_index < 0) {
                     this.now_index = 0;
                 }
+
+                if (this.now_index == 0) {
+                    this.leftBut.visible = false;
+                } else {
+                    this.leftBut.visible = true;
+                }
+                if (this.now_index == 20) {
+                    this.rightBut.visible = false;
+                } else {
+                    this.rightBut.visible = true;
+                }
+
                 this.m_list.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
                 break;
             case 'right':
                 this.scrollPage += 1;
                 this.now_index += indexItem;
-                if (this.now_index > 12) {
-                    this.now_index = 12;
+                if (this.now_index > 20) {
+                    this.now_index = 20;
                 }
+
+                if (this.now_index == 0) {
+                    this.leftBut.visible = false;
+                } else {
+                    this.leftBut.visible = true;
+                }
+                if (this.now_index == 20) {
+                    this.rightBut.visible = false;
+                } else {
+                    this.rightBut.visible = true;
+                }
+
                 this.m_list.tweenTo(this.now_index, 300)
                 // this.m_list.page += 1;
                 break;
@@ -112,6 +158,9 @@ class ShoppingLog extends StoreLogUI {
     }
 
     private selectHandle(selectIdex) {
+        if (selectIdex > 21)
+            return;//后两个item点击不作处理
+
         for (var i: number = 0; i < this.itemArr.length; i++) {
             this.itemArr[i].selectedBg.visible = false;
         }
@@ -123,23 +172,45 @@ class ShoppingLog extends StoreLogUI {
     }
 
     private updateInfoText(selectIdex) {
-        // var item:any=this.itemArr[selectIdex];
-        var text: string = '食物' + selectIdex.toString();
-        this.titleInfo.changeText(text);
+        var type = this.storeData[selectIdex].type
+        var text: string = ''
+
+        switch (type) {
+            case 1:
+                text = '食物';
+                break;
+            case 2:
+                text = '道具';
+                break;
+            case 3:
+                text = '幸运物';
+                break;
+        }
+
+        var t_text: string = text + '：' + this.storeData[selectIdex].name;
+        this.titleInfo.changeText(t_text);
+        this.descText1.changeText(this.storeData[selectIdex].desc1);
+        this.descText2.changeText(this.storeData[selectIdex].desc2);
+
     }
 
     private showBuyConfirm() {
-        var nameText: string = this.titleInfo.text;
-        this.buyConfirmLog.setInfo(nameText);
+        var index: number = this.m_list.selectedIndex
+        var _name: string = this.storeData[index].name;
+        var _price: string = this.storeData[index].price;
+
+        var infoText: string = "确定花费" + _price + '铜钱购买' + _name + '？';
+        this.buyConfirmLog.setInfo(infoText);
 
         this.buyConfirmLog.visible = true;
         this.buyConfirmLog.popup();
     }
 
     private showBuyState() {
-        var nameText: string = this.titleInfo.text;
-        GameEvent.LOG_info='购买成功'+nameText;
-        GameEvent.LOG_name='Info'
+        var nameText: string = this.storeData[this.m_list.selectedIndex].name;
+        GameEvent.LOG_info = '你获得了' + nameText;
+        GameEvent.LOG_name = 'Info'
+        GameEvent.LOG_url = 'storeItem/'+this.storeData[this.m_list.selectedIndex].res+'.png'
         Global.dispatchEvent(GameEvent.SHOW_LOG);
     }
 }

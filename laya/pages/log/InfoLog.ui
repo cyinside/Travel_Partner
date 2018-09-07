@@ -2,7 +2,7 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":1,
-    "selecteID":3,
+    "selecteID":4,
     "props":{"width":750,"sceneColor":"#000000","runtime":"infoLog","height":200},
     "nodeParent":-1,
     "label":"Dialog",
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"skin":"settingLog/inputInfLog.png"},
+            "props":{"y":0,"x":0,"width":750,"skin":"settingLog/inputInfLog.png","sizeGrid":"29,0,28,0","height":200},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -28,13 +28,26 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":100,"x":375,"width":360,"var":"infoText","text":"信息信息信息信息信息信息","pivotY":15,"pivotX":180,"height":30,"fontSize":30,"font":"Microsoft YaHei","color":"#56361f","align":"center"},
+            "props":{"y":100,"x":358,"width":360,"var":"infoText","text":"信息信息信息信息","pivotY":15,"pivotX":180,"height":30,"fontSize":30,"font":"Microsoft YaHei","color":"#56361f","align":"center"},
             "nodeParent":1,
             "label":"Label(infoText)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":3,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":23,"x":480,"var":"roleImg","skin":"storeItem/icon_food_03.png","scaleY":0.8,"scaleX":0.8},
+            "nodeParent":1,
+            "label":"Image(roleImg)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":4,
             "child":[
                 ]
         }],

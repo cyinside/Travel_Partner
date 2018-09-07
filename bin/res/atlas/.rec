@@ -78,6 +78,10 @@ R 72EA2A40 picBg.png
 P 351F5398 picBg_min.png
 P 54C4E1C7 picTitle.png
 R 27291705 testPic.png
+D prepareLog
+P 9373D360 addIcon.png
+R 7ED35058 bagBg.png
+R B04DB516 tableBg.png
 D settingLog
 P DCD5E630 btn_1.png
 P 59567EF5 btn_2.png
@@ -90,7 +94,7 @@ P D579BC3C closeBut.png
 P FAA87A84 face.png
 P 7FF61DEF helpBut.png
 P A65C1469 inputBg.png
-R 8426869A inputInfLog.png
+R 7D040704 inputInfLog.png
 P 2F314B08 line1.png
 P C2EF750A logBg2.png
 R 6C0EF88E settingLogBg.png
@@ -100,9 +104,34 @@ P 282EB43C itemBg1.png
 P 5D4995B9 itemBg2.png
 P 952683B7 itemInfobg.png
 P 7D5A0DDE leftBut.png
+P CD31C802 priceBg.png
 P 3D60E48D rightBut.png
 P E123396E selectdBg.png
 P B42FF913 store.png
+D storeItem
+P 3FAC2C15 icon_boat_01.png
+P 00C5A84E icon_boat_02.png
+P 4DEDB285 icon_boat_03.png
+P 8D8561FD icon_boat_04.png
+P FDA28B3D icon_box_01.png
+P A7E1525B icon_box_02.png
+P 1F6BFFFF icon_food_01.png
+P 920002EE icon_food_02.png
+P BC9C1A28 icon_food_03.png
+P C801FB8F icon_food_04.png
+P C9E63597 icon_hat_01.png
+P D5589A02 icon_hat_02.png
+P 33688E8B icon_hat_03.png
+P 4A1BC365 icon_hat_04.png
+P 91995672 icon_light_01.png
+P 3A8AD910 icon_light_02.png
+P 68176975 icon_light_03.png
+P BFFC189D icon_light_04.png
+P B706C525 icon_lucky_02.png
+P 2B9F96CD icon_neck_01.png
+P FEF291B3 icon_neck_02.png
+P DAED4674 icon_neck_03.png
+P 7F975E16 icon_neck_04.png
 D wave
 P E386D750 wave1.png
 P 4A0C40C5 wave2.png

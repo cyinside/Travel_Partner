@@ -42,6 +42,7 @@ class MainScene extends MainSceneUI {
         // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         this.on(Laya.Event.CLICK, this, this.touchHandle);
     }
+
     private touchHandle(e: Laya.Event) {
         switch (e.target) {
             case this.indoorRect:

@@ -9,6 +9,7 @@ var GameData = /** @class */ (function () {
     };
     GameData._instance = null;
     GameData.userName = '一共7个字字字';
+    GameData.storeDataArr = [];
     return GameData;
 }());
 //# sourceMappingURL=GameData.js.map

@@ -23,11 +23,19 @@ var infoLog = /** @class */ (function (_super) {
     };
     infoLog.prototype.showInfo = function (text) {
         this.infoText.changeText(text);
-        this.infoText.x = this.width / 2;
+        if (GameEvent.LOG_url != '') {
+            this.roleImg.skin = GameEvent.LOG_url;
+            this.infoText.x = 358;
+            GameEvent.LOG_url = '';
+        }
+        else {
+            this.roleImg.skin = '';
+            this.infoText.x = this.width / 2;
+        }
         this.visible = true;
         this.popup();
         if (this.isPopup)
-            Laya.timer.once(2000, this, function () {
+            Laya.timer.once(2500, this, function () {
                 this.close();
             });
     };

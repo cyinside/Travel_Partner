@@ -9,6 +9,7 @@ class LogView extends LogViewUI {
         this.settingLog.closeHandler = new Laya.Handler(this, this.closeHandle);
         this.storeLog.closeHandler = new Laya.Handler(this, this.closeHandle);
         this.pictureLog.closeHandler = new Laya.Handler(this, this.closeHandle);
+        this.prepareLog.closeHandler = new Laya.Handler(this, this.closeHandle);
     }
 
     private closeHandle() {
@@ -35,7 +36,10 @@ class LogView extends LogViewUI {
             case 'Info':
                 this.infoLog.showInfo(GameEvent.LOG_info);
                 break;
-
+            case 'Prepare':
+                this.prepareLog.visible = true;
+                this.prepareLog.popup();
+                break;
         }
     }
 }

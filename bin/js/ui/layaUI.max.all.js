@@ -115,9 +115,10 @@ var ui;
             LogViewUI.prototype.createChildren = function () {
                 View.regComponent("LogView", LogView);
                 View.regComponent("SettingLog", SettingLog);
-                View.regComponent("ShoppingLog", ShoppingLog);
+                View.regComponent("StoreLog", StoreLog);
                 View.regComponent("PictureLog", PictureLog);
                 View.regComponent("infoLog", infoLog);
+                View.regComponent("PrepareLog", PrepareLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("log/LogView");
             };
@@ -208,6 +209,27 @@ var ui;
             }(Dialog));
             picture.PictureLogUI = PictureLogUI;
         })(picture = log.picture || (log.picture = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var prepare;
+        (function (prepare) {
+            var PrepareLogUI = /** @class */ (function (_super) {
+                __extends(PrepareLogUI, _super);
+                function PrepareLogUI() {
+                    return _super.call(this) || this;
+                }
+                PrepareLogUI.prototype.createChildren = function () {
+                    View.regComponent("PrepareLog", PrepareLog);
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/prepare/PrepareLog");
+                };
+                return PrepareLogUI;
+            }(Dialog));
+            prepare.PrepareLogUI = PrepareLogUI;
+        })(prepare = log.prepare || (log.prepare = {}));
     })(log = ui.log || (ui.log = {}));
 })(ui || (ui = {}));
 (function (ui) {
@@ -325,7 +347,7 @@ var ui;
                     return _super.call(this) || this;
                 }
                 StoreLogUI.prototype.createChildren = function () {
-                    View.regComponent("ShoppingLog", ShoppingLog);
+                    View.regComponent("StoreLog", StoreLog);
                     View.regComponent("ListItem", ListItem);
                     View.regComponent("BuyConfirmLog", BuyConfirmLog);
                     _super.prototype.createChildren.call(this);

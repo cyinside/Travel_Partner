@@ -2,8 +2,8 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":1,
-    "selecteID":22,
-    "props":{"width":700,"sceneColor":"#000000","runtime":"ShoppingLog","mouseEnabled":true,"height":1000,"cacheAsBitmap":true},
+    "selecteID":23,
+    "props":{"width":700,"sceneColor":"#000000","runtime":"StoreLog","mouseEnabled":true,"height":1000,"cacheAsBitmap":true},
     "nodeParent":-1,
     "label":"Dialog",
     "isOpen":true,
@@ -67,7 +67,7 @@
         {
             "x":15,
             "type":"List",
-            "props":{"y":160,"x":87,"width":549,"var":"m_list","spaceY":10,"spaceX":15,"selectEnable":true,"repeatY":2,"repeatX":7,"renderType":"render","mouseEnabled":true,"height":540,"hScrollBarSkin":"comp/hscroll.png"},
+            "props":{"y":160,"x":87,"width":549,"var":"m_list","spaceY":10,"spaceX":15,"selectEnable":true,"repeatY":2,"repeatX":11,"renderType":"render","mouseEnabled":true,"height":540,"hScrollBarSkin":"comp/hscroll.png"},
             "nodeParent":1,
             "label":"List(m_list)",
             "isOpen":true,
@@ -133,7 +133,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":770,"x":138,"width":379,"var":"titleInfo","text":"这里是介绍","height":44,"fontSize":22,"font":"Microsoft YaHei","color":"#56361f","bold":true},
+            "props":{"y":770,"x":138,"width":379,"var":"titleInfo","height":44,"fontSize":22,"font":"Microsoft YaHei","color":"#56361f","bold":true},
             "nodeParent":1,
             "label":"Label(titleInfo)",
             "isDirectory":false,
@@ -146,13 +146,26 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":836,"x":137,"wordWrap":true,"width":379,"valign":"middle","text":"这里是介绍这里是介绍这里是介绍这里是介绍这里是介绍","leading":35,"height":80,"fontSize":22,"font":"Microsoft YaHei","color":"#af9970","bold":false},
+            "props":{"y":836,"x":137,"wordWrap":false,"width":438,"var":"descText1","valign":"middle","leading":35,"height":36,"fontSize":22,"font":"Microsoft YaHei","color":"#af9970","bold":false},
             "nodeParent":1,
-            "label":"Label",
+            "label":"Label(descText1)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":19,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Label",
+            "props":{"y":896,"x":137,"wordWrap":false,"width":438,"var":"descText2","valign":"middle","leading":35,"height":36,"fontSize":22,"font":"Microsoft YaHei","color":"#af9970","bold":false},
+            "nodeParent":1,
+            "label":"Label(descText2)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":22,
             "child":[
                 ]
         },

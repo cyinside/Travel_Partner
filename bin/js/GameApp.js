@@ -47,6 +47,7 @@ var GameMain = /** @class */ (function () {
         // console.log("加载进度: " + progress);
     };
     GameMain.prototype.onCreateScene = function (id) {
+        DataModel.getInstance().DataConfig();
         if (Laya.stage.contains(this.LoadView)) {
             Laya.stage.removeChild(this.LoadView);
             this.LoadView.visible = false;
@@ -60,8 +61,6 @@ var GameMain = /** @class */ (function () {
         this.logView = new LogView;
         this.logView.visible = false;
         Laya.stage.addChild(this.logView);
-        // var jsonData = Laya.Loader.getRes('res/contData.json');
-        // console.log(jsonData['giftInfo'][0].desc);
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
         // SceneEvent.sceneID = 1;

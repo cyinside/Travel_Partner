@@ -7,7 +7,6 @@ class Bottom2Unit extends Bottom2UnitUI {
 
     public Bottom2UnitInit() {
         this.on(Laya.Event.CLICK, this, this.onTouchHandle)
-
     }
 
     private onTouchHandle(e: Laya.Event) {
@@ -21,7 +20,14 @@ class Bottom2Unit extends Bottom2UnitUI {
                 SceneEvent.sceneID = 1;
                 Global.dispatchEvent(SceneEvent.CHANGE_SCENE);
                 break;
-
+            case this.prepareBut:
+                GameEvent.LOG_name = 'Prepare';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                break;
+            case this.bookBut:
+                GameEvent.LOG_name = 'Picture';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                break;
         }
     }
 }

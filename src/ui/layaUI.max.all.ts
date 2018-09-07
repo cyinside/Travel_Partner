@@ -73,6 +73,7 @@ module ui.indoor {
 module ui.log {
     export class InfoLogUI extends Dialog {
 		public infoText:Laya.Label;
+		public roleImg:Laya.Image;
 
         constructor(){ super()}
         createChildren():void {
@@ -89,17 +90,19 @@ module ui.log {
 module ui.log {
     export class LogViewUI extends View {
 		public settingLog:SettingLog;
-		public storeLog:ShoppingLog;
+		public storeLog:StoreLog;
 		public pictureLog:PictureLog;
 		public infoLog:infoLog;
+		public prepareLog:PrepareLog;
 
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("LogView",LogView);
 			View.regComponent("SettingLog",SettingLog);
-			View.regComponent("ShoppingLog",ShoppingLog);
+			View.regComponent("StoreLog",StoreLog);
 			View.regComponent("PictureLog",PictureLog);
 			View.regComponent("infoLog",infoLog);
+			View.regComponent("PrepareLog",PrepareLog);
 
             super.createChildren();
             this.loadUI("log/LogView");
@@ -176,6 +179,27 @@ module ui.log.picture {
 
             super.createChildren();
             this.loadUI("log/picture/PictureLog");
+
+        }
+
+    }
+}
+
+module ui.log.prepare {
+    export class PrepareLogUI extends Dialog {
+		public bgPanel:Laya.Panel;
+		public bgBox:Laya.Box;
+		public bagAera:Laya.Image;
+		public tableArea:Laya.Image;
+		public leftBut:Laya.Image;
+		public rightBut:Laya.Image;
+
+        constructor(){ super()}
+        createChildren():void {
+        			View.regComponent("PrepareLog",PrepareLog);
+
+            super.createChildren();
+            this.loadUI("log/prepare/PrepareLog");
 
         }
 
@@ -267,7 +291,9 @@ module ui.log.store {
     export class ListItemUI extends View {
 		public selectedBg:Laya.Image;
 		public itemBg:Laya.Image;
+		public itemImg:Laya.Image;
 		public m_label:Laya.Label;
+		public priceText:Laya.Label;
 
         constructor(){ super()}
         createChildren():void {
@@ -288,12 +314,14 @@ module ui.log.store {
 		public leftBut:Laya.Button;
 		public rightBut:Laya.Button;
 		public titleInfo:Laya.Label;
+		public descText1:Laya.Label;
+		public descText2:Laya.Label;
 		public closeBut:Laya.Image;
 		public buyConfirmLog:BuyConfirmLog;
 
         constructor(){ super()}
         createChildren():void {
-        			View.regComponent("ShoppingLog",ShoppingLog);
+        			View.regComponent("StoreLog",StoreLog);
 			View.regComponent("ListItem",ListItem);
 			View.regComponent("BuyConfirmLog",BuyConfirmLog);
 

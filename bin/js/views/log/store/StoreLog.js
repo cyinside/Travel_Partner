@@ -12,29 +12,43 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var StoreLogUI = ui.log.store.StoreLogUI;
-var ShoppingLog = /** @class */ (function (_super) {
-    __extends(ShoppingLog, _super);
-    function ShoppingLog() {
+var StoreLog = /** @class */ (function (_super) {
+    __extends(StoreLog, _super);
+    function StoreLog() {
         var _this = _super.call(this) || this;
         _this.itemArr = _this.m_list.cells;
+        _this.storeData = GameData.storeDataArr["prop"];
         _this.b_X = 0;
         _this.e_X = 0;
         _this.scrollPage = 0;
         _this.now_index = 0;
-        _this.shoppingLogInit();
+        _this.StoreLogInit();
         return _this;
     }
-    ShoppingLog.prototype.shoppingLogInit = function () {
+    StoreLog.prototype.StoreLogInit = function () {
         this.m_list.scrollBar.hide = true; //隐藏列表的滚动条。
-        this.m_list.scrollBar.elasticBackTime = 200; //设置橡皮筋回弹时间。单位为毫秒。
-        this.m_list.scrollBar.elasticDistance = 30; //设置橡皮筋极限距离。
+        // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
+        // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
         this.m_list.cacheContent = true;
         this.m_list.scrollBar.rollRatio = 0.8;
+        var _imgUrl = '';
         for (var m = 0; m < this.itemArr.length; m++) {
-            this.itemArr[m].m_label.text = 'NO.' + m.toString();
+            if (m < 22) {
+                this.itemArr[m].priceText.text = this.storeData[m].price;
+                this.itemArr[m].m_label.text = this.storeData[m].name;
+                _imgUrl = 'storeItem/' + this.storeData[m].res + '.png';
+                this.itemArr[m].itemImg.skin = _imgUrl;
+                if (this.storeData[m].type == 1) {
+                    this.itemArr[m].itemBg.skin = 'store/itemBg1.png';
+                }
+            }
+            if (m > 21) {
+                this.itemArr[m].alpha = 0;
+            } // 隐藏最后两个多出item
         }
         this.m_list.array = this.itemArr;
-        this.m_list.refresh();
+        this.selectHandle(0); //默认选中;
+        // this.m_list.refresh();
         this.on(Laya.Event.CLICK, this, this.touchHandle);
         // this.m_list.scrollBar.changeHandler=new Laya.Handler(this,this.getListPos);
         this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
@@ -42,14 +56,15 @@ var ShoppingLog = /** @class */ (function (_super) {
         this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
         // this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
         this.closeBut.name = Dialog.CLOSE;
+        this.leftBut.visible = false;
         Global.addEventListener(GameEvent.SHWO_BUY_CONFIRM, this, this.showBuyConfirm);
         Global.addEventListener(GameEvent.SHWO_BUY_STATE, this, this.showBuyState);
     };
-    ShoppingLog.prototype.touchBegin = function (e) {
+    StoreLog.prototype.touchBegin = function (e) {
         this.b_X = e.stageX;
         // console.log('b:' + this.b_X)
     };
-    ShoppingLog.prototype.touchEnd = function (e) {
+    StoreLog.prototype.touchEnd = function (e) {
         this.e_X = e.stageX;
         // console.log('e:' + this.e_X)
         this.dragHandle();
@@ -60,7 +75,7 @@ var ShoppingLog = /** @class */ (function (_super) {
     //     // console.log('e:' + this.e_X)
     //     this.dragHandle()
     // }
-    ShoppingLog.prototype.dragHandle = function () {
+    StoreLog.prototype.dragHandle = function () {
         var _dis = this.e_X - this.b_X;
         if (_dis > 0 && _dis > 5) {
             // console.log('left');
@@ -71,7 +86,7 @@ var ShoppingLog = /** @class */ (function (_super) {
             this.tweenPage('right');
         }
     };
-    ShoppingLog.prototype.touchHandle = function (e) {
+    StoreLog.prototype.touchHandle = function (e) {
         var _target = e.target;
         switch (_target) {
             case this.rightBut:
@@ -83,7 +98,7 @@ var ShoppingLog = /** @class */ (function (_super) {
                 break;
         }
     };
-    ShoppingLog.prototype.tweenPage = function (side) {
+    StoreLog.prototype.tweenPage = function (side) {
         var indexItem = 4;
         switch (side) {
             case 'left':
@@ -92,28 +107,54 @@ var ShoppingLog = /** @class */ (function (_super) {
                 if (this.now_index < 0) {
                     this.now_index = 0;
                 }
+                if (this.now_index == 0) {
+                    this.leftBut.visible = false;
+                }
+                else {
+                    this.leftBut.visible = true;
+                }
+                if (this.now_index == 20) {
+                    this.rightBut.visible = false;
+                }
+                else {
+                    this.rightBut.visible = true;
+                }
                 this.m_list.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
                 break;
             case 'right':
                 this.scrollPage += 1;
                 this.now_index += indexItem;
-                if (this.now_index > 12) {
-                    this.now_index = 12;
+                if (this.now_index > 20) {
+                    this.now_index = 20;
+                }
+                if (this.now_index == 0) {
+                    this.leftBut.visible = false;
+                }
+                else {
+                    this.leftBut.visible = true;
+                }
+                if (this.now_index == 20) {
+                    this.rightBut.visible = false;
+                }
+                else {
+                    this.rightBut.visible = true;
                 }
                 this.m_list.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
                 break;
         }
     };
-    ShoppingLog.prototype.getListPos = function (num) {
+    StoreLog.prototype.getListPos = function (num) {
         console.log(num);
         if (num > 300) {
             this.m_list.tweenTo(4, 300);
         }
         // console.log(this.m_list.totalPage)
     };
-    ShoppingLog.prototype.selectHandle = function (selectIdex) {
+    StoreLog.prototype.selectHandle = function (selectIdex) {
+        if (selectIdex > 21)
+            return; //后两个item点击不作处理
         for (var i = 0; i < this.itemArr.length; i++) {
             this.itemArr[i].selectedBg.visible = false;
         }
@@ -122,23 +163,41 @@ var ShoppingLog = /** @class */ (function (_super) {
         item.selectedBg.visible = true;
         this.updateInfoText(selectIdex);
     };
-    ShoppingLog.prototype.updateInfoText = function (selectIdex) {
-        // var item:any=this.itemArr[selectIdex];
-        var text = '食物' + selectIdex.toString();
-        this.titleInfo.changeText(text);
+    StoreLog.prototype.updateInfoText = function (selectIdex) {
+        var type = this.storeData[selectIdex].type;
+        var text = '';
+        switch (type) {
+            case 1:
+                text = '食物';
+                break;
+            case 2:
+                text = '道具';
+                break;
+            case 3:
+                text = '幸运物';
+                break;
+        }
+        var t_text = text + '：' + this.storeData[selectIdex].name;
+        this.titleInfo.changeText(t_text);
+        this.descText1.changeText(this.storeData[selectIdex].desc1);
+        this.descText2.changeText(this.storeData[selectIdex].desc2);
     };
-    ShoppingLog.prototype.showBuyConfirm = function () {
-        var nameText = this.titleInfo.text;
-        this.buyConfirmLog.setInfo(nameText);
+    StoreLog.prototype.showBuyConfirm = function () {
+        var index = this.m_list.selectedIndex;
+        var _name = this.storeData[index].name;
+        var _price = this.storeData[index].price;
+        var infoText = "确定花费" + _price + '铜钱购买' + _name + '？';
+        this.buyConfirmLog.setInfo(infoText);
         this.buyConfirmLog.visible = true;
         this.buyConfirmLog.popup();
     };
-    ShoppingLog.prototype.showBuyState = function () {
-        var nameText = this.titleInfo.text;
-        GameEvent.LOG_info = '购买成功' + nameText;
+    StoreLog.prototype.showBuyState = function () {
+        var nameText = this.storeData[this.m_list.selectedIndex].name;
+        GameEvent.LOG_info = '你获得了' + nameText;
         GameEvent.LOG_name = 'Info';
+        GameEvent.LOG_url = 'storeItem/' + this.storeData[this.m_list.selectedIndex].res + '.png';
         Global.dispatchEvent(GameEvent.SHOW_LOG);
     };
-    return ShoppingLog;
+    return StoreLog;
 }(StoreLogUI));
 //# sourceMappingURL=StoreLog.js.map

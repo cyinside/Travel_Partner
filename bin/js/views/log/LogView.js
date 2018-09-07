@@ -23,6 +23,7 @@ var LogView = /** @class */ (function (_super) {
         this.settingLog.closeHandler = new Laya.Handler(this, this.closeHandle);
         this.storeLog.closeHandler = new Laya.Handler(this, this.closeHandle);
         this.pictureLog.closeHandler = new Laya.Handler(this, this.closeHandle);
+        this.prepareLog.closeHandler = new Laya.Handler(this, this.closeHandle);
     };
     LogView.prototype.closeHandle = function () {
         console.log('close');
@@ -46,6 +47,10 @@ var LogView = /** @class */ (function (_super) {
                 break;
             case 'Info':
                 this.infoLog.showInfo(GameEvent.LOG_info);
+                break;
+            case 'Prepare':
+                this.prepareLog.visible = true;
+                this.prepareLog.popup();
                 break;
         }
     };

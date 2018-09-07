@@ -33,6 +33,14 @@ var Bottom2Unit = /** @class */ (function (_super) {
                 SceneEvent.sceneID = 1;
                 Global.dispatchEvent(SceneEvent.CHANGE_SCENE);
                 break;
+            case this.prepareBut:
+                GameEvent.LOG_name = 'Prepare';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                break;
+            case this.bookBut:
+                GameEvent.LOG_name = 'Picture';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                break;
         }
     };
     return Bottom2Unit;

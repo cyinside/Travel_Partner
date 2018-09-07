@@ -15,6 +15,7 @@ var GameEvent = /** @class */ (function () {
     GameEvent.SAVE_PIC_COMP = 'save_pic_comp';
     GameEvent.LOG_name = '';
     GameEvent.LOG_info = '';
+    GameEvent.LOG_url = '';
     return GameEvent;
 }());
 //# sourceMappingURL=GameEvent.js.map
