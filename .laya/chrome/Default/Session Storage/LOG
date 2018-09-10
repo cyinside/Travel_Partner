@@ -1,6 +1,42 @@
-2018/09/06-14:28:45.286 29955 Reusing MANIFEST /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/MANIFEST-000001
-2018/09/06-14:28:45.286 29955 Recovering log #12
-2018/09/06-14:28:45.288 29955 Reusing old log /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/000012.log 
-2018/09/06-15:56:58.974 173387 Level-0 table #16: started
-2018/09/06-15:56:58.975 173387 Level-0 table #16: 17921 bytes OK
-2018/09/06-15:56:58.976 173387 Delete type=0 #12
+2018/09/10-09:57:58.652 32003 Reusing MANIFEST /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/MANIFEST-000001
+2018/09/10-09:57:58.652 32003 Recovering log #15
+2018/09/10-09:57:58.653 32003 Reusing old log /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/000015.log 
+2018/09/10-10:07:44.449 123303 Level-0 table #19: started
+2018/09/10-10:07:44.454 123303 Level-0 table #19: 23597 bytes OK
+2018/09/10-10:07:44.454 123303 Delete type=0 #15
+2018/09/10-10:07:44.455 123303 Compacting 4@0 + 1@1 files
+2018/09/10-10:07:44.458 123303 Generated table #20@0: 983 keys, 35766 bytes
+2018/09/10-10:07:44.458 123303 Compacted 4@0 + 1@1 files => 35766 bytes
+2018/09/10-10:07:44.459 123303 compacted to: files[ 0 1 1 0 0 0 0 ]
+2018/09/10-10:07:44.459 123303 Delete type=2 #16
+2018/09/10-10:07:44.459 123303 Delete type=2 #13
+2018/09/10-10:07:44.459 123303 Delete type=2 #10
+2018/09/10-10:07:44.459 123303 Delete type=2 #8
+2018/09/10-10:07:44.459 123303 Delete type=2 #19
+2018/09/10-10:24:16.001 123303 Level-0 table #22: started
+2018/09/10-10:24:16.002 123303 Level-0 table #22: 19703 bytes OK
+2018/09/10-10:24:16.003 123303 Delete type=0 #18
+2018/09/10-12:09:23.663 123303 Level-0 table #24: started
+2018/09/10-12:09:23.664 123303 Level-0 table #24: 21499 bytes OK
+2018/09/10-12:09:23.666 123303 Delete type=0 #21
+2018/09/10-14:40:25.332 123303 Level-0 table #26: started
+2018/09/10-14:40:25.333 123303 Level-0 table #26: 22572 bytes OK
+2018/09/10-14:40:25.334 123303 Delete type=0 #23
+2018/09/10-18:22:41.416 123303 Level-0 table #28: started
+2018/09/10-18:22:41.417 123303 Level-0 table #28: 37015 bytes OK
+2018/09/10-18:22:41.420 123303 Delete type=0 #25
+2018/09/10-18:22:41.421 123303 Compacting 4@0 + 1@1 files
+2018/09/10-18:22:41.425 123303 Generated table #29@0: 1443 keys, 58784 bytes
+2018/09/10-18:22:41.425 123303 Compacted 4@0 + 1@1 files => 58784 bytes
+2018/09/10-18:22:41.427 123303 compacted to: files[ 0 1 1 0 0 0 0 ]
+2018/09/10-18:22:41.427 123303 Delete type=2 #28
+2018/09/10-18:22:41.428 123303 Delete type=2 #20
+2018/09/10-18:22:41.431 123303 Delete type=2 #22
+2018/09/10-18:22:41.433 123303 Delete type=2 #26
+2018/09/10-18:22:41.434 123303 Delete type=2 #24
+2018/09/10-18:24:59.465 123303 Level-0 table #31: started
+2018/09/10-18:24:59.466 123303 Level-0 table #31: 35273 bytes OK
+2018/09/10-18:24:59.468 123303 Delete type=0 #27
+2018/09/10-19:02:30.323 123303 Level-0 table #33: started
+2018/09/10-19:02:30.324 123303 Level-0 table #33: 17481 bytes OK
+2018/09/10-19:02:30.326 123303 Delete type=0 #30

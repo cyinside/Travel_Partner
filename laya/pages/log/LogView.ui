@@ -30,7 +30,7 @@
             "x":15,
             "type":"UIView",
             "source":"log/store/StoreLog.ui",
-            "props":{"y":3,"x":636,"visible":false,"var":"storeLog","runtime":"StoreLog","popupCenter":true,"mouseEnabled":true,"cacheAsBitmap":true},
+            "props":{"y":3,"x":636,"visible":false,"var":"storeLog","runtime":"StoreLog1","popupCenter":true,"mouseEnabled":true,"cacheAsBitmap":false},
             "nodeParent":1,
             "label":"UIView(storeLog)",
             "isDirectory":false,

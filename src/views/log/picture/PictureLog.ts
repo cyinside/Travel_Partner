@@ -5,13 +5,27 @@ class PictureLog extends PictureLogUI {
         this.pictureLogInit();
     }
 
-    private itemArr: Array<any> = this.m_list.cells;
+    private itemArr: Array<any> = [];
     private pictureLogInit() {
         this.m_list.scrollBar.hide = true;//隐藏列表的滚动条。
-        this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
-        this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
+        // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
+        // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
         this.m_list.cacheContent = true;
+
         this.m_list.scrollBar.rollRatio = 0.8;
+
+        this.m_list.itemRender = PicItem;
+        // this.m_list.repeatX = 1;
+        // this.m_list.repeatY = 3;
+        this.m_list.spaceX=12;
+        this.m_list.spaceY=12;
+
+        for (var i: number = 0; i < GameData.picDataArr.length; i++) {
+            var item:Object = {
+                id:i
+            }
+            this.itemArr.push(item);
+        }
 
         this.m_list.array = this.itemArr;
         this.m_list.refresh();
@@ -23,8 +37,8 @@ class PictureLog extends PictureLogUI {
 
         this.closeBut.name = Dialog.CLOSE;
 
-        Global.addEventListener(GameEvent.SHOW_DELPIC_CONFIRM,this,this.showDelCon);
-        Global.addEventListener(GameEvent.SAVE_PIC_COMP,this,this.showStateInfo);
+        Global.addEventListener(GameEvent.SHOW_DELPIC_CONFIRM, this, this.showDelCon);
+        Global.addEventListener(GameEvent.SAVE_PIC_COMP, this, this.showStateInfo);
     }
 
     private b_X: number = 0;
@@ -100,20 +114,20 @@ class PictureLog extends PictureLogUI {
         this.picInfo.popup();
     }
 
-    private showDelCon(){
-        this.picDelConfrom.visible=true;
+    private showDelCon() {
+        this.picDelConfrom.visible = true;
         this.picDelConfrom.popup();
     }
 
-    private showStateInfo(){
+    private showStateInfo() {
         // this.infoLog.infoText.changeText('保存成功');
         // this.infoLog.visible=true;
         // this.infoLog.popup();
 
         // this.infoLog.showInfo('保存成功')
 
-        GameEvent.LOG_info='保存成功';
-        GameEvent.LOG_name='Info'
+        GameEvent.LOG_info = '保存成功';
+        GameEvent.LOG_name = 'Info'
         Global.dispatchEvent(GameEvent.SHOW_LOG);
     }
 

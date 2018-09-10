@@ -57,8 +57,8 @@ P 8099B4D7 btn_book.png
 P B323DABF btn_mousic.png
 P C824C6A0 btn_setting.png
 P 579F4989 btn_test.png
-P 06B22957 coin1.png
-P C6C31C29 coin2.png
+P EBFC5F4F coin1.png
+P 7057296F coin2.png
 P A20F64F8 coin3.png
 P BA4924BC coinBg.png
 P 90A00208 coinIcon.png
@@ -70,6 +70,12 @@ P CFB7B81F outsideBut.png
 P 4D7327C7 prepareBut.png
 P D3571397 storeBut.png
 P E4DD7E64 warnTip.png
+D load
+P B1808398 loadBar.png
+P B169FA56 loadBarBg.png
+R ADAADAE2 LoadBg.jpg
+P E7D52980 roleIcon1.png
+P ED000FF6 roleIcon2.png
 D pictureLog
 P E5EA42C8 btn_delPic.png
 P 6902C1B4 btn_savePic.png

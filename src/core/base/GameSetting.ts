@@ -12,9 +12,11 @@ class GameSetting {
     // public static res_url:'oss://weixin-trip'
 
     public static coinNumber: number = 10;
-    public static res_Arr: Array<any> = [
-
-    ]
+    public static res_Arr: Array<any> = []
+    public static load_res_Arr: Array<any> = [
+        { url: "res/atlas/load.atlas", type: Laya.Loader.ATLAS },
+        { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
+    ];
 
     public setRes() {
         var res_v: string = GameConfig.res_Type.toString() + 'x';
@@ -31,7 +33,9 @@ class GameSetting {
             { url: "res/atlas/fire.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/pictureLog.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/storeItem.atlas", type: Laya.Loader.ATLAS },
-            {url:'res/storeData.json',type:Laya.Loader.JSON},
+
+            { url: 'res/storeData.json', type: Laya.Loader.JSON },
+
             { url: 'main/BottomUnit.json', type: Laya.Loader.JSON },
             { url: 'main/MainScene.json', type: Laya.Loader.JSON },
             { url: 'main/TopUnit.json', type: Laya.Loader.JSON },
@@ -41,6 +45,7 @@ class GameSetting {
             { url: 'log/InfoLog.json', type: Laya.Loader.JSON },
             { url: 'log/store/StoreLog.json', type: Laya.Loader.JSON },
             { url: 'log/store/ListItem.json', type: Laya.Loader.JSON },
+            { url: 'log/store/StoreItemGroup.json', type: Laya.Loader.JSON },
             { url: 'log/store/BuyConfirmLog.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicDelConfrom.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicInfo.json', type: Laya.Loader.JSON },
@@ -54,8 +59,6 @@ class GameSetting {
             { url: 'indoor/IndoorScene.json', type: Laya.Loader.JSON },
             { url: 'indoor/FireAni.json', type: Laya.Loader.JSON },
             { url: 'log/LogView.json', type: Laya.Loader.JSON },
-            { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
-
 
             { url: 'music.mp3', type: Laya.Loader.SOUND }
         ]

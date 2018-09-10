@@ -16,7 +16,7 @@ var PictureLog = /** @class */ (function (_super) {
     __extends(PictureLog, _super);
     function PictureLog() {
         var _this = _super.call(this) || this;
-        _this.itemArr = _this.m_list.cells;
+        _this.itemArr = [];
         _this.b_X = 0;
         _this.e_X = 0;
         _this.scrollPage = 0;
@@ -27,10 +27,21 @@ var PictureLog = /** @class */ (function (_super) {
     }
     PictureLog.prototype.pictureLogInit = function () {
         this.m_list.scrollBar.hide = true; //隐藏列表的滚动条。
-        this.m_list.scrollBar.elasticBackTime = 200; //设置橡皮筋回弹时间。单位为毫秒。
-        this.m_list.scrollBar.elasticDistance = 30; //设置橡皮筋极限距离。
+        // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
+        // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
         this.m_list.cacheContent = true;
         this.m_list.scrollBar.rollRatio = 0.8;
+        this.m_list.itemRender = PicItem;
+        // this.m_list.repeatX = 1;
+        // this.m_list.repeatY = 3;
+        this.m_list.spaceX = 12;
+        this.m_list.spaceY = 12;
+        for (var i = 0; i < GameData.picDataArr.length; i++) {
+            var item = {
+                id: i
+            };
+            this.itemArr.push(item);
+        }
         this.m_list.array = this.itemArr;
         this.m_list.refresh();
         this.on(Laya.Event.CLICK, this, this.touchHandle);

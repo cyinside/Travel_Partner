@@ -2,7 +2,6 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":4,
     "props":{"width":295,"sceneColor":"#000000","mouseEnabled":true,"height":236,"cacheAsBitmap":true},
     "nodeParent":-1,
     "label":"View",

@@ -115,7 +115,7 @@ var ui;
             LogViewUI.prototype.createChildren = function () {
                 View.regComponent("LogView", LogView);
                 View.regComponent("SettingLog", SettingLog);
-                View.regComponent("StoreLog", StoreLog);
+                View.regComponent("StoreLog1", StoreLog1);
                 View.regComponent("PictureLog", PictureLog);
                 View.regComponent("infoLog", infoLog);
                 View.regComponent("PrepareLog", PrepareLog);
@@ -199,7 +199,6 @@ var ui;
                 }
                 PictureLogUI.prototype.createChildren = function () {
                     View.regComponent("PictureLog", PictureLog);
-                    View.regComponent("ui.log.picture.PicItemUI", ui.log.picture.PicItemUI);
                     View.regComponent("PicInfo", PicInfo);
                     View.regComponent("PicDelConfirmLog", PicDelConfirmLog);
                     _super.prototype.createChildren.call(this);
@@ -341,15 +340,36 @@ var ui;
     (function (log) {
         var store;
         (function (store) {
+            var StoreItemGroupUI = /** @class */ (function (_super) {
+                __extends(StoreItemGroupUI, _super);
+                function StoreItemGroupUI() {
+                    return _super.call(this) || this;
+                }
+                StoreItemGroupUI.prototype.createChildren = function () {
+                    View.regComponent("ui.log.store.ListItemUI", ui.log.store.ListItemUI);
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/store/StoreItemGroup");
+                };
+                return StoreItemGroupUI;
+            }(View));
+            store.StoreItemGroupUI = StoreItemGroupUI;
+        })(store = log.store || (log.store = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var store;
+        (function (store) {
             var StoreLogUI = /** @class */ (function (_super) {
                 __extends(StoreLogUI, _super);
                 function StoreLogUI() {
                     return _super.call(this) || this;
                 }
                 StoreLogUI.prototype.createChildren = function () {
-                    View.regComponent("StoreLog", StoreLog);
-                    View.regComponent("ListItem", ListItem);
+                    View.regComponent("StoreLog1", StoreLog1);
                     View.regComponent("BuyConfirmLog", BuyConfirmLog);
+                    View.regComponent("ListItem", ListItem);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/store/StoreLog");
                 };

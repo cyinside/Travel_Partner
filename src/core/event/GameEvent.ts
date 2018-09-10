@@ -16,7 +16,7 @@ class GameEvent {
 
     public static SAVE_PIC_COMP = 'save_pic_comp';
 
-    public static LOG_name = ''
-    public static LOG_info = ''
-    public static LOG_url = ''
+    public static LOG_name = '';
+    public static LOG_info = '';
+    public static LOG_url = '';
 }

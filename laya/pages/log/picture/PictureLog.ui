@@ -2,7 +2,7 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":1,
-    "selecteID":13,
+    "selecteID":6,
     "props":{"y":0,"x":0,"width":730,"sceneColor":"#000000","runtime":"PictureLog","mouseEnabled":true,"height":1000,"cacheAsBitmap":true},
     "nodeParent":-1,
     "label":"Dialog",
@@ -67,29 +67,16 @@
         {
             "x":15,
             "type":"List",
-            "props":{"y":163,"x":57,"width":621,"var":"m_list","spaceY":10,"spaceX":10,"selectEnable":true,"repeatY":3,"repeatX":8,"renderType":"render","mouseEnabled":true,"height":775,"hScrollBarSkin":"comp/hscroll.png"},
+            "props":{"y":163,"x":61,"width":613,"var":"m_list","spaceY":10,"spaceX":10,"selectEnable":true,"renderType":"render","mouseEnabled":true,"height":775,"hScrollBarSkin":"comp/hscroll.png"},
             "nodeParent":1,
             "label":"List(m_list)",
             "isOpen":true,
-            "isDirectory":true,
+            "isDirectory":false,
             "isAniNode":true,
-            "hasChild":true,
+            "hasChild":false,
             "compId":6,
             "child":[
-                {
-                    "x":30,
-                    "type":"UIView",
-                    "source":"log/picture/PicItem.ui",
-                    "props":{"y":0,"x":10,"var":"m_item","renderType":"render","mouseEnabled":true},
-                    "nodeParent":6,
-                    "label":"UIView(m_item)",
-                    "isDirectory":false,
-                    "isAniNode":false,
-                    "hasChild":false,
-                    "compId":7,
-                    "child":[
-                        ]
-                }]
+                ]
         },
         {
             "x":15,

@@ -48,7 +48,7 @@ class StoreLog extends StoreLogUI {
 
         this.closeBut.name = Dialog.CLOSE;
 
-        this.leftBut.visible = false;
+        this.leftBut.alpha = 0;
 
         Global.addEventListener(GameEvent.SHWO_BUY_CONFIRM, this, this.showBuyConfirm);
         Global.addEventListener(GameEvent.SHWO_BUY_STATE, this, this.showBuyState);
@@ -112,14 +112,14 @@ class StoreLog extends StoreLogUI {
                 }
 
                 if (this.now_index == 0) {
-                    this.leftBut.visible = false;
+                    this.hideBut("left")
                 } else {
-                    this.leftBut.visible = true;
+                    this.showBut('left')
                 }
                 if (this.now_index == 20) {
-                    this.rightBut.visible = false;
+                    this.hideBut('right');
                 } else {
-                    this.rightBut.visible = true;
+                    this.showBut('right')
                 }
 
                 this.m_list.tweenTo(this.now_index, 300);
@@ -132,15 +132,16 @@ class StoreLog extends StoreLogUI {
                     this.now_index = 20;
                 }
 
+
                 if (this.now_index == 0) {
-                    this.leftBut.visible = false;
+                    this.hideBut("left")
                 } else {
-                    this.leftBut.visible = true;
+                    this.showBut('left')
                 }
                 if (this.now_index == 20) {
-                    this.rightBut.visible = false;
+                    this.hideBut('right');
                 } else {
-                    this.rightBut.visible = true;
+                    this.showBut('right')
                 }
 
                 this.m_list.tweenTo(this.now_index, 300)
@@ -149,6 +150,28 @@ class StoreLog extends StoreLogUI {
         }
     }
 
+    private hideBut(dir:string){
+        switch(dir){
+            case "left":
+            Laya.Tween.to(this.leftBut,{alpha:0},400,Laya.Ease.sineIn);
+            break;
+            case "right":
+            Laya.Tween.to(this.rightBut,{alpha:0},400,Laya.Ease.sineIn);
+            break;
+        }
+    }
+
+    private showBut(dir:string){
+        switch(dir){
+            case "left":
+            Laya.Tween.to(this.leftBut,{alpha:1},400,Laya.Ease.sineIn);
+            break;
+            case "right":
+            Laya.Tween.to(this.rightBut,{alpha:1},400,Laya.Ease.sineIn);
+            break;
+        }
+    }
+    
     private getListPos(num) {
         console.log(num)
         if (num > 300) {
@@ -209,8 +232,8 @@ class StoreLog extends StoreLogUI {
     private showBuyState() {
         var nameText: string = this.storeData[this.m_list.selectedIndex].name;
         GameEvent.LOG_info = '你获得了' + nameText;
-        GameEvent.LOG_name = 'Info'
-        GameEvent.LOG_url = 'storeItem/'+this.storeData[this.m_list.selectedIndex].res+'.png'
+        GameEvent.LOG_name = 'Info';
+        GameEvent.LOG_url = 'storeItem/'+this.storeData[this.m_list.selectedIndex].res+'.png';
         Global.dispatchEvent(GameEvent.SHOW_LOG);
     }
 }

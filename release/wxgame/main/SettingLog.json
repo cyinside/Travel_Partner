@@ -1,1 +1,0 @@
-{"type":"Dialog","props":{"width":500,"height":700},"child":[{"type":"Image","props":{"y":19,"x":7,"width":486,"skin":"GameScene/logBg.png","sizeGrid":"22,19,22,19","height":662}},{"type":"Label","props":{"y":320,"x":116,"text":"hahahaha","fontSize":60,"color":"#f1f1f1"}}]}

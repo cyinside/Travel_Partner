@@ -6,6 +6,7 @@ class ListItem extends ListItemUI {
     }
 
     public touchTime:number=0;
+    public item_id:string='';
     private listIteminit(){
         this.selectedBg.on(Laya.Event.CLICK,this,this.clickHandle);
     }

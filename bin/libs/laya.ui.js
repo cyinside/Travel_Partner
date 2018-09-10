@@ -5787,7 +5787,7 @@ var List=(function(_super){
 		/**@private */
 		this._page=0;
 		/**@private */
-		this._isVertical=true;
+		this._isVertical=false;
 		/**@private */
 		this._cellSize=20;
 		/**@private */

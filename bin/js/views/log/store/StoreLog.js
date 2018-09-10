@@ -56,7 +56,7 @@ var StoreLog = /** @class */ (function (_super) {
         this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
         // this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
         this.closeBut.name = Dialog.CLOSE;
-        this.leftBut.visible = false;
+        this.leftBut.alpha = 0;
         Global.addEventListener(GameEvent.SHWO_BUY_CONFIRM, this, this.showBuyConfirm);
         Global.addEventListener(GameEvent.SHWO_BUY_STATE, this, this.showBuyState);
     };
@@ -108,16 +108,16 @@ var StoreLog = /** @class */ (function (_super) {
                     this.now_index = 0;
                 }
                 if (this.now_index == 0) {
-                    this.leftBut.visible = false;
+                    this.hideBut("left");
                 }
                 else {
-                    this.leftBut.visible = true;
+                    this.showBut('left');
                 }
                 if (this.now_index == 20) {
-                    this.rightBut.visible = false;
+                    this.hideBut('right');
                 }
                 else {
-                    this.rightBut.visible = true;
+                    this.showBut('right');
                 }
                 this.m_list.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
@@ -129,19 +129,39 @@ var StoreLog = /** @class */ (function (_super) {
                     this.now_index = 20;
                 }
                 if (this.now_index == 0) {
-                    this.leftBut.visible = false;
+                    this.hideBut("left");
                 }
                 else {
-                    this.leftBut.visible = true;
+                    this.showBut('left');
                 }
                 if (this.now_index == 20) {
-                    this.rightBut.visible = false;
+                    this.hideBut('right');
                 }
                 else {
-                    this.rightBut.visible = true;
+                    this.showBut('right');
                 }
                 this.m_list.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
+                break;
+        }
+    };
+    StoreLog.prototype.hideBut = function (dir) {
+        switch (dir) {
+            case "left":
+                Laya.Tween.to(this.leftBut, { alpha: 0 }, 400, Laya.Ease.sineIn);
+                break;
+            case "right":
+                Laya.Tween.to(this.rightBut, { alpha: 0 }, 400, Laya.Ease.sineIn);
+                break;
+        }
+    };
+    StoreLog.prototype.showBut = function (dir) {
+        switch (dir) {
+            case "left":
+                Laya.Tween.to(this.leftBut, { alpha: 1 }, 400, Laya.Ease.sineIn);
+                break;
+            case "right":
+                Laya.Tween.to(this.rightBut, { alpha: 1 }, 400, Laya.Ease.sineIn);
                 break;
         }
     };

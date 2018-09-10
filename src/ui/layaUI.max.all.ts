@@ -4,7 +4,15 @@ import Dialog=laya.ui.Dialog;
 import EffectAnimation=laya.display.EffectAnimation
 module ui.Loading {
     export class LoadingViewUI extends View {
+		public LoadBg:Laya.Image;
+		public loadBarBox:Laya.Box;
+		public loadText:Laya.Label;
 		public numText:Laya.Label;
+		public loadBar:Laya.Image;
+		public loadBarMask:Laya.Image;
+		public loadBarBg:Laya.Image;
+		public roleIcon2:Laya.Image;
+		public roleIcon1:Laya.Image;
 
         constructor(){ super()}
         createChildren():void {
@@ -90,7 +98,7 @@ module ui.log {
 module ui.log {
     export class LogViewUI extends View {
 		public settingLog:SettingLog;
-		public storeLog:StoreLog;
+		public storeLog:StoreLog1;
 		public pictureLog:PictureLog;
 		public infoLog:infoLog;
 		public prepareLog:PrepareLog;
@@ -99,7 +107,7 @@ module ui.log {
         createChildren():void {
         			View.regComponent("LogView",LogView);
 			View.regComponent("SettingLog",SettingLog);
-			View.regComponent("StoreLog",StoreLog);
+			View.regComponent("StoreLog1",StoreLog1);
 			View.regComponent("PictureLog",PictureLog);
 			View.regComponent("infoLog",infoLog);
 			View.regComponent("PrepareLog",PrepareLog);
@@ -164,7 +172,6 @@ module ui.log.picture {
     export class PictureLogUI extends Dialog {
 		public closeBut:Laya.Image;
 		public m_list:Laya.List;
-		public m_item:ui.log.picture.PicItemUI;
 		public rightBut:Laya.Image;
 		public leftBut:Laya.Image;
 		public picInfo:PicInfo;
@@ -173,7 +180,6 @@ module ui.log.picture {
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("PictureLog",PictureLog);
-			View.regComponent("ui.log.picture.PicItemUI",ui.log.picture.PicItemUI);
 			View.regComponent("PicInfo",PicInfo);
 			View.regComponent("PicDelConfirmLog",PicDelConfirmLog);
 
@@ -308,9 +314,26 @@ module ui.log.store {
 }
 
 module ui.log.store {
+    export class StoreItemGroupUI extends View {
+		public i_0:ui.log.store.ListItemUI;
+		public i_3:ui.log.store.ListItemUI;
+		public i_2:ui.log.store.ListItemUI;
+		public i_1:ui.log.store.ListItemUI;
+
+        constructor(){ super()}
+        createChildren():void {
+        			View.regComponent("ui.log.store.ListItemUI",ui.log.store.ListItemUI);
+
+            super.createChildren();
+            this.loadUI("log/store/StoreItemGroup");
+
+        }
+
+    }
+}
+
+module ui.log.store {
     export class StoreLogUI extends Dialog {
-		public m_list:Laya.List;
-		public m_item:ListItem;
 		public leftBut:Laya.Button;
 		public rightBut:Laya.Button;
 		public titleInfo:Laya.Label;
@@ -318,12 +341,18 @@ module ui.log.store {
 		public descText2:Laya.Label;
 		public closeBut:Laya.Image;
 		public buyConfirmLog:BuyConfirmLog;
+		public m_list1:Laya.List;
+		public m_item1:Laya.Box;
+		public i_0:ListItem;
+		public i_1:ListItem;
+		public i_2:ListItem;
+		public i_3:ListItem;
 
         constructor(){ super()}
         createChildren():void {
-        			View.regComponent("StoreLog",StoreLog);
-			View.regComponent("ListItem",ListItem);
+        			View.regComponent("StoreLog1",StoreLog1);
 			View.regComponent("BuyConfirmLog",BuyConfirmLog);
+			View.regComponent("ListItem",ListItem);
 
             super.createChildren();
             this.loadUI("log/store/StoreLog");

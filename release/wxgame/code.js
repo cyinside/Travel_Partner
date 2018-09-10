@@ -56260,6 +56260,24 @@ var SoundModel = /** @class */ (function () {
     return SoundModel;
 }());
 //# sourceMappingURL=SoundModel.js.map
+var DataModel = /** @class */ (function () {
+    function DataModel() {
+    }
+    DataModel.getInstance = function () {
+        if (DataModel._instance == null) {
+            DataModel._instance = new DataModel();
+        }
+        return DataModel._instance;
+    };
+    DataModel.prototype.DataConfig = function () {
+        var jsonData = Laya.Loader.getRes('res/storeData.json');
+        GameData.storeDataArr = jsonData;
+        console.log(jsonData);
+    };
+    DataModel._instance = null;
+    return DataModel;
+}());
+//# sourceMappingURL=DataModel.js.map
 var WX_SDK = /** @class */ (function () {
     function WX_SDK() {
     }
@@ -56758,6 +56776,8 @@ var GameEvent = /** @class */ (function () {
     GameEvent.SHOW_LOG = 'show_log';
     GameEvent.SAVE_PIC_COMP = 'save_pic_comp';
     GameEvent.LOG_name = '';
+    GameEvent.LOG_info = '';
+    GameEvent.LOG_url = '';
     return GameEvent;
 }());
 //# sourceMappingURL=GameEvent.js.map
@@ -56784,7 +56804,8 @@ var GameSetting = /** @class */ (function () {
             { url: "res/atlas/inDoorScene.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/fire.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/pictureLog.atlas", type: Laya.Loader.ATLAS },
-            // {url:'res/contData.json',type:Laya.Loader.JSON},
+            { url: "res/atlas/storeItem.atlas", type: Laya.Loader.ATLAS },
+            { url: 'res/storeData.json', type: Laya.Loader.JSON },
             { url: 'main/BottomUnit.json', type: Laya.Loader.JSON },
             { url: 'main/MainScene.json', type: Laya.Loader.JSON },
             { url: 'main/TopUnit.json', type: Laya.Loader.JSON },
@@ -56799,6 +56820,7 @@ var GameSetting = /** @class */ (function () {
             { url: 'log/picture/PicInfo.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PictureLog.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicItem.json', type: Laya.Loader.JSON },
+            { url: 'log/prepare/PrepareLog.json', type: Laya.Loader.JSON },
             { url: 'main/WaveView.json', type: Laya.Loader.JSON },
             { url: 'main/Tips.json', type: Laya.Loader.JSON },
             { url: 'indoor/Tips1.ani', type: Laya.Loader.JSON },
@@ -56829,6 +56851,7 @@ var GameData = /** @class */ (function () {
     };
     GameData._instance = null;
     GameData.userName = '一共7个字字字';
+    GameData.storeDataArr = [];
     return GameData;
 }());
 //# sourceMappingURL=GameData.js.map
@@ -57417,6 +57440,7 @@ var ui;
                 return _super.call(this) || this;
             }
             InfoLogUI.prototype.createChildren = function () {
+                View.regComponent("infoLog", infoLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("log/InfoLog");
             };
@@ -57436,8 +57460,10 @@ var ui;
             LogViewUI.prototype.createChildren = function () {
                 View.regComponent("LogView", LogView);
                 View.regComponent("SettingLog", SettingLog);
-                View.regComponent("ShoppingLog", ShoppingLog);
+                View.regComponent("StoreLog", StoreLog);
                 View.regComponent("PictureLog", PictureLog);
+                View.regComponent("infoLog", infoLog);
+                View.regComponent("PrepareLog", PrepareLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("log/LogView");
             };
@@ -57521,7 +57547,6 @@ var ui;
                     View.regComponent("ui.log.picture.PicItemUI", ui.log.picture.PicItemUI);
                     View.regComponent("PicInfo", PicInfo);
                     View.regComponent("PicDelConfirmLog", PicDelConfirmLog);
-                    View.regComponent("infoLogUI", infoLogUI);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/picture/PictureLog");
                 };
@@ -57529,6 +57554,27 @@ var ui;
             }(Dialog));
             picture.PictureLogUI = PictureLogUI;
         })(picture = log.picture || (log.picture = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var prepare;
+        (function (prepare) {
+            var PrepareLogUI = /** @class */ (function (_super) {
+                __extends(PrepareLogUI, _super);
+                function PrepareLogUI() {
+                    return _super.call(this) || this;
+                }
+                PrepareLogUI.prototype.createChildren = function () {
+                    View.regComponent("PrepareLog", PrepareLog);
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/prepare/PrepareLog");
+                };
+                return PrepareLogUI;
+            }(Dialog));
+            prepare.PrepareLogUI = PrepareLogUI;
+        })(prepare = log.prepare || (log.prepare = {}));
     })(log = ui.log || (ui.log = {}));
 })(ui || (ui = {}));
 (function (ui) {
@@ -57565,7 +57611,6 @@ var ui;
                 SettingLogUI.prototype.createChildren = function () {
                     View.regComponent("ChangeNameLog", ChangeNameLog);
                     View.regComponent("DelConfirmLog", DelConfirmLog);
-                    View.regComponent("infoLogUI", infoLogUI);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/setting/SettingLog");
                 };
@@ -57647,10 +57692,9 @@ var ui;
                     return _super.call(this) || this;
                 }
                 StoreLogUI.prototype.createChildren = function () {
-                    View.regComponent("ShoppingLog", ShoppingLog);
+                    View.regComponent("StoreLog", StoreLog);
                     View.regComponent("ListItem", ListItem);
                     View.regComponent("BuyConfirmLog", BuyConfirmLog);
-                    View.regComponent("infoLogUI", infoLogUI);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/store/StoreLog");
                 };
@@ -57770,6 +57814,14 @@ var Bottom2Unit = /** @class */ (function (_super) {
                 SceneEvent.sceneID = 1;
                 Global.dispatchEvent(SceneEvent.CHANGE_SCENE);
                 break;
+            case this.prepareBut:
+                GameEvent.LOG_name = 'Prepare';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                break;
+            case this.bookBut:
+                GameEvent.LOG_name = 'Picture';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                break;
         }
     };
     return Bottom2Unit;
@@ -57834,10 +57886,19 @@ var infoLog = /** @class */ (function (_super) {
     };
     infoLog.prototype.showInfo = function (text) {
         this.infoText.changeText(text);
+        if (GameEvent.LOG_url != '') {
+            this.roleImg.skin = GameEvent.LOG_url;
+            this.infoText.x = 358;
+            GameEvent.LOG_url = '';
+        }
+        else {
+            this.roleImg.skin = '';
+            this.infoText.x = this.width / 2;
+        }
         this.visible = true;
         this.popup();
         if (this.isPopup)
-            Laya.timer.once(2000, this, function () {
+            Laya.timer.once(2500, this, function () {
                 this.close();
             });
     };
@@ -57869,10 +57930,36 @@ var LogView = /** @class */ (function (_super) {
         this.settingLog.closeHandler = new Laya.Handler(this, this.closeHandle);
         this.storeLog.closeHandler = new Laya.Handler(this, this.closeHandle);
         this.pictureLog.closeHandler = new Laya.Handler(this, this.closeHandle);
+        this.prepareLog.closeHandler = new Laya.Handler(this, this.closeHandle);
     };
     LogView.prototype.closeHandle = function () {
         console.log('close');
         this.visible = false;
+    };
+    LogView.prototype.showLog = function () {
+        this.visible = true;
+        var name = GameEvent.LOG_name;
+        switch (name) {
+            case 'Store':
+                this.storeLog.visible = true;
+                this.storeLog.popup();
+                break;
+            case 'Setting':
+                this.settingLog.visible = true;
+                this.settingLog.popup();
+                break;
+            case 'Picture':
+                this.pictureLog.visible = true;
+                this.pictureLog.popup();
+                break;
+            case 'Info':
+                this.infoLog.showInfo(GameEvent.LOG_info);
+                break;
+            case 'Prepare':
+                this.prepareLog.visible = true;
+                this.prepareLog.popup();
+                break;
+        }
     };
     return LogView;
 }(LogViewUI));
@@ -57936,7 +58023,8 @@ var PicInfo = /** @class */ (function (_super) {
                 break;
             case this.btn_savePic:
                 console.log('btn_savePic');
-                WX_SDK.getInstance().screenCapture(this.pictureBig, 0, 0, true);
+                // WX_SDK.getInstance().screenCapture(this.pictureBig,0,0,true);
+                Global.dispatchEvent(GameEvent.SAVE_PIC_COMP); //保存图片成功
                 break;
         }
     };
@@ -58081,11 +58169,108 @@ var PictureLog = /** @class */ (function (_super) {
         // this.infoLog.infoText.changeText('保存成功');
         // this.infoLog.visible=true;
         // this.infoLog.popup();
-        this.infoLog.showInfo('保存成功');
+        // this.infoLog.showInfo('保存成功')
+        GameEvent.LOG_info = '保存成功';
+        GameEvent.LOG_name = 'Info';
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     };
     return PictureLog;
 }(PictureLogUI));
 //# sourceMappingURL=PictureLog.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var PrepareLogUI = ui.log.prepare.PrepareLogUI;
+var PrepareLog = /** @class */ (function (_super) {
+    __extends(PrepareLog, _super);
+    function PrepareLog() {
+        var _this = _super.call(this) || this;
+        _this.b_X = 0;
+        _this.e_X = 0;
+        _this.dirState = 0;
+        _this.prepareLogInit();
+        return _this;
+    }
+    PrepareLog.prototype.prepareLogInit = function () {
+        this.bgPanel.hScrollBar.hide = true;
+        this.bgPanel.hScrollBar.elasticBackTime = 200; //设置橡皮筋回弹时间。单位为毫秒。
+        this.bgPanel.hScrollBar.elasticDistance = 30; //设置橡皮筋极限距离。
+        this.on(Laya.Event.CLICK, this, this.onTouchHandle);
+        // this.bgPanel.hScrollBar.on(Laya.Event.CHANGE, this, this.onChange);
+        this.bgPanel.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin);
+        this.bgPanel.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
+    };
+    PrepareLog.prototype.touchBegin = function (e) {
+        this.b_X = e.stageX;
+        // console.log('b:' + this.b_X)
+    };
+    PrepareLog.prototype.touchEnd = function (e) {
+        this.e_X = e.stageX;
+        // console.log('e:' + this.e_X)
+        this.dragHandle();
+    };
+    PrepareLog.prototype.dragHandle = function () {
+        var _dis = this.e_X - this.b_X;
+        if (_dis > 0 && _dis > 5) {
+            // console.log('left');
+            if (this.dirState == 1) {
+                this.moveTo_Bag();
+                this.dirState = 0;
+            }
+        }
+        else if (_dis < 0 && _dis < -5) {
+            // console.log('right')
+            if (this.dirState == 0) {
+                this.moveTo_Table();
+                this.dirState = 1;
+            }
+        }
+    };
+    PrepareLog.prototype.onChange = function (e) {
+        console.log(this.bgPanel.hScrollBar.value);
+    };
+    PrepareLog.prototype.onTouchHandle = function (e) {
+        var _target = e.target;
+        switch (_target) {
+            case this.rightBut:
+                if (this.dirState == 0) {
+                    this.moveTo_Table();
+                    this.dirState = 1;
+                }
+                break;
+            case this.leftBut:
+                if (this.dirState == 1) {
+                    this.moveTo_Bag();
+                    this.dirState = 0;
+                }
+                break;
+        }
+    };
+    PrepareLog.prototype.moveTo_Table = function () {
+        Laya.Tween.to(this.bgPanel.hScrollBar, { value: 757 }, 400, Laya.Ease.sineInOut, new Laya.Handler(this, function () {
+            this.leftBut.visible = true;
+            this.rightBut.visible = false;
+        }));
+    };
+    PrepareLog.prototype.moveTo_Bag = function () {
+        Laya.Tween.to(this.bgPanel.hScrollBar, { value: 0 }, 400, Laya.Ease.sineInOut, new Laya.Handler(this, function () {
+            this.leftBut.visible = false;
+            this.rightBut.visible = true;
+        }));
+    };
+    return PrepareLog;
+}(PrepareLogUI));
+//# sourceMappingURL=PreapreLog.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -58222,9 +58407,9 @@ var SettingLog = /** @class */ (function (_super) {
     };
     SettingLog.prototype.showInfo = function () {
         this.nameText.changeText(GameData.userName);
-        this.infoLog.visible = true;
-        this.infoLog.infoText.changeText('改名了！！');
-        this.infoLog.popup();
+        GameEvent.LOG_info = '更改成功';
+        GameEvent.LOG_name = 'Info';
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     };
     return SettingLog;
 }(SettingLogUI));
@@ -58322,29 +58507,43 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var StoreLogUI = ui.log.store.StoreLogUI;
-var ShoppingLog = /** @class */ (function (_super) {
-    __extends(ShoppingLog, _super);
-    function ShoppingLog() {
+var StoreLog = /** @class */ (function (_super) {
+    __extends(StoreLog, _super);
+    function StoreLog() {
         var _this = _super.call(this) || this;
         _this.itemArr = _this.m_list.cells;
+        _this.storeData = GameData.storeDataArr["prop"];
         _this.b_X = 0;
         _this.e_X = 0;
         _this.scrollPage = 0;
         _this.now_index = 0;
-        _this.shoppingLogInit();
+        _this.StoreLogInit();
         return _this;
     }
-    ShoppingLog.prototype.shoppingLogInit = function () {
+    StoreLog.prototype.StoreLogInit = function () {
         this.m_list.scrollBar.hide = true; //隐藏列表的滚动条。
-        this.m_list.scrollBar.elasticBackTime = 200; //设置橡皮筋回弹时间。单位为毫秒。
-        this.m_list.scrollBar.elasticDistance = 30; //设置橡皮筋极限距离。
+        // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
+        // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
         this.m_list.cacheContent = true;
         this.m_list.scrollBar.rollRatio = 0.8;
+        var _imgUrl = '';
         for (var m = 0; m < this.itemArr.length; m++) {
-            this.itemArr[m].m_label.text = 'NO.' + m.toString();
+            if (m < 22) {
+                this.itemArr[m].priceText.text = this.storeData[m].price;
+                this.itemArr[m].m_label.text = this.storeData[m].name;
+                _imgUrl = 'storeItem/' + this.storeData[m].res + '.png';
+                this.itemArr[m].itemImg.skin = _imgUrl;
+                if (this.storeData[m].type == 1) {
+                    this.itemArr[m].itemBg.skin = 'store/itemBg1.png';
+                }
+            }
+            if (m > 21) {
+                this.itemArr[m].alpha = 0;
+            } // 隐藏最后两个多出item
         }
         this.m_list.array = this.itemArr;
-        this.m_list.refresh();
+        this.selectHandle(0); //默认选中;
+        // this.m_list.refresh();
         this.on(Laya.Event.CLICK, this, this.touchHandle);
         // this.m_list.scrollBar.changeHandler=new Laya.Handler(this,this.getListPos);
         this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
@@ -58352,14 +58551,15 @@ var ShoppingLog = /** @class */ (function (_super) {
         this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
         // this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
         this.closeBut.name = Dialog.CLOSE;
+        this.leftBut.alpha = 0;
         Global.addEventListener(GameEvent.SHWO_BUY_CONFIRM, this, this.showBuyConfirm);
         Global.addEventListener(GameEvent.SHWO_BUY_STATE, this, this.showBuyState);
     };
-    ShoppingLog.prototype.touchBegin = function (e) {
+    StoreLog.prototype.touchBegin = function (e) {
         this.b_X = e.stageX;
         // console.log('b:' + this.b_X)
     };
-    ShoppingLog.prototype.touchEnd = function (e) {
+    StoreLog.prototype.touchEnd = function (e) {
         this.e_X = e.stageX;
         // console.log('e:' + this.e_X)
         this.dragHandle();
@@ -58370,7 +58570,7 @@ var ShoppingLog = /** @class */ (function (_super) {
     //     // console.log('e:' + this.e_X)
     //     this.dragHandle()
     // }
-    ShoppingLog.prototype.dragHandle = function () {
+    StoreLog.prototype.dragHandle = function () {
         var _dis = this.e_X - this.b_X;
         if (_dis > 0 && _dis > 5) {
             // console.log('left');
@@ -58381,7 +58581,7 @@ var ShoppingLog = /** @class */ (function (_super) {
             this.tweenPage('right');
         }
     };
-    ShoppingLog.prototype.touchHandle = function (e) {
+    StoreLog.prototype.touchHandle = function (e) {
         var _target = e.target;
         switch (_target) {
             case this.rightBut:
@@ -58393,7 +58593,7 @@ var ShoppingLog = /** @class */ (function (_super) {
                 break;
         }
     };
-    ShoppingLog.prototype.tweenPage = function (side) {
+    StoreLog.prototype.tweenPage = function (side) {
         var indexItem = 4;
         switch (side) {
             case 'left':
@@ -58402,28 +58602,74 @@ var ShoppingLog = /** @class */ (function (_super) {
                 if (this.now_index < 0) {
                     this.now_index = 0;
                 }
+                if (this.now_index == 0) {
+                    this.hideBut("left");
+                }
+                else {
+                    this.showBut('left');
+                }
+                if (this.now_index == 20) {
+                    this.hideBut('right');
+                }
+                else {
+                    this.showBut('right');
+                }
                 this.m_list.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
                 break;
             case 'right':
                 this.scrollPage += 1;
                 this.now_index += indexItem;
-                if (this.now_index > 12) {
-                    this.now_index = 12;
+                if (this.now_index > 20) {
+                    this.now_index = 20;
+                }
+                if (this.now_index == 0) {
+                    this.hideBut("left");
+                }
+                else {
+                    this.showBut('left');
+                }
+                if (this.now_index == 20) {
+                    this.hideBut('right');
+                }
+                else {
+                    this.showBut('right');
                 }
                 this.m_list.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
                 break;
         }
     };
-    ShoppingLog.prototype.getListPos = function (num) {
+    StoreLog.prototype.hideBut = function (dir) {
+        switch (dir) {
+            case "left":
+                Laya.Tween.to(this.leftBut, { alpha: 0 }, 400, Laya.Ease.sineIn);
+                break;
+            case "right":
+                Laya.Tween.to(this.rightBut, { alpha: 0 }, 400, Laya.Ease.sineIn);
+                break;
+        }
+    };
+    StoreLog.prototype.showBut = function (dir) {
+        switch (dir) {
+            case "left":
+                Laya.Tween.to(this.leftBut, { alpha: 1 }, 400, Laya.Ease.sineIn);
+                break;
+            case "right":
+                Laya.Tween.to(this.rightBut, { alpha: 1 }, 400, Laya.Ease.sineIn);
+                break;
+        }
+    };
+    StoreLog.prototype.getListPos = function (num) {
         console.log(num);
         if (num > 300) {
             this.m_list.tweenTo(4, 300);
         }
         // console.log(this.m_list.totalPage)
     };
-    ShoppingLog.prototype.selectHandle = function (selectIdex) {
+    StoreLog.prototype.selectHandle = function (selectIdex) {
+        if (selectIdex > 21)
+            return; //后两个item点击不作处理
         for (var i = 0; i < this.itemArr.length; i++) {
             this.itemArr[i].selectedBg.visible = false;
         }
@@ -58432,27 +58678,42 @@ var ShoppingLog = /** @class */ (function (_super) {
         item.selectedBg.visible = true;
         this.updateInfoText(selectIdex);
     };
-    ShoppingLog.prototype.updateInfoText = function (selectIdex) {
-        // var item:any=this.itemArr[selectIdex];
-        var text = '食物' + selectIdex.toString();
-        this.titleInfo.changeText(text);
+    StoreLog.prototype.updateInfoText = function (selectIdex) {
+        var type = this.storeData[selectIdex].type;
+        var text = '';
+        switch (type) {
+            case 1:
+                text = '食物';
+                break;
+            case 2:
+                text = '道具';
+                break;
+            case 3:
+                text = '幸运物';
+                break;
+        }
+        var t_text = text + '：' + this.storeData[selectIdex].name;
+        this.titleInfo.changeText(t_text);
+        this.descText1.changeText(this.storeData[selectIdex].desc1);
+        this.descText2.changeText(this.storeData[selectIdex].desc2);
     };
-    ShoppingLog.prototype.showBuyConfirm = function () {
-        var nameText = this.titleInfo.text;
-        this.buyConfirmLog.setInfo(nameText);
+    StoreLog.prototype.showBuyConfirm = function () {
+        var index = this.m_list.selectedIndex;
+        var _name = this.storeData[index].name;
+        var _price = this.storeData[index].price;
+        var infoText = "确定花费" + _price + '铜钱购买' + _name + '？';
+        this.buyConfirmLog.setInfo(infoText);
         this.buyConfirmLog.visible = true;
         this.buyConfirmLog.popup();
     };
-    ShoppingLog.prototype.showBuyState = function () {
-        var nameText = this.titleInfo.text;
-        this.infoLog.infoText.changeText(nameText);
-        this.infoLog.visible = true;
-        this.infoLog.popup();
-        Laya.timer.once(2000, this, function () {
-            this.infoLog.close();
-        });
+    StoreLog.prototype.showBuyState = function () {
+        var nameText = this.storeData[this.m_list.selectedIndex].name;
+        GameEvent.LOG_info = '你获得了' + nameText;
+        GameEvent.LOG_name = 'Info';
+        GameEvent.LOG_url = 'storeItem/' + this.storeData[this.m_list.selectedIndex].res + '.png';
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     };
-    return ShoppingLog;
+    return StoreLog;
 }(StoreLogUI));
 //# sourceMappingURL=StoreLog.js.map
 var __extends = (this && this.__extends) || (function () {
@@ -58804,18 +59065,18 @@ var GameMain = /** @class */ (function () {
         // Laya.DebugPanel.init();
         //性能面板
         Laya.Stat.show(0, 100);
-        // WX_SDK.getInstance().showConsol();
+        WX_SDK.getInstance().showConsol();
         // WX_SDK.getInstance().onShow(function(){
         //     SoundModel.getInstance().playBgMusic();//背景音乐播放
         // })
         // WX_SDK.getInstance().setStorage('test',{msg:'this is test'});
         // WX_SDK.getInstance().getStorage('msg')
         Laya.loader.load('Loading/LoadingView.json', Handler.create(this, this.loadingComp));
-        // Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
+        Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
         // Laya.URL.basePath = GameSetting.res_url;
-        // Laya.MiniAdpter.nativefiles = [
-        //     'Loading/LoadingView.json'
-        // ]
+        Laya.MiniAdpter.nativefiles = [
+            'Loading/LoadingView.json'
+        ];
         // UIConfig.closeDialogOnSide = false;
     }
     GameMain.prototype.loadingComp = function () {
@@ -58828,6 +59089,7 @@ var GameMain = /** @class */ (function () {
         // console.log("加载进度: " + progress);
     };
     GameMain.prototype.onCreateScene = function (id) {
+        DataModel.getInstance().DataConfig();
         if (Laya.stage.contains(this.LoadView)) {
             Laya.stage.removeChild(this.LoadView);
             this.LoadView.visible = false;
@@ -58841,8 +59103,6 @@ var GameMain = /** @class */ (function () {
         this.logView = new LogView;
         this.logView.visible = false;
         Laya.stage.addChild(this.logView);
-        // var jsonData = Laya.Loader.getRes('res/contData.json');
-        // console.log(jsonData['giftInfo'][0].desc);
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
         // SceneEvent.sceneID = 1;
@@ -58878,22 +59138,7 @@ var GameMain = /** @class */ (function () {
         }
     };
     GameMain.prototype.showLog = function () {
-        this.logView.visible = true;
-        var name = GameEvent.LOG_name;
-        switch (name) {
-            case 'Store':
-                this.logView.storeLog.visible = true;
-                this.logView.storeLog.popup();
-                break;
-            case 'Setting':
-                this.logView.settingLog.visible = true;
-                this.logView.settingLog.popup();
-                break;
-            case 'Picture':
-                this.logView.pictureLog.visible = true;
-                this.logView.pictureLog.popup();
-                break;
-        }
+        this.logView.showLog();
     };
     GameMain.prototype.changeHandle = function () {
         console.log('changeHandle');

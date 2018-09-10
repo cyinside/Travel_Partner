@@ -17,6 +17,7 @@ var ListItem = /** @class */ (function (_super) {
     function ListItem() {
         var _this = _super.call(this) || this;
         _this.touchTime = 0;
+        _this.item_id = '';
         _this.listIteminit();
         return _this;
     }

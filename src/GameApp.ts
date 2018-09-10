@@ -4,7 +4,6 @@ import Handler = Laya.Handler;
 import Sprite = Laya.Sprite;
 import Browser = Laya.Browser;
 import Render = Laya.Render;
-import LoadingUI = ui.Loading.LoadingViewUI;
 
 // 程序入口
 class GameMain {
@@ -31,7 +30,6 @@ class GameMain {
         Laya.Stat.show(0, 100);
         // WX_SDK.getInstance().showConsol();
 
-
         // WX_SDK.getInstance().onShow(function(){
         //     SoundModel.getInstance().playBgMusic();//背景音乐播放
         // })
@@ -39,30 +37,31 @@ class GameMain {
         // WX_SDK.getInstance().setStorage('test',{msg:'this is test'});
         // WX_SDK.getInstance().getStorage('msg')
 
-        Laya.loader.load('Loading/LoadingView.json', Handler.create(this, this.loadingComp));
+        Laya.loader.load(GameSetting.load_res_Arr, Handler.create(this, this.loadingComp));
         // Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
 
         // Laya.URL.basePath = GameSetting.res_url;
 
         // Laya.MiniAdpter.nativefiles = [
-        //     'Loading/LoadingView.json'
+        //     'Loading/LoadingView.json',
+        // "res/atlas/load.atlas",
         // ]
 
         // UIConfig.closeDialogOnSide = false;
     }
 
-    private LoadView: LoadingUI;
+    private LoadView: LoadingView;
     private loadingComp() {
-        this.LoadView = new LoadingUI;
+        this.LoadView = new LoadingView;
+        GameConfig.setAlign_center(this.LoadView);
         Laya.stage.addChild(this.LoadView);
 
         Laya.loader.load(GameSetting.res_Arr, Handler.create(this, this.onCreateScene), Handler.create(this, this.onLoading, null, false));
-
     }
 
     private onLoading(progress) {
-        this.LoadView.numText.text = ~~(progress * 100).toString() + '%';
         // console.log("加载进度: " + progress);
+        this.LoadView.loadingProgress(progress);
     }
 
     private mainScene: MainScene;

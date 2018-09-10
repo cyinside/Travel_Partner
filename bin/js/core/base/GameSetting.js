@@ -32,6 +32,7 @@ var GameSetting = /** @class */ (function () {
             { url: 'log/InfoLog.json', type: Laya.Loader.JSON },
             { url: 'log/store/StoreLog.json', type: Laya.Loader.JSON },
             { url: 'log/store/ListItem.json', type: Laya.Loader.JSON },
+            { url: 'log/store/StoreItemGroup.json', type: Laya.Loader.JSON },
             { url: 'log/store/BuyConfirmLog.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicDelConfrom.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicInfo.json', type: Laya.Loader.JSON },
@@ -45,7 +46,6 @@ var GameSetting = /** @class */ (function () {
             { url: 'indoor/IndoorScene.json', type: Laya.Loader.JSON },
             { url: 'indoor/FireAni.json', type: Laya.Loader.JSON },
             { url: 'log/LogView.json', type: Laya.Loader.JSON },
-            { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
             { url: 'music.mp3', type: Laya.Loader.SOUND }
         ];
     };
@@ -54,6 +54,10 @@ var GameSetting = /** @class */ (function () {
     // public static res_url:'oss://weixin-trip'
     GameSetting.coinNumber = 10;
     GameSetting.res_Arr = [];
+    GameSetting.load_res_Arr = [
+        { url: "res/atlas/load.atlas", type: Laya.Loader.ATLAS },
+        { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
+    ];
     return GameSetting;
 }());
 //# sourceMappingURL=GameSetting.js.map

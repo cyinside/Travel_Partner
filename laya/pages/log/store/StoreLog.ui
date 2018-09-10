@@ -1,9 +1,9 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":1,
-    "selecteID":23,
-    "props":{"width":700,"sceneColor":"#000000","runtime":"StoreLog","mouseEnabled":true,"height":1000,"cacheAsBitmap":true},
+    "selectedBox":30,
+    "selecteID":29,
+    "props":{"width":700,"sceneColor":"#000000","runtime":"StoreLog1","mouseEnabled":true,"height":1000,"cacheAsBitmap":true},
     "nodeParent":-1,
     "label":"Dialog",
     "isOpen":true,
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":51,"width":600,"skin":"settingLog/logBg2.png","sizeGrid":"20,20,23,20","height":1000},
+            "props":{"y":0,"x":36,"width":631,"skin":"settingLog/logBg2.png","sizeGrid":"20,20,23,20","height":1000},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -66,35 +66,8 @@
         },
         {
             "x":15,
-            "type":"List",
-            "props":{"y":160,"x":87,"width":549,"var":"m_list","spaceY":10,"spaceX":15,"selectEnable":true,"repeatY":2,"repeatX":11,"renderType":"render","mouseEnabled":true,"height":540,"hScrollBarSkin":"comp/hscroll.png"},
-            "nodeParent":1,
-            "label":"List(m_list)",
-            "isOpen":true,
-            "isDirectory":true,
-            "isAniNode":true,
-            "hasChild":true,
-            "compId":3,
-            "child":[
-                {
-                    "x":30,
-                    "type":"UIView",
-                    "source":"log/store/ListItem.ui",
-                    "props":{"y":0,"x":0,"var":"m_item","runtime":"ListItem","renderType":"render","mouseEnabled":true},
-                    "nodeParent":3,
-                    "label":"UIView(m_item)",
-                    "isDirectory":false,
-                    "isAniNode":false,
-                    "hasChild":false,
-                    "compId":2,
-                    "child":[
-                        ]
-                }]
-        },
-        {
-            "x":15,
             "type":"Button",
-            "props":{"y":448,"x":-1,"width":61,"var":"leftBut","stateNum":"1","skin":"store/leftBut.png","scaleY":1,"scaleX":1,"mouseEnabled":true,"labelSize":30,"labelColors":"#FFFFFF","labelBold":true,"label":"◁","height":103},
+            "props":{"y":336,"x":3,"width":61,"var":"leftBut","stateNum":"1","skin":"store/leftBut.png","scaleY":1,"scaleX":1,"mouseEnabled":true,"labelSize":30,"labelColors":"#FFFFFF","labelBold":true,"label":"◁","height":103},
             "nodeParent":1,
             "label":"Button(leftBut)",
             "isDirectory":false,
@@ -107,7 +80,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":448,"x":635,"width":61,"var":"rightBut","stateNum":"1","skin":"store/rightBut.png","scaleY":1,"scaleX":1,"mouseEnabled":true,"labelSize":30,"labelColors":"#FFFFFF","labelBold":true,"label":"▷","height":103},
+            "props":{"y":336,"x":637,"width":61,"var":"rightBut","stateNum":"1","skin":"store/rightBut.png","scaleY":1,"scaleX":1,"mouseEnabled":true,"labelSize":30,"labelColors":"#FFFFFF","labelBold":true,"label":"▷","height":103},
             "nodeParent":1,
             "label":"Button(rightBut)",
             "isDirectory":false,
@@ -195,6 +168,89 @@
             "compId":21,
             "child":[
                 ]
+        },
+        {
+            "x":15,
+            "type":"List",
+            "props":{"y":140,"x":86,"width":546,"var":"m_list1","selectEnable":true,"renderType":"render","mouseEnabled":true,"height":567,"hScrollBarSkin":"comp/hscroll.png","cacheAsBitmap":false},
+            "nodeParent":1,
+            "label":"List(m_list1)",
+            "isOpen":true,
+            "isDirectory":true,
+            "isAniNode":true,
+            "hasChild":true,
+            "compId":23,
+            "child":[
+                {
+                    "x":30,
+                    "type":"Box",
+                    "props":{"y":20,"x":8,"width":546,"var":"m_item1","renderType":"render","height":515,"cacheAsBitmap":true},
+                    "nodeParent":23,
+                    "label":"Box(m_item1)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":false,
+                    "hasChild":true,
+                    "compId":30,
+                    "child":[
+                        {
+                            "x":45,
+                            "type":"UIView",
+                            "source":"log/store/ListItem.ui",
+                            "props":{"var":"i_0","runtime":"ListItem","name":"i_0","mouseEnabled":true,"cacheAsBitmap":false,"cacheAs":"normal"},
+                            "nodeParent":30,
+                            "label":"UIView(i_0)",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":26,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"UIView",
+                            "source":"log/store/ListItem.ui",
+                            "props":{"y":2,"x":274,"var":"i_1","runtime":"ListItem","name":"i_1","mouseEnabled":true,"cacheAsBitmap":false,"cacheAs":"normal"},
+                            "nodeParent":30,
+                            "label":"UIView(i_1)",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":27,
+                            "child":[
+                                ],
+                            "$HIDDEN":false
+                        },
+                        {
+                            "x":45,
+                            "type":"UIView",
+                            "source":"log/store/ListItem.ui",
+                            "props":{"y":270,"x":6,"var":"i_2","runtime":"ListItem","name":"i_2","mouseEnabled":true,"cacheAsBitmap":false,"cacheAs":"normal"},
+                            "nodeParent":30,
+                            "label":"UIView(i_2)",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":28,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"UIView",
+                            "source":"log/store/ListItem.ui",
+                            "props":{"y":269,"x":276,"var":"i_3","runtime":"ListItem","name":"i_3","mouseEnabled":true,"cacheAsBitmap":false,"cacheAs":"normal"},
+                            "nodeParent":30,
+                            "label":"UIView(i_3)",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":29,
+                            "child":[
+                                ]
+                        }]
+                }]
         }],
     "animations":[
         {

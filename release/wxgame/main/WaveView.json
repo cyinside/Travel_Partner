@@ -1,1 +1,0 @@
-{"type":"View","props":{"width":111,"runtime":"WaveView","height":111},"child":[{"type":"Animation","props":{"y":0,"x":0,"wrapMode":"0","width":1,"var":"waveAni","source":"wave/wave1.png,wave/wave2.png,wave/wave3.png,wave/wave4.png","pivotX":-1,"interval":500,"height":1,"autoPlay":false}}]}
