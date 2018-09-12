@@ -48,6 +48,9 @@ class MainScene extends MainSceneUI {
             case this.indoorRect:
                 SceneUtil.changeScene(2);
                 break;
+            case this.textBut:
+                WX_SDK.getInstance().login();
+                break;    
         }
     }
 

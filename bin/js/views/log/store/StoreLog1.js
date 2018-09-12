@@ -11,6 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var StoreLogUI = ui.log.store.StoreLogUI;
 var StoreLog1 = /** @class */ (function (_super) {
     __extends(StoreLog1, _super);
     function StoreLog1() {
@@ -28,8 +29,6 @@ var StoreLog1 = /** @class */ (function (_super) {
     }
     StoreLog1.prototype.StoreLogInit = function () {
         this.m_list1.scrollBar.hide = true; //隐藏列表的滚动条。
-        // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
-        // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
         this.m_list1.scrollBar.rollRatio = 0.8;
         this.setList();
         // this.selectHandle(0);//默认选中;
@@ -55,22 +54,21 @@ var StoreLog1 = /** @class */ (function (_super) {
             _item = this._listItems[i];
             for (var j = 0; j < this.itemArr1[j].length; j++) {
                 // console.log(this.itemArr1[i][j])
-                if (this.itemArr1[i][j]) {
-                    child = _item.getChildByName("i_" + j);
-                    child.m_label.text = this.itemArr1[i][j].name;
-                    child.priceText.text = this.itemArr1[i][j].price;
-                    child.itemImg.skin = 'storeItem/' + this.itemArr1[i][j].res + '.png';
-                    child.item_id = i.toString() + j.toString();
-                }
+                child = _item.getChildByName("i_" + j);
                 if (i == 5 && j > 1) {
                     child.visible = false; //隐藏最后两个
+                }
+                else {
+                    child.m_label.changeText(this.itemArr1[i][j].name);
+                    child.priceText.changeText(this.itemArr1[i][j].price);
+                    child.itemImg.skin = 'storeItem/' + this.itemArr1[i][j].res + '.png';
+                    child.item_id = i.toString() + j.toString();
                 }
             }
         }
         this.m_list1.array = this._listItems;
         this.m_list1.refresh();
         this.m_list1.cacheContent = true;
-        // this.m_list1.selectHandler = new Laya.Handler(this, this.selectHandle);
     };
     StoreLog1.prototype.setGroup = function (array, subGroupLength) {
         var index = 0;
@@ -187,13 +185,6 @@ var StoreLog1 = /** @class */ (function (_super) {
                 Laya.Tween.to(this.rightBut, { alpha: 1 }, 400, Laya.Ease.sineIn);
                 break;
         }
-    };
-    StoreLog1.prototype.getListPos = function (num) {
-        console.log(num);
-        if (num > 300) {
-            this.m_list1.tweenTo(0, 300);
-        }
-        // console.log(this.m_list.totalPage)
     };
     StoreLog1.prototype.selectHandle = function (selectItem) {
         if (this.now_selectItem == selectItem) {

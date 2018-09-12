@@ -19,4 +19,6 @@ class GameEvent {
     public static LOG_name = '';
     public static LOG_info = '';
     public static LOG_url = '';
+
+    public static locker_id:number=0;
 }

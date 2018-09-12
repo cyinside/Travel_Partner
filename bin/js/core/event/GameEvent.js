@@ -16,6 +16,7 @@ var GameEvent = /** @class */ (function () {
     GameEvent.LOG_name = '';
     GameEvent.LOG_info = '';
     GameEvent.LOG_url = '';
+    GameEvent.locker_id = 0;
     return GameEvent;
 }());
 //# sourceMappingURL=GameEvent.js.map

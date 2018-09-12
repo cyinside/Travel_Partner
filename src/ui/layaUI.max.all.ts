@@ -102,6 +102,7 @@ module ui.log {
 		public pictureLog:PictureLog;
 		public infoLog:infoLog;
 		public prepareLog:PrepareLog;
+		public lockerLog:LockerLog;
 
         constructor(){ super()}
         createChildren():void {
@@ -111,9 +112,57 @@ module ui.log {
 			View.regComponent("PictureLog",PictureLog);
 			View.regComponent("infoLog",infoLog);
 			View.regComponent("PrepareLog",PrepareLog);
+			View.regComponent("LockerLog",LockerLog);
 
             super.createChildren();
             this.loadUI("log/LogView");
+
+        }
+
+    }
+}
+
+module ui.log.locker {
+    export class LockerListItemUI extends View {
+		public roleImg:Laya.Image;
+		public nameText:Laya.Label;
+		public descText1:Laya.Label;
+		public descText2:Laya.Label;
+		public numText:Laya.Label;
+
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.loadUI("log/locker/LockerListItem");
+
+        }
+
+    }
+}
+
+module ui.log.locker {
+    export class LockerLogUI extends Dialog {
+		public nthImg:Laya.Image;
+		public btn_tostore:Laya.Button;
+		public tabGtoup:Laya.Tab;
+		public item0:Laya.Button;
+		public item1:Laya.Button;
+		public item2:Laya.Button;
+		public item3:Laya.Button;
+		public butText0:Laya.Label;
+		public butText1:Laya.Label;
+		public butText2:Laya.Label;
+		public butText3:Laya.Label;
+		public lockerList:Laya.List;
+
+        constructor(){ super()}
+        createChildren():void {
+        			View.regComponent("LockerLog",LockerLog);
+			View.regComponent("ui.log.locker.LockerListItemUI",ui.log.locker.LockerListItemUI);
+
+            super.createChildren();
+            this.loadUI("log/locker/LockerLog");
 
         }
 
@@ -196,7 +245,19 @@ module ui.log.prepare {
 		public bgPanel:Laya.Panel;
 		public bgBox:Laya.Box;
 		public bagAera:Laya.Image;
+		public addFood1:Laya.Image;
+		public addLuck1:Laya.Image;
+		public addProp2:Laya.Image;
+		public addProp1:Laya.Image;
 		public tableArea:Laya.Image;
+		public setFood1:Laya.Image;
+		public setFood2:Laya.Image;
+		public setLock1:Laya.Image;
+		public setLock2:Laya.Image;
+		public setProp1:Laya.Image;
+		public setProp2:Laya.Image;
+		public setProp3:Laya.Image;
+		public setProp4:Laya.Image;
 		public leftBut:Laya.Image;
 		public rightBut:Laya.Image;
 
@@ -392,6 +453,7 @@ module ui.main {
 		public indoorRect:Laya.Sprite;
 		public topUnit:TopUnit;
 		public bottomUnit:BottomUnit;
+		public textBut:Laya.Button;
 
         constructor(){ super()}
         createChildren():void {

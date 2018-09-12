@@ -76,6 +76,18 @@ P B169FA56 loadBarBg.png
 R ADAADAE2 LoadBg.jpg
 P E7D52980 roleIcon1.png
 P ED000FF6 roleIcon2.png
+D LockerLog
+P 524FC920 btn_tar1.png
+P C4E9F7F5 btn_tostore.png
+P A3948A95 defaultImg.png
+R C3C959D9 lockerInfo.png
+P B169AE86 lockerItemBg.png
+R 74EB2C2B lockerLgBg.png
+P 1B99307B notingImg.png
+P B36ED2A2 thumbBg.png
+R FB0C64E9 thumbListBg.png
+P BBEB28C9 vscroll$bar.png
+P 49274D8B vscroll.png
 D pictureLog
 P E5EA42C8 btn_delPic.png
 P 6902C1B4 btn_savePic.png

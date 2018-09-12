@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":3,
+    "selecteID":7,
     "props":{"width":750,"visible":true,"sceneColor":"#000000","runtime":"LogView","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -79,6 +79,20 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":6,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"UIView",
+            "source":"log/locker/LockerLog.ui",
+            "props":{"y":23,"x":3021,"visible":false,"var":"lockerLog","runtime":"LockerLog","popupCenter":true,"mouseEnabled":true},
+            "nodeParent":1,
+            "label":"UIView(lockerLog)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":7,
             "child":[
                 ]
         }],

@@ -1,3 +1,4 @@
+import StoreLogUI = ui.log.store.StoreLogUI;
 class StoreLog1 extends StoreLogUI {
     public constructor() {
         super();
@@ -8,8 +9,6 @@ class StoreLog1 extends StoreLogUI {
     private storeData: Array<any> = GameData.storeDataArr["prop"];
     public StoreLogInit() {
         this.m_list1.scrollBar.hide = true;//隐藏列表的滚动条。
-        // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
-        // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
         this.m_list1.scrollBar.rollRatio = 0.8;
 
         this.setList()
@@ -46,16 +45,16 @@ class StoreLog1 extends StoreLogUI {
             _item = this._listItems[i];
             for (var j: number = 0; j < this.itemArr1[j].length; j++) {
                 // console.log(this.itemArr1[i][j])
-                if (this.itemArr1[i][j]) {
-                    child = _item.getChildByName("i_" + j)
-                    child.m_label.text = this.itemArr1[i][j].name;
-                    child.priceText.text = this.itemArr1[i][j].price;
+                child = _item.getChildByName("i_" + j)
+
+                if (i == 5 && j > 1) {
+                    child.visible = false;//隐藏最后两个
+                }else{
+                    child.m_label.changeText(this.itemArr1[i][j].name);
+                    child.priceText.changeText(this.itemArr1[i][j].price);
 
                     child.itemImg.skin = 'storeItem/' + this.itemArr1[i][j].res + '.png';
                     child.item_id = i.toString() + j.toString();
-                }
-                if (i == 5 && j > 1) {
-                    child.visible = false;//隐藏最后两个
                 }
             }
         }
@@ -63,8 +62,6 @@ class StoreLog1 extends StoreLogUI {
         this.m_list1.array = this._listItems;
         this.m_list1.refresh();
         this.m_list1.cacheContent = true;
-
-        // this.m_list1.selectHandler = new Laya.Handler(this, this.selectHandle);
     }
 
     private setGroup(array, subGroupLength) {
@@ -199,14 +196,6 @@ class StoreLog1 extends StoreLogUI {
                 Laya.Tween.to(this.rightBut, { alpha: 1 }, 400, Laya.Ease.sineIn);
                 break;
         }
-    }
-
-    private getListPos(num) {
-        console.log(num)
-        if (num > 300) {
-            this.m_list1.tweenTo(0, 300);
-        }
-        // console.log(this.m_list.totalPage)
     }
 
     private now_selectItem: ListItem;

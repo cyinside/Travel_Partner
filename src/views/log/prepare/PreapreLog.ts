@@ -6,7 +6,7 @@ class PrepareLog extends PrepareLogUI {
     }
 
     private prepareLogInit() {
-        this.bgPanel.hScrollBar.hide=true;
+        this.bgPanel.hScrollBar.hide = true;
         this.bgPanel.hScrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
         this.bgPanel.hScrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
 
@@ -68,6 +68,112 @@ class PrepareLog extends PrepareLogUI {
                     this.moveTo_Bag();
                     this.dirState = 0
                 }
+                break;
+            case this.addFood1:
+                GameEvent.locker_id = 0;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+                console.log('addFood1');
+                break;
+            case this.addLuck1:
+                GameEvent.locker_id = 1;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+                console.log('addLuck1');
+                break;
+            case this.addProp1:
+                GameEvent.locker_id = 2;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+                console.log('addProp1');
+                break;
+            case this.addProp2:
+                GameEvent.locker_id = 2;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+                console.log('addProp2');
+                break;
+
+
+
+            case this.setFood1:
+                GameEvent.locker_id = 0;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+                console.log('setFood1')
+                break;
+            case this.setFood2:
+                GameEvent.locker_id = 0;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+
+                console.log('setFood2')
+                break;
+            case this.setLock1:
+                GameEvent.locker_id = 1;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+
+                console.log('setLock1')
+                break;
+            case this.setLock2:
+                GameEvent.locker_id = 1;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+
+                console.log('setLock2')
+                break;
+            case this.setProp1:
+                GameEvent.locker_id = 2;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+
+                console.log('setProp1')
+                break;
+            case this.setProp2:
+                GameEvent.locker_id = 2;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+
+                console.log('setProp2')
+                break;
+            case this.setProp3:
+                GameEvent.locker_id = 2;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+
+                console.log('setProp3')
+                break;
+            case this.setProp4:
+                GameEvent.locker_id = 2;
+
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+
+
+                console.log('setProp4')
                 break;
         }
     }

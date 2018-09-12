@@ -52,6 +52,12 @@ var LogView = /** @class */ (function (_super) {
                 this.prepareLog.visible = true;
                 this.prepareLog.popup();
                 break;
+            case 'Locker':
+                this.lockerLog.setIndex(GameEvent.locker_id);
+                // this.lockerLog.setButTouch_off();
+                this.lockerLog.visible = true;
+                this.lockerLog.popup();
+                break;
         }
     };
     return LogView;

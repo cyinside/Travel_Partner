@@ -32,8 +32,9 @@ class GameSetting {
             { url: "res/atlas/inDoorScene.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/fire.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/pictureLog.atlas", type: Laya.Loader.ATLAS },
+            { url: "res/atlas/prepareLog.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/storeItem.atlas", type: Laya.Loader.ATLAS },
-
+            { url: "res/atlas/LockerLog.atlas", type: Laya.Loader.ATLAS },
             { url: 'res/storeData.json', type: Laya.Loader.JSON },
 
             { url: 'main/BottomUnit.json', type: Laya.Loader.JSON },
@@ -52,6 +53,9 @@ class GameSetting {
             { url: 'log/picture/PictureLog.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicItem.json', type: Laya.Loader.JSON },
             { url: 'log/prepare/PrepareLog.json', type: Laya.Loader.JSON },
+            { url: 'log/locker/LockerLog.json', type: Laya.Loader.JSON },
+            { url: 'log/locker/LockerListItem.json', type: Laya.Loader.JSON },
+
             { url: 'main/WaveView.json', type: Laya.Loader.JSON },
             { url: 'main/Tips.json', type: Laya.Loader.JSON },
             { url: 'indoor/Tips1.ani', type: Laya.Loader.JSON },

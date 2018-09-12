@@ -119,12 +119,55 @@ var ui;
                 View.regComponent("PictureLog", PictureLog);
                 View.regComponent("infoLog", infoLog);
                 View.regComponent("PrepareLog", PrepareLog);
+                View.regComponent("LockerLog", LockerLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("log/LogView");
             };
             return LogViewUI;
         }(View));
         log.LogViewUI = LogViewUI;
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var locker;
+        (function (locker) {
+            var LockerListItemUI = /** @class */ (function (_super) {
+                __extends(LockerListItemUI, _super);
+                function LockerListItemUI() {
+                    return _super.call(this) || this;
+                }
+                LockerListItemUI.prototype.createChildren = function () {
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/locker/LockerListItem");
+                };
+                return LockerListItemUI;
+            }(View));
+            locker.LockerListItemUI = LockerListItemUI;
+        })(locker = log.locker || (log.locker = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var locker;
+        (function (locker) {
+            var LockerLogUI = /** @class */ (function (_super) {
+                __extends(LockerLogUI, _super);
+                function LockerLogUI() {
+                    return _super.call(this) || this;
+                }
+                LockerLogUI.prototype.createChildren = function () {
+                    View.regComponent("LockerLog", LockerLog);
+                    View.regComponent("ui.log.locker.LockerListItemUI", ui.log.locker.LockerListItemUI);
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/locker/LockerLog");
+                };
+                return LockerLogUI;
+            }(Dialog));
+            locker.LockerLogUI = LockerLogUI;
+        })(locker = log.locker || (log.locker = {}));
     })(log = ui.log || (ui.log = {}));
 })(ui || (ui = {}));
 (function (ui) {

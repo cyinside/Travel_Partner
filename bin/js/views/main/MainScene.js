@@ -55,6 +55,9 @@ var MainScene = /** @class */ (function (_super) {
             case this.indoorRect:
                 SceneUtil.changeScene(2);
                 break;
+            case this.textBut:
+                WX_SDK.getInstance().login();
+                break;
         }
     };
     MainScene.prototype.onAssetsLoaded = function () {

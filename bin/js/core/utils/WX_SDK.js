@@ -13,6 +13,20 @@ var WX_SDK = /** @class */ (function () {
         wx.onShow(callBack);
         console.log('onShow');
     };
+    WX_SDK.prototype.login = function () {
+        var wx = Laya.Browser.window.wx;
+        wx.login({
+            success: function (e) {
+                console.log(e);
+            }
+        });
+    };
+    WX_SDK.prototype.getTaken = function () {
+        var wx = Laya.Browser.window.wx;
+        var url = '';
+        var header = {};
+        wx.request({});
+    };
     WX_SDK.prototype.getLocation = function (callBack) {
         if (callBack === void 0) { callBack = null; }
         /**

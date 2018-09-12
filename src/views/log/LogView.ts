@@ -23,11 +23,11 @@ class LogView extends LogViewUI {
         switch (name) {
             case 'Store':
                 this.storeLog.visible = true;
-                this.storeLog.popup()
+                this.storeLog.popup();
                 break;
             case 'Setting':
                 this.settingLog.visible = true;
-                this.settingLog.popup()
+                this.settingLog.popup();
                 break;
             case 'Picture':
                 this.pictureLog.visible = true;
@@ -39,6 +39,12 @@ class LogView extends LogViewUI {
             case 'Prepare':
                 this.prepareLog.visible = true;
                 this.prepareLog.popup();
+                break;
+            case 'Locker':
+                this.lockerLog.setIndex(GameEvent.locker_id);
+                // this.lockerLog.setButTouch_off();
+                this.lockerLog.visible = true;
+                this.lockerLog.popup();
                 break;
         }
     }

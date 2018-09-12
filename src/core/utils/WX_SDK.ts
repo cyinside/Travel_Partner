@@ -7,12 +7,31 @@ class WX_SDK {
     }
 
     private static _instance = null;
-
     public onShow(callBack:Function = null):void{
         var wx=Laya.Browser.window.wx;
         wx.onShow(callBack);
 
         console.log('onShow');
+    }
+
+    public login(){
+        var wx=Laya.Browser.window.wx;
+        wx.login({
+            success:function(e){
+                console.log(e);
+            }
+        })
+    }
+
+    public getTaken(){
+        var wx=Laya.Browser.window.wx;
+        var url:string='';
+        var header:Object={
+            
+        }   
+        wx.request({
+            
+        })
     }
 
     public getLocation(callBack:Function = null):any{

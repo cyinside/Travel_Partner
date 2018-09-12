@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":53,
+    "selectedBox":1,
+    "selecteID":55,
     "props":{"width":750,"visible":false,"sceneColor":"#000000","height":1468},
     "nodeParent":-1,
     "label":"View",
@@ -292,6 +292,19 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":13,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":1130,"x":57,"width":197,"var":"textBut","skin":"comp/button.png","mouseEnabled":true,"label":"textBut","height":62},
+            "nodeParent":1,
+            "label":"Button(textBut)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":55,
             "child":[
                 ]
         }],

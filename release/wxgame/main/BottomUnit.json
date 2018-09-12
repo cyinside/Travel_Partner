@@ -1,0 +1,1 @@
+{"type":"View","props":{"mouseEnabled":true,"hitTestPrior":false},"child":[{"type":"Button","props":{"y":0,"x":0,"var":"bookBut","stateNum":1,"skin":"GameScene/btn_book.png","mouseEnabled":true,"hitTestPrior":true}},{"type":"Button","props":{"y":145,"x":0,"var":"insideBut","stateNum":1,"skin":"GameScene/btn_test.png"}}]}

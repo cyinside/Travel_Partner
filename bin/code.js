@@ -39675,7 +39675,7 @@ var List=(function(_super){
 		/**@private */
 		this._page=0;
 		/**@private */
-		this._isVertical=true;
+		this._isVertical=false;
 		/**@private */
 		this._cellSize=20;
 		/**@private */
@@ -56293,6 +56293,20 @@ var WX_SDK = /** @class */ (function () {
         wx.onShow(callBack);
         console.log('onShow');
     };
+    WX_SDK.prototype.login = function () {
+        var wx = Laya.Browser.window.wx;
+        wx.login({
+            success: function (e) {
+                console.log(e);
+            }
+        });
+    };
+    WX_SDK.prototype.getTaken = function () {
+        var wx = Laya.Browser.window.wx;
+        var url = '';
+        var header = {};
+        wx.request({});
+    };
     WX_SDK.prototype.getLocation = function (callBack) {
         if (callBack === void 0) { callBack = null; }
         /**
@@ -56778,6 +56792,7 @@ var GameEvent = /** @class */ (function () {
     GameEvent.LOG_name = '';
     GameEvent.LOG_info = '';
     GameEvent.LOG_url = '';
+    GameEvent.locker_id = 0;
     return GameEvent;
 }());
 //# sourceMappingURL=GameEvent.js.map
@@ -56804,7 +56819,9 @@ var GameSetting = /** @class */ (function () {
             { url: "res/atlas/inDoorScene.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/fire.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/pictureLog.atlas", type: Laya.Loader.ATLAS },
+            { url: "res/atlas/prepareLog.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/storeItem.atlas", type: Laya.Loader.ATLAS },
+            { url: "res/atlas/LockerLog.atlas", type: Laya.Loader.ATLAS },
             { url: 'res/storeData.json', type: Laya.Loader.JSON },
             { url: 'main/BottomUnit.json', type: Laya.Loader.JSON },
             { url: 'main/MainScene.json', type: Laya.Loader.JSON },
@@ -56815,12 +56832,15 @@ var GameSetting = /** @class */ (function () {
             { url: 'log/InfoLog.json', type: Laya.Loader.JSON },
             { url: 'log/store/StoreLog.json', type: Laya.Loader.JSON },
             { url: 'log/store/ListItem.json', type: Laya.Loader.JSON },
+            { url: 'log/store/StoreItemGroup.json', type: Laya.Loader.JSON },
             { url: 'log/store/BuyConfirmLog.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicDelConfrom.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicInfo.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PictureLog.json', type: Laya.Loader.JSON },
             { url: 'log/picture/PicItem.json', type: Laya.Loader.JSON },
             { url: 'log/prepare/PrepareLog.json', type: Laya.Loader.JSON },
+            { url: 'log/locker/LockerLog.json', type: Laya.Loader.JSON },
+            { url: 'log/locker/LockerListItem.json', type: Laya.Loader.JSON },
             { url: 'main/WaveView.json', type: Laya.Loader.JSON },
             { url: 'main/Tips.json', type: Laya.Loader.JSON },
             { url: 'indoor/Tips1.ani', type: Laya.Loader.JSON },
@@ -56828,7 +56848,6 @@ var GameSetting = /** @class */ (function () {
             { url: 'indoor/IndoorScene.json', type: Laya.Loader.JSON },
             { url: 'indoor/FireAni.json', type: Laya.Loader.JSON },
             { url: 'log/LogView.json', type: Laya.Loader.JSON },
-            { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
             { url: 'music.mp3', type: Laya.Loader.SOUND }
         ];
     };
@@ -56837,6 +56856,10 @@ var GameSetting = /** @class */ (function () {
     // public static res_url:'oss://weixin-trip'
     GameSetting.coinNumber = 10;
     GameSetting.res_Arr = [];
+    GameSetting.load_res_Arr = [
+        { url: "res/atlas/load.atlas", type: Laya.Loader.ATLAS },
+        { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
+    ];
     return GameSetting;
 }());
 //# sourceMappingURL=GameSetting.js.map
@@ -56852,6 +56875,58 @@ var GameData = /** @class */ (function () {
     GameData._instance = null;
     GameData.userName = '一共7个字字字';
     GameData.storeDataArr = [];
+    GameData.picDataArr = [
+        {
+            id: 0,
+            name: '第一张',
+            date: '2018-9-10'
+        },
+        {
+            id: 1,
+            name: '第二张',
+            date: '2018-9-9'
+        },
+        {
+            id: 2,
+            name: '第三张',
+            date: '2018-9-8'
+        },
+        {
+            id: 3,
+            name: '第四张',
+            date: '2018-9-8'
+        },
+        {
+            id: 3,
+            name: '第四张',
+            date: '2018-9-8'
+        },
+        {
+            id: 3,
+            name: '第四张',
+            date: '2018-9-8'
+        },
+        {
+            id: 3,
+            name: '第四张',
+            date: '2018-9-8'
+        },
+        {
+            id: 3,
+            name: '第四张',
+            date: '2018-9-8'
+        },
+        {
+            id: 3,
+            name: '第四张',
+            date: '2018-9-8'
+        },
+        {
+            id: 3,
+            name: '第四张',
+            date: '2018-9-8'
+        },
+    ];
     return GameData;
 }());
 //# sourceMappingURL=GameData.js.map
@@ -57460,16 +57535,59 @@ var ui;
             LogViewUI.prototype.createChildren = function () {
                 View.regComponent("LogView", LogView);
                 View.regComponent("SettingLog", SettingLog);
-                View.regComponent("StoreLog", StoreLog);
+                View.regComponent("StoreLog1", StoreLog1);
                 View.regComponent("PictureLog", PictureLog);
                 View.regComponent("infoLog", infoLog);
                 View.regComponent("PrepareLog", PrepareLog);
+                View.regComponent("LockerLog", LockerLog);
                 _super.prototype.createChildren.call(this);
                 this.loadUI("log/LogView");
             };
             return LogViewUI;
         }(View));
         log.LogViewUI = LogViewUI;
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var locker;
+        (function (locker) {
+            var LockerListItemUI = /** @class */ (function (_super) {
+                __extends(LockerListItemUI, _super);
+                function LockerListItemUI() {
+                    return _super.call(this) || this;
+                }
+                LockerListItemUI.prototype.createChildren = function () {
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/locker/LockerListItem");
+                };
+                return LockerListItemUI;
+            }(View));
+            locker.LockerListItemUI = LockerListItemUI;
+        })(locker = log.locker || (log.locker = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var locker;
+        (function (locker) {
+            var LockerLogUI = /** @class */ (function (_super) {
+                __extends(LockerLogUI, _super);
+                function LockerLogUI() {
+                    return _super.call(this) || this;
+                }
+                LockerLogUI.prototype.createChildren = function () {
+                    View.regComponent("LockerLog", LockerLog);
+                    View.regComponent("ui.log.locker.LockerListItemUI", ui.log.locker.LockerListItemUI);
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/locker/LockerLog");
+                };
+                return LockerLogUI;
+            }(Dialog));
+            locker.LockerLogUI = LockerLogUI;
+        })(locker = log.locker || (log.locker = {}));
     })(log = ui.log || (ui.log = {}));
 })(ui || (ui = {}));
 (function (ui) {
@@ -57544,7 +57662,6 @@ var ui;
                 }
                 PictureLogUI.prototype.createChildren = function () {
                     View.regComponent("PictureLog", PictureLog);
-                    View.regComponent("ui.log.picture.PicItemUI", ui.log.picture.PicItemUI);
                     View.regComponent("PicInfo", PicInfo);
                     View.regComponent("PicDelConfirmLog", PicDelConfirmLog);
                     _super.prototype.createChildren.call(this);
@@ -57686,15 +57803,36 @@ var ui;
     (function (log) {
         var store;
         (function (store) {
+            var StoreItemGroupUI = /** @class */ (function (_super) {
+                __extends(StoreItemGroupUI, _super);
+                function StoreItemGroupUI() {
+                    return _super.call(this) || this;
+                }
+                StoreItemGroupUI.prototype.createChildren = function () {
+                    View.regComponent("ui.log.store.ListItemUI", ui.log.store.ListItemUI);
+                    _super.prototype.createChildren.call(this);
+                    this.loadUI("log/store/StoreItemGroup");
+                };
+                return StoreItemGroupUI;
+            }(View));
+            store.StoreItemGroupUI = StoreItemGroupUI;
+        })(store = log.store || (log.store = {}));
+    })(log = ui.log || (ui.log = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var log;
+    (function (log) {
+        var store;
+        (function (store) {
             var StoreLogUI = /** @class */ (function (_super) {
                 __extends(StoreLogUI, _super);
                 function StoreLogUI() {
                     return _super.call(this) || this;
                 }
                 StoreLogUI.prototype.createChildren = function () {
-                    View.regComponent("StoreLog", StoreLog);
-                    View.regComponent("ListItem", ListItem);
+                    View.regComponent("StoreLog1", StoreLog1);
                     View.regComponent("BuyConfirmLog", BuyConfirmLog);
+                    View.regComponent("ListItem", ListItem);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/store/StoreLog");
                 };
@@ -57779,6 +57917,67 @@ var ui;
     })(main = ui.main || (ui.main = {}));
 })(ui || (ui = {}));
 //# sourceMappingURL=layaUI.max.all.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var LoadingViewUI = ui.Loading.LoadingViewUI;
+var LoadingView = /** @class */ (function (_super) {
+    __extends(LoadingView, _super);
+    function LoadingView() {
+        var _this = _super.call(this) || this;
+        _this.num = 0;
+        _this.loadingViewInit();
+        return _this;
+    }
+    LoadingView.prototype.loadingViewInit = function () {
+        this.height = GameConfig.gameHeight;
+        this.width = GameConfig.gameWidth;
+        // this.LoadBg.x = this.width/2;
+        this.LoadBg.y = this.height / 2;
+        var _x = 150;
+        if (GameConfig.res_Type == 3) {
+            this.loadBarBox.y = this.loadBarBox.y + _x;
+            this.roleIcon1.y = this.roleIcon1.y + _x;
+            this.roleIcon2.y = this.roleIcon2.y + _x;
+        }
+        Laya.timer.frameLoop(1, this, this.animateFrameRateBased);
+        // this.on(Laya.Event.CLICK,this,this.loadingProgress)
+    };
+    LoadingView.prototype.animateFrameRateBased = function () {
+        this.roleIcon1.rotation += 1;
+        this.roleIcon2.rotation += 1;
+        this.num++;
+        if (this.num > 30) {
+            this.loadText.changeText('加载中.');
+        }
+        if (this.num > 60) {
+            this.loadText.changeText('加载中..');
+        }
+        if (this.num > 90) {
+            this.loadText.changeText('加载中...');
+            this.num = 0;
+        }
+    };
+    LoadingView.prototype.loadingProgress = function (progress) {
+        if (progress === void 0) { progress = null; }
+        var num = ~~(progress * 100);
+        this.numText.text = num.toString() + '%';
+        this.loadBarMask.x = this.loadBar.x + 410 * progress;
+        // console.log(this.loadBarMask.x)
+    };
+    return LoadingView;
+}(LoadingViewUI));
+//# sourceMappingURL=LoadingView.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -57959,11 +58158,128 @@ var LogView = /** @class */ (function (_super) {
                 this.prepareLog.visible = true;
                 this.prepareLog.popup();
                 break;
+            case 'Locker':
+                this.lockerLog.setIndex(GameEvent.locker_id);
+                this.lockerLog.visible = true;
+                this.lockerLog.popup();
+                break;
         }
     };
     return LogView;
 }(LogViewUI));
 //# sourceMappingURL=LogView.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var LockerLogUI = ui.log.locker.LockerLogUI;
+var LockerLog = /** @class */ (function (_super) {
+    __extends(LockerLog, _super);
+    function LockerLog() {
+        var _this = _super.call(this) || this;
+        _this.lockerListArr = GameData.storeDataArr["prop"];
+        _this.lockerListArr_food = [];
+        _this.lockerListArr_luck = [];
+        _this.lockerListArr_prop = [];
+        _this.up_color = '#ffedd5';
+        _this.down_color = '#56361f';
+        _this.lockerLogInit();
+        return _this;
+    }
+    LockerLog.prototype.lockerLogInit = function () {
+        this.tabGtoup.selectHandler = new Handler(this, this.onSelect);
+        this.lockerList_food.cacheContent = true;
+        this.lockerList_luck.cacheContent = true;
+        this.lockerListArr_food = this.filterItemByKey(1);
+        this.lockerListArr_luck = this.filterItemByKey(3);
+        this.setListDetail(this.lockerListArr_food, 1);
+        this.lockerList_food.array = this.lockerListArr_food;
+        this.vSBar.showButtons = false;
+    };
+    LockerLog.prototype.setListDetail = function (arr, type) {
+        if (arr === void 0) { arr = []; }
+        var _itemList;
+        switch (type) {
+            case 1:
+                _itemList = this.lockerList_food.cells;
+                if (arr.length < 5) {
+                    this.lockerList_food.scrollBar.hide = true;
+                }
+                break;
+            case 2:
+                _itemList = this.lockerList_luck.cells;
+                if (arr.length < 5) {
+                    this.lockerList_luck.scrollBar.hide = true;
+                }
+                break;
+            case 3:
+                _itemList = this.lockerList_food.cells;
+                if (arr.length < 5) {
+                    this.lockerList_food.scrollBar.hide = true;
+                }
+                break;
+        }
+        for (var i = 0; i < arr.length; i++) {
+            _itemList[i].nameText.changeText(arr[i].name);
+            _itemList[i].descText1.changeText(arr[i].desc1);
+            _itemList[i].descText1.changeText(arr[i].desc2);
+        }
+    };
+    LockerLog.prototype.filterItemByKey = function (key) {
+        var filter_arr = this.lockerListArr.filter(function (value, index, arr) {
+            if (value.type == key) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+        return filter_arr;
+    };
+    LockerLog.prototype.onSelect = function (index) {
+        console.log("当前选择的标签页索引为 " + index);
+        for (var i = 0; i < 4; i++) {
+            this.getChildByName('butText' + i).color = this.up_color;
+            this.getChildByName('butText' + i).fontSize = 30;
+        }
+        this.closeAll();
+        switch (index) {
+            case 0:
+                this.lockerList_food.visible = true;
+                this.lockerList_food.alpha = 0;
+                this.showList(this.lockerList_food);
+                break;
+            case 1:
+                this.lockerList_luck.visible = true;
+                this.lockerList_luck.alpha = 0;
+                this.showList(this.lockerList_luck);
+                break;
+        }
+        this.getChildByName('butText' + index).color = this.down_color;
+        this.getChildByName('butText' + index).fontSize = 34;
+    };
+    LockerLog.prototype.closeAll = function () {
+        this.lockerList_food.visible = false;
+        this.lockerList_luck.visible = false;
+    };
+    LockerLog.prototype.showList = function (obj) {
+        Laya.Tween.to(obj, { alpha: 1 }, 400);
+    };
+    LockerLog.prototype.setIndex = function (id) {
+        this.tabGtoup.selectedIndex = id;
+    };
+    return LockerLog;
+}(LockerLogUI));
+//# sourceMappingURL=LockerLog.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -58075,7 +58391,7 @@ var PictureLog = /** @class */ (function (_super) {
     __extends(PictureLog, _super);
     function PictureLog() {
         var _this = _super.call(this) || this;
-        _this.itemArr = _this.m_list.cells;
+        _this.itemArr = [];
         _this.b_X = 0;
         _this.e_X = 0;
         _this.scrollPage = 0;
@@ -58086,10 +58402,21 @@ var PictureLog = /** @class */ (function (_super) {
     }
     PictureLog.prototype.pictureLogInit = function () {
         this.m_list.scrollBar.hide = true; //隐藏列表的滚动条。
-        this.m_list.scrollBar.elasticBackTime = 200; //设置橡皮筋回弹时间。单位为毫秒。
-        this.m_list.scrollBar.elasticDistance = 30; //设置橡皮筋极限距离。
+        // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
+        // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
         this.m_list.cacheContent = true;
         this.m_list.scrollBar.rollRatio = 0.8;
+        this.m_list.itemRender = PicItem;
+        // this.m_list.repeatX = 1;
+        // this.m_list.repeatY = 3;
+        this.m_list.spaceX = 12;
+        this.m_list.spaceY = 12;
+        for (var i = 0; i < GameData.picDataArr.length; i++) {
+            var item = {
+                id: i
+            };
+            this.itemArr.push(item);
+        }
         this.m_list.array = this.itemArr;
         this.m_list.refresh();
         this.on(Laya.Event.CLICK, this, this.touchHandle);
@@ -58253,6 +58580,78 @@ var PrepareLog = /** @class */ (function (_super) {
                     this.moveTo_Bag();
                     this.dirState = 0;
                 }
+                break;
+            case this.addFood1:
+                GameEvent.locker_id = 0;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('addFood1');
+                break;
+            case this.addLuck1:
+                GameEvent.locker_id = 1;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('addLuck1');
+                break;
+            case this.addProp1:
+                GameEvent.locker_id = 2;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('addProp1');
+                break;
+            case this.addProp2:
+                GameEvent.locker_id = 2;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('addProp2');
+                break;
+            case this.setFood1:
+                GameEvent.locker_id = 0;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('setFood1');
+                break;
+            case this.setFood2:
+                GameEvent.locker_id = 0;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('setFood2');
+                break;
+            case this.setLock1:
+                GameEvent.locker_id = 1;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('setLock1');
+                break;
+            case this.setLock2:
+                GameEvent.locker_id = 1;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('setLock2');
+                break;
+            case this.setProp1:
+                GameEvent.locker_id = 2;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('setProp1');
+                break;
+            case this.setProp2:
+                GameEvent.locker_id = 2;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('setProp2');
+                break;
+            case this.setProp3:
+                GameEvent.locker_id = 2;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('setProp3');
+                break;
+            case this.setProp4:
+                GameEvent.locker_id = 2;
+                GameEvent.LOG_name = 'Locker';
+                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                console.log('setProp4');
                 break;
         }
     };
@@ -58476,6 +58875,7 @@ var ListItem = /** @class */ (function (_super) {
     function ListItem() {
         var _this = _super.call(this) || this;
         _this.touchTime = 0;
+        _this.item_id = '';
         _this.listIteminit();
         return _this;
     }
@@ -58506,13 +58906,244 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var StoreLogUI = ui.log.store.StoreLogUI;
-var StoreLog = /** @class */ (function (_super) {
-    __extends(StoreLog, _super);
-    function StoreLog() {
+var StoreItemGroupUI = ui.log.store.StoreItemGroupUI;
+var StoreItemGroup = /** @class */ (function (_super) {
+    __extends(StoreItemGroup, _super);
+    function StoreItemGroup() {
         var _this = _super.call(this) || this;
-        _this.itemArr = _this.m_list.cells;
+        _this.storeItemGroupInit();
+        return _this;
+    }
+    StoreItemGroup.prototype.storeItemGroupInit = function () {
+    };
+    return StoreItemGroup;
+}(StoreItemGroupUI));
+//# sourceMappingURL=StoreItemGroup.js.map
+// import StoreLogUI = ui.log.store.StoreLogUI;
+// class StoreLog extends StoreLogUI {
+//     public constructor() {
+//         super();
+//         this.StoreLogInit();
+//     }
+//     private itemArr: Array<any> = this.m_list.cells;
+//     private storeData: Array<any> = GameData.storeDataArr["prop"];
+//     public StoreLogInit() {
+//         this.m_list.scrollBar.hide = true;//隐藏列表的滚动条。
+//         // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
+//         // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
+//         this.m_list.cacheContent = true;
+//         this.m_list.scrollBar.rollRatio = 0.8;
+//         var _imgUrl: string = '';
+//         for (var m: number = 0; m < this.itemArr.length; m++) {
+//             if (m < 22) {
+//                 this.itemArr[m].priceText.text = this.storeData[m].price;
+//                 this.itemArr[m].m_label.text = this.storeData[m].name;
+//                 _imgUrl = 'storeItem/' + this.storeData[m].res + '.png';
+//                 this.itemArr[m].itemImg.skin = _imgUrl;
+//                 if (this.storeData[m].type == 1) {
+//                     this.itemArr[m].itemBg.skin = 'store/itemBg1.png'
+//                 }
+//             }
+//             if (m > 21) {
+//                 this.itemArr[m].alpha = 0;
+//             }// 隐藏最后两个多出item
+//         }
+//         this.m_list.array = this.itemArr;
+//         this.selectHandle(0);//默认选中;
+//         // this.m_list.refresh();
+//         this.on(Laya.Event.CLICK, this, this.touchHandle);
+//         // this.m_list.scrollBar.changeHandler=new Laya.Handler(this,this.getListPos);
+//         this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
+//         this.m_list.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin)
+//         this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
+//         // this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
+//         this.closeBut.name = Dialog.CLOSE;
+//         this.leftBut.alpha = 0;
+//         Global.addEventListener(GameEvent.SHWO_BUY_CONFIRM, this, this.showBuyConfirm);
+//         Global.addEventListener(GameEvent.SHWO_BUY_STATE, this, this.showBuyState);
+//     }
+//     private b_X: number = 0;
+//     private touchBegin(e: Laya.Event) {
+//         this.b_X = e.stageX;
+//         // console.log('b:' + this.b_X)
+//     }
+//     private e_X: number = 0;
+//     private touchEnd(e: Laya.Event) {
+//         this.e_X = e.stageX;
+//         // console.log('e:' + this.e_X)
+//         this.dragHandle()
+//     }
+//     // private touchOut(e: Laya.Event){
+//     //     // console.log('mouse out')
+//     //     this.e_X = e.stageX;
+//     //     // console.log('e:' + this.e_X)
+//     //     this.dragHandle()
+//     // }
+//     private dragHandle() {
+//         var _dis: number = this.e_X - this.b_X;
+//         if (_dis > 0 && _dis > 5) {
+//             // console.log('left');
+//             this.tweenPage('left')
+//         }
+//         else if (_dis < 0 && _dis < -5) {
+//             // console.log('right')
+//             this.tweenPage('right')
+//         }
+//     }
+//     private touchHandle(e: Laya.Event) {
+//         var _target = e.target;
+//         switch (_target) {
+//             case this.rightBut:
+//                 this.tweenPage('right')
+//                 break;
+//             case this.leftBut:
+//                 this.m_list.tweenTo(0, 300);
+//                 this.tweenPage('left')
+//                 break;
+//         }
+//     }
+//     private scrollPage: number = 0;
+//     private now_index: number = 0;
+//     private tweenPage(side: string) {
+//         var indexItem = 4;
+//         switch (side) {
+//             case 'left':
+//                 this.scrollPage -= 1;
+//                 this.now_index -= indexItem;
+//                 if (this.now_index < 0) {
+//                     this.now_index = 0;
+//                 }
+//                 if (this.now_index == 0) {
+//                     this.hideBut("left")
+//                 } else {
+//                     this.showBut('left')
+//                 }
+//                 if (this.now_index == 20) {
+//                     this.hideBut('right');
+//                 } else {
+//                     this.showBut('right')
+//                 }
+//                 this.m_list.tweenTo(this.now_index, 300);
+//                 // this.m_list.page += 1;
+//                 break;
+//             case 'right':
+//                 this.scrollPage += 1;
+//                 this.now_index += indexItem;
+//                 if (this.now_index > 20) {
+//                     this.now_index = 20;
+//                 }
+//                 if (this.now_index == 0) {
+//                     this.hideBut("left")
+//                 } else {
+//                     this.showBut('left')
+//                 }
+//                 if (this.now_index == 20) {
+//                     this.hideBut('right');
+//                 } else {
+//                     this.showBut('right')
+//                 }
+//                 this.m_list.tweenTo(this.now_index, 300)
+//                 // this.m_list.page += 1;
+//                 break;
+//         }
+//     }
+//     private hideBut(dir:string){
+//         switch(dir){
+//             case "left":
+//             Laya.Tween.to(this.leftBut,{alpha:0},400,Laya.Ease.sineIn);
+//             break;
+//             case "right":
+//             Laya.Tween.to(this.rightBut,{alpha:0},400,Laya.Ease.sineIn);
+//             break;
+//         }
+//     }
+//     private showBut(dir:string){
+//         switch(dir){
+//             case "left":
+//             Laya.Tween.to(this.leftBut,{alpha:1},400,Laya.Ease.sineIn);
+//             break;
+//             case "right":
+//             Laya.Tween.to(this.rightBut,{alpha:1},400,Laya.Ease.sineIn);
+//             break;
+//         }
+//     }
+//     private getListPos(num) {
+//         console.log(num)
+//         if (num > 300) {
+//             this.m_list.tweenTo(4, 300);
+//         }
+//         // console.log(this.m_list.totalPage)
+//     }
+//     private selectHandle(selectIdex) {
+//         if (selectIdex > 21)
+//             return;//后两个item点击不作处理
+//         for (var i: number = 0; i < this.itemArr.length; i++) {
+//             this.itemArr[i].selectedBg.visible = false;
+//         }
+//         console.log(selectIdex);
+//         var item: any = this.itemArr[selectIdex];
+//         item.selectedBg.visible = true;
+//         this.updateInfoText(selectIdex)
+//     }
+//     private updateInfoText(selectIdex) {
+//         var type = this.storeData[selectIdex].type
+//         var text: string = ''
+//         switch (type) {
+//             case 1:
+//                 text = '食物';
+//                 break;
+//             case 2:
+//                 text = '道具';
+//                 break;
+//             case 3:
+//                 text = '幸运物';
+//                 break;
+//         }
+//         var t_text: string = text + '：' + this.storeData[selectIdex].name;
+//         this.titleInfo.changeText(t_text);
+//         this.descText1.changeText(this.storeData[selectIdex].desc1);
+//         this.descText2.changeText(this.storeData[selectIdex].desc2);
+//     }
+//     private showBuyConfirm() {
+//         var index: number = this.m_list.selectedIndex
+//         var _name: string = this.storeData[index].name;
+//         var _price: string = this.storeData[index].price;
+//         var infoText: string = "确定花费" + _price + '铜钱购买' + _name + '？';
+//         this.buyConfirmLog.setInfo(infoText);
+//         this.buyConfirmLog.visible = true;
+//         this.buyConfirmLog.popup();
+//     }
+//     private showBuyState() {
+//         var nameText: string = this.storeData[this.m_list.selectedIndex].name;
+//         GameEvent.LOG_info = '你获得了' + nameText;
+//         GameEvent.LOG_name = 'Info';
+//         GameEvent.LOG_url = 'storeItem/'+this.storeData[this.m_list.selectedIndex].res+'.png';
+//         Global.dispatchEvent(GameEvent.SHOW_LOG);
+//     }
+// }
+//# sourceMappingURL=StoreLog.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var StoreLogUI = ui.log.store.StoreLogUI;
+var StoreLog1 = /** @class */ (function (_super) {
+    __extends(StoreLog1, _super);
+    function StoreLog1() {
+        var _this = _super.call(this) || this;
+        // private itemArr: Array<any> = this.m_list.cells;
         _this.storeData = GameData.storeDataArr["prop"];
+        _this.itemArr1 = [];
+        _this._listItems = [];
         _this.b_X = 0;
         _this.e_X = 0;
         _this.scrollPage = 0;
@@ -58520,46 +59151,62 @@ var StoreLog = /** @class */ (function (_super) {
         _this.StoreLogInit();
         return _this;
     }
-    StoreLog.prototype.StoreLogInit = function () {
-        this.m_list.scrollBar.hide = true; //隐藏列表的滚动条。
-        // this.m_list.scrollBar.elasticBackTime = 200;//设置橡皮筋回弹时间。单位为毫秒。
-        // this.m_list.scrollBar.elasticDistance = 30;//设置橡皮筋极限距离。
-        this.m_list.cacheContent = true;
-        this.m_list.scrollBar.rollRatio = 0.8;
-        var _imgUrl = '';
-        for (var m = 0; m < this.itemArr.length; m++) {
-            if (m < 22) {
-                this.itemArr[m].priceText.text = this.storeData[m].price;
-                this.itemArr[m].m_label.text = this.storeData[m].name;
-                _imgUrl = 'storeItem/' + this.storeData[m].res + '.png';
-                this.itemArr[m].itemImg.skin = _imgUrl;
-                if (this.storeData[m].type == 1) {
-                    this.itemArr[m].itemBg.skin = 'store/itemBg1.png';
-                }
-            }
-            if (m > 21) {
-                this.itemArr[m].alpha = 0;
-            } // 隐藏最后两个多出item
-        }
-        this.m_list.array = this.itemArr;
-        this.selectHandle(0); //默认选中;
+    StoreLog1.prototype.StoreLogInit = function () {
+        this.m_list1.scrollBar.hide = true; //隐藏列表的滚动条。
+        this.m_list1.scrollBar.rollRatio = 0.8;
+        this.setList();
+        // this.selectHandle(0);//默认选中;
         // this.m_list.refresh();
         this.on(Laya.Event.CLICK, this, this.touchHandle);
         // this.m_list.scrollBar.changeHandler=new Laya.Handler(this,this.getListPos);
-        this.m_list.selectHandler = new Laya.Handler(this, this.selectHandle);
-        this.m_list.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin);
-        this.m_list.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
+        this.m_list1.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin);
+        this.m_list1.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
         // this.m_list.on(Laya.Event.MOUSE_OUT, this, this.touchOut);
         this.closeBut.name = Dialog.CLOSE;
         this.leftBut.alpha = 0;
         Global.addEventListener(GameEvent.SHWO_BUY_CONFIRM, this, this.showBuyConfirm);
         Global.addEventListener(GameEvent.SHWO_BUY_STATE, this, this.showBuyState);
     };
-    StoreLog.prototype.touchBegin = function (e) {
+    StoreLog1.prototype.setList = function () {
+        this.m_list1.repeatX = 5;
+        this.itemArr1 = this.setGroup(this.storeData, 4);
+        console.log(this.itemArr1);
+        this._listItems = this.m_list1.cells;
+        var _item;
+        var child = null;
+        for (var i = 0; i < this.itemArr1.length; i++) {
+            _item = this._listItems[i];
+            for (var j = 0; j < this.itemArr1[j].length; j++) {
+                // console.log(this.itemArr1[i][j])
+                if (this.itemArr1[i][j]) {
+                    child = _item.getChildByName("i_" + j);
+                    child.m_label.changeText(this.itemArr1[i][j].name);
+                    child.priceText.changeText(this.itemArr1[i][j].price);
+                    child.itemImg.skin = 'storeItem/' + this.itemArr1[i][j].res + '.png';
+                    child.item_id = i.toString() + j.toString();
+                }
+                if (i == 5 && j > 1) {
+                    child.visible = false; //隐藏最后两个
+                }
+            }
+        }
+        this.m_list1.array = this._listItems;
+        this.m_list1.refresh();
+        this.m_list1.cacheContent = true;
+    };
+    StoreLog1.prototype.setGroup = function (array, subGroupLength) {
+        var index = 0;
+        var newArray = [];
+        while (index < array.length) {
+            newArray.push(array.slice(index, index += subGroupLength));
+        }
+        return newArray;
+    };
+    StoreLog1.prototype.touchBegin = function (e) {
         this.b_X = e.stageX;
         // console.log('b:' + this.b_X)
     };
-    StoreLog.prototype.touchEnd = function (e) {
+    StoreLog1.prototype.touchEnd = function (e) {
         this.e_X = e.stageX;
         // console.log('e:' + this.e_X)
         this.dragHandle();
@@ -58570,7 +59217,7 @@ var StoreLog = /** @class */ (function (_super) {
     //     // console.log('e:' + this.e_X)
     //     this.dragHandle()
     // }
-    StoreLog.prototype.dragHandle = function () {
+    StoreLog1.prototype.dragHandle = function () {
         var _dis = this.e_X - this.b_X;
         if (_dis > 0 && _dis > 5) {
             // console.log('left');
@@ -58581,20 +59228,23 @@ var StoreLog = /** @class */ (function (_super) {
             this.tweenPage('right');
         }
     };
-    StoreLog.prototype.touchHandle = function (e) {
+    StoreLog1.prototype.touchHandle = function (e) {
         var _target = e.target;
+        if (_target.item_id) {
+            this.selectHandle(_target);
+        }
         switch (_target) {
             case this.rightBut:
                 this.tweenPage('right');
                 break;
             case this.leftBut:
-                this.m_list.tweenTo(0, 300);
+                this.m_list1.tweenTo(0, 300);
                 this.tweenPage('left');
                 break;
         }
     };
-    StoreLog.prototype.tweenPage = function (side) {
-        var indexItem = 4;
+    StoreLog1.prototype.tweenPage = function (side) {
+        var indexItem = 1;
         switch (side) {
             case 'left':
                 this.scrollPage -= 1;
@@ -58608,13 +59258,13 @@ var StoreLog = /** @class */ (function (_super) {
                 else {
                     this.showBut('left');
                 }
-                if (this.now_index == 20) {
+                if (this.now_index == 6) {
                     this.hideBut('right');
                 }
                 else {
                     this.showBut('right');
                 }
-                this.m_list.tweenTo(this.now_index, 300);
+                this.m_list1.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
                 break;
             case 'right':
@@ -58629,18 +59279,18 @@ var StoreLog = /** @class */ (function (_super) {
                 else {
                     this.showBut('left');
                 }
-                if (this.now_index == 20) {
+                if (this.now_index == 6) {
                     this.hideBut('right');
                 }
                 else {
                     this.showBut('right');
                 }
-                this.m_list.tweenTo(this.now_index, 300);
+                this.m_list1.tweenTo(this.now_index, 300);
                 // this.m_list.page += 1;
                 break;
         }
     };
-    StoreLog.prototype.hideBut = function (dir) {
+    StoreLog1.prototype.hideBut = function (dir) {
         switch (dir) {
             case "left":
                 Laya.Tween.to(this.leftBut, { alpha: 0 }, 400, Laya.Ease.sineIn);
@@ -58650,7 +59300,7 @@ var StoreLog = /** @class */ (function (_super) {
                 break;
         }
     };
-    StoreLog.prototype.showBut = function (dir) {
+    StoreLog1.prototype.showBut = function (dir) {
         switch (dir) {
             case "left":
                 Laya.Tween.to(this.leftBut, { alpha: 1 }, 400, Laya.Ease.sineIn);
@@ -58660,26 +59310,22 @@ var StoreLog = /** @class */ (function (_super) {
                 break;
         }
     };
-    StoreLog.prototype.getListPos = function (num) {
-        console.log(num);
-        if (num > 300) {
-            this.m_list.tweenTo(4, 300);
+    StoreLog1.prototype.selectHandle = function (selectItem) {
+        if (this.now_selectItem == selectItem) {
         }
-        // console.log(this.m_list.totalPage)
-    };
-    StoreLog.prototype.selectHandle = function (selectIdex) {
-        if (selectIdex > 21)
-            return; //后两个item点击不作处理
-        for (var i = 0; i < this.itemArr.length; i++) {
-            this.itemArr[i].selectedBg.visible = false;
+        else {
+            this.m_list1.selection.getChildByName('i_0').selectedBg.visible = false;
+            this.m_list1.selection.getChildByName('i_1').selectedBg.visible = false;
+            this.m_list1.selection.getChildByName('i_2').selectedBg.visible = false;
+            this.m_list1.selection.getChildByName('i_3').selectedBg.visible = false;
+            this.now_selectItem = selectItem;
         }
-        console.log(selectIdex);
-        var item = this.itemArr[selectIdex];
-        item.selectedBg.visible = true;
-        this.updateInfoText(selectIdex);
+        selectItem.selectedBg.visible = true;
+        this.updateInfoText(selectItem);
     };
-    StoreLog.prototype.updateInfoText = function (selectIdex) {
-        var type = this.storeData[selectIdex].type;
+    StoreLog1.prototype.updateInfoText = function (selectItem) {
+        var _item = this.getNowInfo();
+        var type = _item.type;
         var text = '';
         switch (type) {
             case 1:
@@ -58692,30 +59338,36 @@ var StoreLog = /** @class */ (function (_super) {
                 text = '幸运物';
                 break;
         }
-        var t_text = text + '：' + this.storeData[selectIdex].name;
+        var t_text = text + '：' + _item.name;
         this.titleInfo.changeText(t_text);
-        this.descText1.changeText(this.storeData[selectIdex].desc1);
-        this.descText2.changeText(this.storeData[selectIdex].desc2);
+        this.descText1.changeText(_item.desc1);
+        this.descText2.changeText(_item.desc2);
     };
-    StoreLog.prototype.showBuyConfirm = function () {
-        var index = this.m_list.selectedIndex;
-        var _name = this.storeData[index].name;
-        var _price = this.storeData[index].price;
+    StoreLog1.prototype.showBuyConfirm = function () {
+        var _item = this.getNowInfo();
+        var _name = _item.name;
+        var _price = _item.price;
         var infoText = "确定花费" + _price + '铜钱购买' + _name + '？';
         this.buyConfirmLog.setInfo(infoText);
         this.buyConfirmLog.visible = true;
         this.buyConfirmLog.popup();
     };
-    StoreLog.prototype.showBuyState = function () {
-        var nameText = this.storeData[this.m_list.selectedIndex].name;
-        GameEvent.LOG_info = '你获得了' + nameText;
+    StoreLog1.prototype.showBuyState = function () {
+        var _item = this.getNowInfo();
+        GameEvent.LOG_info = '你获得了' + _item.name;
         GameEvent.LOG_name = 'Info';
-        GameEvent.LOG_url = 'storeItem/' + this.storeData[this.m_list.selectedIndex].res + '.png';
+        GameEvent.LOG_url = 'storeItem/' + _item.res + '.png';
         Global.dispatchEvent(GameEvent.SHOW_LOG);
     };
-    return StoreLog;
+    StoreLog1.prototype.getNowInfo = function () {
+        var index = this.now_selectItem.item_id;
+        var _i = parseInt(index.substr(0, 1));
+        var _j = parseInt(index.substr(1, 1));
+        return this.itemArr1[_i][_j];
+    };
+    return StoreLog1;
 }(StoreLogUI));
-//# sourceMappingURL=StoreLog.js.map
+//# sourceMappingURL=StoreLog1.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -58856,6 +59508,9 @@ var MainScene = /** @class */ (function (_super) {
         switch (e.target) {
             case this.indoorRect:
                 SceneUtil.changeScene(2);
+                break;
+            case this.textBut:
+                WX_SDK.getInstance().login();
                 break;
         }
     };
@@ -59046,7 +59701,6 @@ var Handler = Laya.Handler;
 var Sprite = Laya.Sprite;
 var Browser = Laya.Browser;
 var Render = Laya.Render;
-var LoadingUI = ui.Loading.LoadingViewUI;
 // 程序入口
 var GameMain = /** @class */ (function () {
     function GameMain() {
@@ -59071,22 +59725,24 @@ var GameMain = /** @class */ (function () {
         // })
         // WX_SDK.getInstance().setStorage('test',{msg:'this is test'});
         // WX_SDK.getInstance().getStorage('msg')
-        Laya.loader.load('Loading/LoadingView.json', Handler.create(this, this.loadingComp));
-        Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
+        Laya.loader.load(GameSetting.load_res_Arr, Handler.create(this, this.loadingComp));
+        // Laya.URL.basePath = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
         // Laya.URL.basePath = GameSetting.res_url;
-        Laya.MiniAdpter.nativefiles = [
-            'Loading/LoadingView.json'
-        ];
+        // Laya.MiniAdpter.nativefiles = [
+        //     'Loading/LoadingView.json',
+        // "res/atlas/load.atlas",
+        // ]
         // UIConfig.closeDialogOnSide = false;
     }
     GameMain.prototype.loadingComp = function () {
-        this.LoadView = new LoadingUI;
+        this.LoadView = new LoadingView;
+        GameConfig.setAlign_center(this.LoadView);
         Laya.stage.addChild(this.LoadView);
         Laya.loader.load(GameSetting.res_Arr, Handler.create(this, this.onCreateScene), Handler.create(this, this.onLoading, null, false));
     };
     GameMain.prototype.onLoading = function (progress) {
-        this.LoadView.numText.text = ~~(progress * 100).toString() + '%';
         // console.log("加载进度: " + progress);
+        this.LoadView.loadingProgress(progress);
     };
     GameMain.prototype.onCreateScene = function (id) {
         DataModel.getInstance().DataConfig();
