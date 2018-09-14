@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":55,
+    "selecteID":65,
     "props":{"width":750,"visible":false,"sceneColor":"#000000","height":1468},
     "nodeParent":-1,
     "label":"View",
@@ -83,15 +83,16 @@
                     "props":{"x":-3,"width":644,"var":"coinBox","top":167,"mouseThrough":false,"hitTestPrior":true,"height":604},
                     "nodeParent":2,
                     "label":"Box(coinBox)",
-                    "isOpen":false,
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":10,
                     "child":[
                         {
+                            "x":45,
                             "type":"Sprite",
-                            "props":{"y":457,"x":107,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "props":{"y":455,"x":68,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
                             "label":"Sprite",
                             "isDirectory":false,
@@ -102,6 +103,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "props":{"y":407,"x":340,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
@@ -114,8 +116,9 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
-                            "props":{"y":355,"x":554,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "props":{"y":312,"x":569,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
                             "label":"Sprite",
                             "isDirectory":false,
@@ -127,8 +130,9 @@
                             "$HIDDEN":false
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
-                            "props":{"y":282,"x":202,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "props":{"y":262,"x":205,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
                             "label":"Sprite",
                             "isDirectory":false,
@@ -139,8 +143,9 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
-                            "props":{"y":241,"x":442,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "props":{"y":203,"x":437,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
                             "label":"Sprite",
                             "isDirectory":false,
@@ -151,6 +156,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "props":{"y":187,"x":269,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
@@ -163,6 +169,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "props":{"y":287,"x":36,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
@@ -175,6 +182,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "props":{"y":490,"x":454,"width":17,"height":16,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
@@ -187,6 +195,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "props":{"y":118,"x":53,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
@@ -199,6 +208,7 @@
                                 ]
                         },
                         {
+                            "x":45,
                             "type":"Sprite",
                             "props":{"y":48,"x":167,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
                             "nodeParent":10,
@@ -207,6 +217,136 @@
                             "isAniNode":true,
                             "hasChild":false,
                             "compId":44,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":183,"x":133,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":56,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":335,"x":397,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":57,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":496,"x":228,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":58,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":472,"x":552,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":59,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":543,"x":330,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":60,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":336,"x":259,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":61,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":334,"x":490,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":62,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":371,"x":140,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":63,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":234,"x":328,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":64,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Sprite",
+                            "props":{"y":125,"x":524,"has_touch":false,"appendProps":"laya/pages/main/CoinsRole.prop"},
+                            "nodeParent":10,
+                            "label":"Sprite",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":65,
                             "child":[
                                 ]
                         }]

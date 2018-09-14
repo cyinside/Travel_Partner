@@ -16,6 +16,16 @@ var GameEvent = /** @class */ (function () {
     GameEvent.LOG_name = '';
     GameEvent.LOG_info = '';
     GameEvent.LOG_url = '';
+    GameEvent.Locker_seclect_Type = 0;
+    GameEvent.Locker_seclect_Id = 0;
+    // public static Locker_seclect_skin: string = '';
+    // public static ToPreapre_Data:ToPreapreDataInfo;
+    GameEvent.ToPreapre_Data = {
+        type: 0,
+        id: null,
+        skinSrc: ''
+    };
+    GameEvent.PREPARE_setItem = 'prepare_setItem';
     GameEvent.locker_id = 0;
     return GameEvent;
 }());

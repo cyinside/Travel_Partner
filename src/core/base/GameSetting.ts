@@ -11,7 +11,6 @@ class GameSetting {
     public static res_url: string = 'https://weixin-res.bbgameonline.com/Travel_Partner/'
     // public static res_url:'oss://weixin-trip'
 
-    public static coinNumber: number = 10;
     public static res_Arr: Array<any> = []
     public static load_res_Arr: Array<any> = [
         { url: "res/atlas/load.atlas", type: Laya.Loader.ATLAS },

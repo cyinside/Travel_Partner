@@ -160,7 +160,7 @@ var ui;
                 }
                 LockerLogUI.prototype.createChildren = function () {
                     View.regComponent("LockerLog", LockerLog);
-                    View.regComponent("ui.log.locker.LockerListItemUI", ui.log.locker.LockerListItemUI);
+                    View.regComponent("LockerListItem", LockerListItem);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/locker/LockerLog");
                 };
@@ -265,6 +265,7 @@ var ui;
                 }
                 PrepareLogUI.prototype.createChildren = function () {
                     View.regComponent("PrepareLog", PrepareLog);
+                    View.regComponent("ButItem", ButItem);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/prepare/PrepareLog");
                 };

@@ -1,3 +1,6 @@
-2018/09/12-09:51:42.389 31747 Reusing MANIFEST /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/MANIFEST-000001
-2018/09/12-09:51:42.389 31747 Recovering log #42
-2018/09/12-09:51:42.391 31747 Reusing old log /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/000042.log 
+2018/09/14-10:50:22.537 35075 Reusing MANIFEST /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/MANIFEST-000001
+2018/09/14-10:50:22.537 35075 Recovering log #61
+2018/09/14-10:50:22.539 35075 Reusing old log /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/000061.log 
+2018/09/14-16:10:31.553 76039 Level-0 table #65: started
+2018/09/14-16:10:31.555 76039 Level-0 table #65: 19656 bytes OK
+2018/09/14-16:10:31.556 76039 Delete type=0 #61

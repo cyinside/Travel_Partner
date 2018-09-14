@@ -20,6 +20,7 @@ var LockerLog = /** @class */ (function (_super) {
         _this.lockerListArr_food = [];
         _this.lockerListArr_luck = [];
         _this.lockerListArr_prop = [];
+        _this.bagPos_Rec = [0, 0, 0, 0];
         _this.up_color = '#ffedd5';
         _this.down_color = '#56361f';
         _this.lockerLogInit();
@@ -31,24 +32,18 @@ var LockerLog = /** @class */ (function (_super) {
         this.lockerListArr_food = this.filterItemByKey(1);
         this.lockerListArr_prop = this.filterItemByKey(2);
         this.lockerListArr_luck = this.filterItemByKey(3);
+        this.lockerList.mouseHandler = new Handler(this, this.selectHandle);
+        this.lockerList.renderHandler = new Handler(this, this.setListDetail);
         this.onSelect(0);
     };
     LockerLog.prototype.setButTouch_off = function () {
         this.tabGtoup.mouseEnabled = false;
     };
-    LockerLog.prototype.setListDetail = function (arr) {
-        if (arr === void 0) { arr = []; }
-        this.lockerList.repeatY = arr.length;
-        this.lockerList.scrollBar.scaleBar = false;
-        var _itemList = this.lockerList.cells;
-        arr.length < 5 ? this.lockerList.scrollBar.hide = true : this.lockerList.scrollBar.hide = false;
-        for (var i = 0; i < arr.length; i++) {
-            _itemList[i].nameText.changeText(arr[i].name);
-            _itemList[i].roleImg.skin = 'storeItem/' + arr[i].res + '.png';
-            _itemList[i].descText1.changeText(arr[i].desc1);
-            _itemList[i].descText1.changeText(arr[i].desc2);
-        }
-        this.lockerList.refresh();
+    LockerLog.prototype.setListDetail = function (cell, index) {
+        cell.nameText.changeText(cell.dataSource.name);
+        cell.descText1.changeText(cell.dataSource.desc1);
+        cell.descText2.changeText(cell.dataSource.desc2);
+        cell.roleImg.skin = 'storeItem/' + cell.dataSource.res + '.png';
     };
     LockerLog.prototype.filterItemByKey = function (key) {
         var filter_arr = this.lockerListArr.filter(function (value, index, arr) {
@@ -61,6 +56,28 @@ var LockerLog = /** @class */ (function (_super) {
         });
         return filter_arr;
     };
+    LockerLog.prototype.selectHandle = function (e, index) {
+        // GameEvent.Locker_seclect_Type = this.tabGtoup.selectedIndex;
+        if (e.type == "mouseup") {
+            console.log(index);
+            if (GameEvent.ToPreapre_Data['id'] == index) {
+                console.log('重复');
+                GameEvent.ToPreapre_Data['skinSrc'] = '';
+                GameEvent.ToPreapre_Data['id'] = null;
+                this.bagPos_Rec[this.tabGtoup.selectedIndex] = 0;
+            }
+            else {
+                var skin = 'storeItem/' + e.target.dataSource.res + '.png';
+                GameEvent.ToPreapre_Data['skinSrc'] = skin;
+                GameEvent.ToPreapre_Data['id'] = index;
+                this.bagPos_Rec[this.tabGtoup.selectedIndex] = 1;
+            }
+            console.log(this.bagPos_Rec);
+            e.target.markImg.visible = false;
+            Global.dispatchEvent(GameEvent.PREPARE_setItem);
+            this.close();
+        }
+    };
     LockerLog.prototype.onSelect = function (index) {
         console.log("当前选择的标签页索引为 " + index);
         for (var i = 0; i < 4; i++) {
@@ -70,28 +87,31 @@ var LockerLog = /** @class */ (function (_super) {
         this.closeAll();
         this.lockerList.visible = true;
         this.lockerList.alpha = 0;
+        if (this.bagPos_Rec[index] == 0) {
+            GameEvent.ToPreapre_Data['id'] = null;
+        }
+        console.log(this.bagPos_Rec);
         switch (index) {
             case 0:
                 this.lockerList.array = this.lockerListArr_food;
-                this.setListDetail(this.lockerListArr_food);
                 this.lockerListArr_food.length > 0 ? this.nthImg.visible = false : this.nthImg.visible = true;
                 this.showList(this.lockerList);
                 break;
             case 1:
                 this.lockerList.array = this.lockerListArr_luck;
-                this.setListDetail(this.lockerListArr_luck);
                 this.lockerListArr_luck.length > 0 ? this.nthImg.visible = false : this.nthImg.visible = true;
                 this.showList(this.lockerList);
                 break;
             case 2:
                 this.lockerList.array = this.lockerListArr_prop;
-                this.setListDetail(this.lockerListArr_prop);
                 this.lockerListArr_prop.length > 0 ? this.nthImg.visible = false : this.nthImg.visible = true;
                 this.showList(this.lockerList);
                 break;
         }
+        this.lockerList.refresh();
         this.getChildByName('butText' + index).color = this.down_color;
         this.getChildByName('butText' + index).fontSize = 34;
+        this.lockerList.array.length < 5 ? this.lockerList.scrollBar.hide = true : this.lockerList.scrollBar.hide = false;
     };
     LockerLog.prototype.closeAll = function () {
         this.lockerList.visible = false;
@@ -101,6 +121,16 @@ var LockerLog = /** @class */ (function (_super) {
     };
     LockerLog.prototype.setIndex = function (id) {
         this.tabGtoup.selectedIndex = id;
+        // this.onSelect(id)
+    };
+    LockerLog.prototype.lockerInit = function () {
+        for (var i = 0; i < this.lockerList.cells.length; i++) {
+            this.lockerList.cells[i].markImg.visible = false;
+        }
+        if (GameEvent.ToPreapre_Data['id'] || GameEvent.ToPreapre_Data['id'] == 0) {
+            this.lockerList.cells[GameEvent.ToPreapre_Data['id']].markImg.visible = true;
+            // this.lockerList.cells[GameEvent.ToPreapre_Data['id']].hes_use=true;
+        }
     };
     return LockerLog;
 }(LockerLogUI));

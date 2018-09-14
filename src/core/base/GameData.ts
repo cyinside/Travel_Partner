@@ -8,6 +8,8 @@ class GameData {
 
     private static _instance = null;
 
+    public static coinNumber: number = 0;
+
     public static userName: string = '一共7个字字字';
 
     public static storeDataArr: Array<any> = [];
@@ -64,4 +66,8 @@ class GameData {
             date: '2018-9-8'
         },
     ]
+
+    public getCoinNum(){
+        WX_SDK.getInstance().getCoin();
+    }
 }

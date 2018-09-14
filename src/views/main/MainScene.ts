@@ -35,12 +35,17 @@ class MainScene extends MainSceneUI {
             this.visible = true;
         })//先定滚动初始位置，再显示
 
-        this.setCoin(GameSetting.coinNumber);//设定金币数量
+
 
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
 
         // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         this.on(Laya.Event.CLICK, this, this.touchHandle);
+
+        GameData.getInstance().getCoinNum();//初始获取金币数量
+        Global.addEventListener(GameEvent.GET_COIN_COMP, this, function () {
+            this.setCoin(GameData.coinNumber);//设定金币数量
+        })
     }
 
     private touchHandle(e: Laya.Event) {
@@ -50,7 +55,7 @@ class MainScene extends MainSceneUI {
                 break;
             case this.textBut:
                 WX_SDK.getInstance().login();
-                break;    
+                break;
         }
     }
 

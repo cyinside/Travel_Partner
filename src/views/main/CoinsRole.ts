@@ -6,6 +6,7 @@ class CoinsRole extends Laya.Sprite {
     }
 
     public coinInit(){
+        this.graphics.clear();
         var typeNum:number = RandomUtils.getInstance().limitInteger(1,2);
         this.loadImage('GameScene/coin'+typeNum+'.png');
         this.alpha=1;

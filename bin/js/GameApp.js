@@ -62,6 +62,9 @@ var GameMain = /** @class */ (function () {
         this.logView = new LogView;
         this.logView.visible = false;
         Laya.stage.addChild(this.logView);
+        WX_SDK.getInstance().onShow(function () {
+            GameData.getInstance().getCoinNum();
+        });
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
         // SceneEvent.sceneID = 1;

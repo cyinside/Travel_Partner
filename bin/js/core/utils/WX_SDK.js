@@ -1,5 +1,6 @@
 var WX_SDK = /** @class */ (function () {
     function WX_SDK() {
+        this.url = 'http://192.168.2.40:8080/';
     }
     WX_SDK.getInstance = function () {
         if (WX_SDK._instance == null) {
@@ -15,17 +16,49 @@ var WX_SDK = /** @class */ (function () {
     };
     WX_SDK.prototype.login = function () {
         var wx = Laya.Browser.window.wx;
+        var code = '';
         wx.login({
             success: function (e) {
                 console.log(e);
+                code = e.code;
+                WX_SDK.getInstance().getTaken(code);
             }
         });
     };
-    WX_SDK.prototype.getTaken = function () {
+    WX_SDK.prototype.getTaken = function (code) {
         var wx = Laya.Browser.window.wx;
-        var url = '';
-        var header = {};
-        wx.request({});
+        var questUrl = '/oAuthToken/token';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            data: {
+                js_code: code,
+            },
+            success: function (res) {
+                console.log('success' + res);
+            },
+            fail: function (error) {
+                console.log('fail' + error);
+            }
+        });
+    };
+    WX_SDK.prototype.getCoin = function () {
+        var wx = Laya.Browser.window.wx;
+        var questUrl = '/copper/get-coppers';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            method: 'POST',
+            data: {
+                openid: "OPENID",
+            },
+            success: function (res) {
+                console.log('getCoinsuccess' + res);
+                GameData.coinNumber = res.data.total;
+                Global.dispatchEvent(GameEvent.GET_COIN_COMP);
+            },
+            fail: function (error) {
+                console.log('getCoinfail' + error);
+            }
+        });
     };
     WX_SDK.prototype.getLocation = function (callBack) {
         if (callBack === void 0) { callBack = null; }

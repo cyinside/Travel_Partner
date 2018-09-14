@@ -42,7 +42,8 @@ class LogView extends LogViewUI {
                 break;
             case 'Locker':
                 this.lockerLog.setIndex(GameEvent.locker_id);
-                // this.lockerLog.setButTouch_off();
+                this.lockerLog.lockerInit()
+                this.lockerLog.setButTouch_off();
                 this.lockerLog.visible = true;
                 this.lockerLog.popup();
                 break;

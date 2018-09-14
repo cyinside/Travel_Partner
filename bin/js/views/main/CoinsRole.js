@@ -19,6 +19,7 @@ var CoinsRole = /** @class */ (function (_super) {
         return _this;
     }
     CoinsRole.prototype.coinInit = function () {
+        this.graphics.clear();
         var typeNum = RandomUtils.getInstance().limitInteger(1, 2);
         this.loadImage('GameScene/coin' + typeNum + '.png');
         this.alpha = 1;

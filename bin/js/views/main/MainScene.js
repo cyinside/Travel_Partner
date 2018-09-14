@@ -45,10 +45,13 @@ var MainScene = /** @class */ (function (_super) {
             this.bgPanel.hScrollBar.value = 400;
             this.visible = true;
         }); //先定滚动初始位置，再显示
-        this.setCoin(GameSetting.coinNumber); //设定金币数量
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
         // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         this.on(Laya.Event.CLICK, this, this.touchHandle);
+        GameData.getInstance().getCoinNum();
+        Global.addEventListener(GameEvent.GET_COIN_COMP, this, function () {
+            this.setCoin(GameData.coinNumber); //设定金币数量
+        });
     };
     MainScene.prototype.touchHandle = function (e) {
         switch (e.target) {

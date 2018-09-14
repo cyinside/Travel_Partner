@@ -56,7 +56,6 @@ var GameSetting = /** @class */ (function () {
     GameSetting._instance = null;
     GameSetting.res_url = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
     // public static res_url:'oss://weixin-trip'
-    GameSetting.coinNumber = 10;
     GameSetting.res_Arr = [];
     GameSetting.load_res_Arr = [
         { url: "res/atlas/load.atlas", type: Laya.Loader.ATLAS },

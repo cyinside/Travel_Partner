@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"Dialog",
-    "selectedBox":3,
-    "selecteID":21,
+    "selectedBox":21,
+    "selecteID":47,
     "referenceLines":[
         {
             "value":503,
@@ -33,6 +33,11 @@
             "value":1269,
             "type":0,
             "id":6
+        },
+        {
+            "value":685,
+            "type":1,
+            "id":7
         }],
     "props":{"width":720,"sceneColor":"#000000","runtime":"PrepareLog","mouseEnabled":true,"height":770},
     "nodeParent":-1,
@@ -95,102 +100,253 @@
                                 },
                                 {
                                     "x":60,
-                                    "type":"Image",
-                                    "props":{"y":225,"x":81,"var":"addFood1","skin":"prepareLog/addIcon.png","name":"addFood1","mouseEnabled":true},
+                                    "type":"Box",
+                                    "props":{"y":198,"x":54,"width":155,"var":"addFood1","runtime":"ButItem","mouseEnabled":true,"height":150},
                                     "nodeParent":12,
-                                    "label":"Image(addFood1)",
-                                    "isDirectory":false,
+                                    "label":"Box(addFood1)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
                                     "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":8,
+                                    "hasChild":true,
+                                    "compId":26,
                                     "child":[
-                                        ],
-                                    "$HIDDEN":false
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":27,"x":27,"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":26,
+                                            "label":"Image(addImg)",
+                                            "isOpen":true,
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":8,
+                                            "child":[
+                                                ],
+                                            "$HIDDEN":false
+                                        },
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":76,"x":77,"width":152,"visible":false,"skin":"storeItem/icon_food_02.png","pivotY":76,"pivotX":77,"name":"itemImg","height":152},
+                                            "nodeParent":26,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":22,
+                                            "child":[
+                                                ],
+                                            "$HIDDEN":false
+                                        }]
                                 },
                                 {
                                     "x":60,
-                                    "type":"Image",
-                                    "props":{"y":225,"x":322,"var":"addLuck1","skin":"prepareLog/addIcon.png","name":"addLuck1","mouseEnabled":true},
+                                    "type":"Box",
+                                    "props":{"y":273,"x":374,"width":160,"var":"addLuck1","runtime":"ButItem","pivotY":75,"pivotX":78,"mouseEnabled":true,"height":154},
                                     "nodeParent":12,
-                                    "label":"Image(addLuck1)",
-                                    "isOpen":true,
-                                    "isDirectory":false,
+                                    "label":"Box(addLuck1)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
                                     "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":9,
+                                    "hasChild":true,
+                                    "compId":27,
                                     "child":[
-                                        ]
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":27,"x":26,"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":27,
+                                            "label":"Image(addImg)",
+                                            "isOpen":true,
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":9,
+                                            "child":[
+                                                ]
+                                        },
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":76,"x":77,"width":152,"visible":false,"skin":"storeItem/icon_food_02.png","pivotY":76,"pivotX":77,"name":"itemImg","height":152},
+                                            "nodeParent":27,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":23,
+                                            "child":[
+                                                ]
+                                        }]
                                 },
                                 {
                                     "x":60,
-                                    "type":"Image",
-                                    "props":{"y":454,"x":316,"var":"addProp2","skin":"prepareLog/addIcon.png","name":"addProp2","mouseEnabled":true},
+                                    "type":"Box",
+                                    "props":{"y":428,"x":295,"width":157,"var":"addProp2","runtime":"ButItem","mouseEnabled":true,"height":155},
                                     "nodeParent":12,
-                                    "label":"Image(addProp2)",
-                                    "isDirectory":false,
+                                    "label":"Box(addProp2)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
                                     "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":11,
+                                    "hasChild":true,
+                                    "compId":28,
                                     "child":[
-                                        ]
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":26,"x":21,"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":28,
+                                            "label":"Image(addImg)",
+                                            "isOpen":true,
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":11,
+                                            "child":[
+                                                ]
+                                        },
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":76,"x":77,"width":152,"visible":false,"skin":"storeItem/icon_food_02.png","pivotY":76,"pivotX":77,"name":"itemImg","height":152},
+                                            "nodeParent":28,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":25,
+                                            "child":[
+                                                ]
+                                        }]
                                 },
                                 {
                                     "x":60,
-                                    "type":"Image",
-                                    "props":{"y":454,"x":88,"var":"addProp1","skin":"prepareLog/addIcon.png","name":"addProp1","mouseEnabled":true},
+                                    "type":"Box",
+                                    "props":{"y":428,"x":55,"width":170,"var":"addProp1","runtime":"ButItem","mouseEnabled":true,"height":156},
                                     "nodeParent":12,
-                                    "label":"Image(addProp1)",
+                                    "label":"Box(addProp1)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":29,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":26,"x":33,"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":29,
+                                            "label":"Image(addImg)",
+                                            "isOpen":true,
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":10,
+                                            "child":[
+                                                ]
+                                        },
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":76,"x":77,"width":152,"visible":false,"skin":"storeItem/icon_food_02.png","pivotY":76,"pivotX":77,"name":"itemImg","height":152},
+                                            "nodeParent":29,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":24,
+                                            "child":[
+                                                ]
+                                        }]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Button",
+                                    "props":{"y":646,"x":122,"var":"clearBut_Bag","stateNum":"1","skin":"settingLog/btn_1.png","mouseEnabled":true,"labelSize":30,"labelColors":"#ffffff","label":"清空"},
+                                    "nodeParent":12,
+                                    "label":"Button(clearBut_Bag)",
                                     "isDirectory":false,
                                     "isAniNode":true,
                                     "hasChild":false,
-                                    "compId":10,
+                                    "compId":46,
                                     "child":[
                                         ]
                                 }]
                         },
                         {
                             "x":45,
-                            "type":"Image",
-                            "props":{"y":0,"x":785,"visible":true,"var":"tableArea","skin":"prepareLog/tableBg.png","mouseEnabled":true},
+                            "type":"Box",
+                            "props":{"y":224,"x":846,"width":596,"mouseEnabled":true,"height":540},
                             "nodeParent":6,
-                            "label":"Image(tableArea)",
+                            "label":"Box",
                             "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
-                            "compId":3,
+                            "compId":21,
                             "child":[
                                 {
                                     "x":60,
-                                    "type":"Box",
-                                    "props":{"y":224,"x":61,"mouseEnabled":true},
-                                    "nodeParent":3,
-                                    "label":"Box",
+                                    "type":"Image",
+                                    "props":{"y":-224,"x":-61,"visible":true,"var":"tableArea","skin":"prepareLog/tableBg.png","mouseEnabled":true},
+                                    "nodeParent":21,
+                                    "label":"Image(tableArea)",
                                     "isOpen":true,
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":3,
+                                    "child":[
+                                        ]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":0,"x":0,"width":111,"var":"setFood1","runtime":"ButItem","mouseEnabled":true,"height":110},
+                                    "nodeParent":21,
+                                    "label":"Box(setFood1)",
+                                    "isOpen":false,
                                     "isDirectory":true,
                                     "isAniNode":true,
                                     "hasChild":true,
-                                    "compId":21,
+                                    "compId":30,
                                     "child":[
                                         {
-                                            "x":75,
                                             "type":"Image",
-                                            "props":{"var":"setFood1","skin":"prepareLog/addIcon.png","name":"setFood1","mouseEnabled":true},
-                                            "nodeParent":21,
-                                            "label":"Image(setFood1)",
+                                            "props":{"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":30,
+                                            "label":"Image(addImg)",
                                             "isDirectory":false,
                                             "isAniNode":true,
                                             "hasChild":false,
                                             "compId":13,
                                             "child":[
-                                                ]
+                                                ],
+                                            "$HIDDEN":false
                                         },
                                         {
-                                            "x":75,
                                             "type":"Image",
-                                            "props":{"x":130,"var":"setFood2","skin":"prepareLog/addIcon.png","name":"setFood2","mouseEnabled":true},
-                                            "nodeParent":21,
-                                            "label":"Image(setFood2)",
+                                            "props":{"y":51,"x":53,"width":133,"visible":false,"skin":"storeItem/icon_boat_03.png","pivotY":67,"pivotX":67,"name":"itemImg","height":133},
+                                            "nodeParent":30,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":31,
+                                            "child":[
+                                                ]
+                                        }]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":0,"x":130,"width":109,"var":"setFood2","runtime":"ButItem","mouseEnabled":true,"height":109},
+                                    "nodeParent":21,
+                                    "label":"Box(setFood2)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":32,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "props":{"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":32,
+                                            "label":"Image(addImg)",
                                             "isDirectory":false,
                                             "isAniNode":true,
                                             "hasChild":false,
@@ -199,11 +355,36 @@
                                                 ]
                                         },
                                         {
-                                            "x":75,
                                             "type":"Image",
-                                            "props":{"y":1,"x":310,"var":"setLock1","skin":"prepareLog/addIcon.png","name":"setLock1","mouseEnabled":true},
-                                            "nodeParent":21,
-                                            "label":"Image(setLock1)",
+                                            "props":{"y":52,"x":53,"width":133,"visible":false,"skin":"storeItem/icon_boat_03.png","pivotY":69,"pivotX":67,"name":"itemImg","height":133},
+                                            "nodeParent":32,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":33,
+                                            "child":[
+                                                ],
+                                            "$HIDDEN":false
+                                        }]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":1,"x":310,"width":113,"var":"setLock1","runtime":"ButItem","mouseEnabled":true,"height":108},
+                                    "nodeParent":21,
+                                    "label":"Box(setLock1)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":34,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "props":{"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":34,
+                                            "label":"Image(addImg)",
                                             "isOpen":true,
                                             "isDirectory":false,
                                             "isAniNode":true,
@@ -214,24 +395,73 @@
                                             "$HIDDEN":false
                                         },
                                         {
-                                            "x":75,
                                             "type":"Image",
-                                            "props":{"y":1,"x":440,"var":"setLock2","skin":"prepareLog/addIcon.png","name":"setLock2","mouseEnabled":true},
-                                            "nodeParent":21,
-                                            "label":"Image(setLock2)",
+                                            "props":{"y":53,"x":53,"width":133,"visible":false,"skin":"storeItem/icon_boat_03.png","pivotY":68,"pivotX":67,"name":"itemImg","height":133},
+                                            "nodeParent":34,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":35,
+                                            "child":[
+                                                ]
+                                        }]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":1,"x":440,"width":122,"var":"setLock2","runtime":"ButItem","mouseEnabled":true,"height":113},
+                                    "nodeParent":21,
+                                    "label":"Box(setLock2)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":36,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "props":{"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":36,
+                                            "label":"Image(addImg)",
                                             "isDirectory":false,
                                             "isAniNode":true,
                                             "hasChild":false,
                                             "compId":15,
                                             "child":[
-                                                ]
+                                                ],
+                                            "$HIDDEN":false
                                         },
                                         {
-                                            "x":75,
                                             "type":"Image",
-                                            "props":{"y":231,"x":18,"var":"setProp1","skin":"prepareLog/addIcon.png","name":"setProp1","mouseEnabled":true},
-                                            "nodeParent":21,
-                                            "label":"Image(setProp1)",
+                                            "props":{"y":54,"x":52,"width":133,"visible":false,"skin":"storeItem/icon_boat_03.png","pivotY":70,"pivotX":67,"name":"itemImg","height":133},
+                                            "nodeParent":36,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":37,
+                                            "child":[
+                                                ]
+                                        }]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":231,"x":18,"width":111,"var":"setProp1","runtime":"ButItem","mouseEnabled":true,"height":108},
+                                    "nodeParent":21,
+                                    "label":"Box(setProp1)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":38,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "props":{"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":38,
+                                            "label":"Image(addImg)",
                                             "isDirectory":false,
                                             "isAniNode":true,
                                             "hasChild":false,
@@ -240,11 +470,36 @@
                                                 ]
                                         },
                                         {
-                                            "x":75,
                                             "type":"Image",
-                                            "props":{"y":230,"x":150,"var":"setProp2","skin":"prepareLog/addIcon.png","name":"setProp2","mouseEnabled":true},
-                                            "nodeParent":21,
-                                            "label":"Image(setProp2)",
+                                            "props":{"y":52,"x":51,"width":133,"visible":false,"skin":"storeItem/icon_boat_03.png","pivotY":68,"pivotX":65,"name":"itemImg","height":133},
+                                            "nodeParent":38,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":39,
+                                            "child":[
+                                                ],
+                                            "$HIDDEN":false
+                                        }]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":230,"x":150,"width":110,"var":"setProp2","runtime":"ButItem","mouseEnabled":true,"height":105},
+                                    "nodeParent":21,
+                                    "label":"Box(setProp2)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":40,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "props":{"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":40,
+                                            "label":"Image(addImg)",
                                             "isDirectory":false,
                                             "isAniNode":true,
                                             "hasChild":false,
@@ -253,11 +508,35 @@
                                                 ]
                                         },
                                         {
-                                            "x":75,
                                             "type":"Image",
-                                            "props":{"y":231,"x":284,"var":"setProp3","skin":"prepareLog/addIcon.png","name":"setProp3","mouseEnabled":true},
-                                            "nodeParent":21,
-                                            "label":"Image(setProp3)",
+                                            "props":{"y":50,"x":52,"width":129,"visible":false,"skin":"storeItem/icon_boat_03.png","pivotY":64,"pivotX":64,"name":"itemImg","height":129},
+                                            "nodeParent":40,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":41,
+                                            "child":[
+                                                ]
+                                        }]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":231,"x":284,"width":112,"var":"setProp3","runtime":"ButItem","mouseEnabled":true,"height":108},
+                                    "nodeParent":21,
+                                    "label":"Box(setProp3)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":42,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "props":{"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":42,
+                                            "label":"Image(addImg)",
                                             "isDirectory":false,
                                             "isAniNode":true,
                                             "hasChild":false,
@@ -266,18 +545,68 @@
                                                 ]
                                         },
                                         {
-                                            "x":75,
                                             "type":"Image",
-                                            "props":{"y":230,"x":419,"var":"setProp4","skin":"prepareLog/addIcon.png","name":"setProp4","mouseEnabled":true},
-                                            "nodeParent":21,
-                                            "label":"Image(setProp4)",
+                                            "props":{"y":49,"x":50,"width":133,"visible":false,"skin":"storeItem/icon_boat_03.png","pivotY":66,"pivotX":64,"name":"itemImg","height":133},
+                                            "nodeParent":42,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":43,
+                                            "child":[
+                                                ]
+                                        }]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":230,"x":419,"width":112,"var":"setProp4","runtime":"ButItem","mouseEnabled":true,"height":104},
+                                    "nodeParent":21,
+                                    "label":"Box(setProp4)",
+                                    "isOpen":false,
+                                    "isDirectory":true,
+                                    "isAniNode":true,
+                                    "hasChild":true,
+                                    "compId":44,
+                                    "child":[
+                                        {
+                                            "type":"Image",
+                                            "props":{"skin":"prepareLog/addIcon.png","name":"addImg"},
+                                            "nodeParent":44,
+                                            "label":"Image(addImg)",
                                             "isDirectory":false,
                                             "isAniNode":true,
                                             "hasChild":false,
                                             "compId":20,
                                             "child":[
+                                                ],
+                                            "$HIDDEN":false
+                                        },
+                                        {
+                                            "type":"Image",
+                                            "props":{"y":54,"x":53,"width":133,"visible":false,"skin":"storeItem/icon_boat_03.png","pivotY":69,"pivotX":67,"name":"itemImg","height":133},
+                                            "nodeParent":44,
+                                            "label":"Image(itemImg)",
+                                            "isDirectory":false,
+                                            "isAniNode":true,
+                                            "hasChild":false,
+                                            "compId":45,
+                                            "child":[
                                                 ]
                                         }]
+                                },
+                                {
+                                    "x":60,
+                                    "type":"Button",
+                                    "props":{"y":422,"x":139,"var":"clearBut_Table","stateNum":"1","skin":"settingLog/btn_1.png","mouseEnabled":true,"labelSize":30,"labelColors":"#ffffff","label":"清空"},
+                                    "nodeParent":21,
+                                    "label":"Button(clearBut_Table)",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":47,
+                                    "child":[
+                                        ]
                                 }]
                         }]
                 }]

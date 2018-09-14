@@ -88,6 +88,7 @@ class GameMain {
         Laya.stage.addChild(this.logView);
 
 
+        WX_SDK.getInstance().onShow(this.wxOnShowHandle);//进入小游戏时间处理
 
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
@@ -134,6 +135,10 @@ class GameMain {
 
     private changeHandle() {
         console.log('changeHandle');
+    }
+
+    private wxOnShowHandle(){
+        GameData.getInstance().getCoinNum();//获取金币
     }
 }
 new GameMain();

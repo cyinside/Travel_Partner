@@ -7,7 +7,11 @@ var GameData = /** @class */ (function () {
         }
         return GameData._instance;
     };
+    GameData.prototype.getCoinNum = function () {
+        WX_SDK.getInstance().getCoin();
+    };
     GameData._instance = null;
+    GameData.coinNumber = 0;
     GameData.userName = '一共7个字字字';
     GameData.storeDataArr = [];
     GameData.picDataArr = [

@@ -129,6 +129,7 @@ module ui.log.locker {
 		public descText1:Laya.Label;
 		public descText2:Laya.Label;
 		public numText:Laya.Label;
+		public markImg:Laya.Image;
 
         constructor(){ super()}
         createChildren():void {
@@ -159,7 +160,7 @@ module ui.log.locker {
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("LockerLog",LockerLog);
-			View.regComponent("ui.log.locker.LockerListItemUI",ui.log.locker.LockerListItemUI);
+			View.regComponent("LockerListItem",LockerListItem);
 
             super.createChildren();
             this.loadUI("log/locker/LockerLog");
@@ -245,25 +246,28 @@ module ui.log.prepare {
 		public bgPanel:Laya.Panel;
 		public bgBox:Laya.Box;
 		public bagAera:Laya.Image;
-		public addFood1:Laya.Image;
-		public addLuck1:Laya.Image;
-		public addProp2:Laya.Image;
-		public addProp1:Laya.Image;
+		public addFood1:ButItem;
+		public addLuck1:ButItem;
+		public addProp2:ButItem;
+		public addProp1:ButItem;
+		public clearBut_Bag:Laya.Button;
 		public tableArea:Laya.Image;
-		public setFood1:Laya.Image;
-		public setFood2:Laya.Image;
-		public setLock1:Laya.Image;
-		public setLock2:Laya.Image;
-		public setProp1:Laya.Image;
-		public setProp2:Laya.Image;
-		public setProp3:Laya.Image;
-		public setProp4:Laya.Image;
+		public setFood1:ButItem;
+		public setFood2:ButItem;
+		public setLock1:ButItem;
+		public setLock2:ButItem;
+		public setProp1:ButItem;
+		public setProp2:ButItem;
+		public setProp3:ButItem;
+		public setProp4:ButItem;
+		public clearBut_Table:Laya.Button;
 		public leftBut:Laya.Image;
 		public rightBut:Laya.Image;
 
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("PrepareLog",PrepareLog);
+			View.regComponent("ButItem",ButItem);
 
             super.createChildren();
             this.loadUI("log/prepare/PrepareLog");

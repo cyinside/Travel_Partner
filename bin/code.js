@@ -56241,6 +56241,21 @@ if (typeof define === 'function' && define.amd){
         }
     });
 }
+var ToPreapreDataInfo = /** @class */ (function () {
+    function ToPreapreDataInfo() {
+        this.type = 0;
+        this.id = 0;
+        this.skinSrc = '';
+    }
+    return ToPreapreDataInfo;
+}());
+//# sourceMappingURL=ToPreapreDataInfo.js.map
+var ButItemInfo = /** @class */ (function () {
+    function ButItemInfo() {
+    }
+    return ButItemInfo;
+}());
+//# sourceMappingURL=ButItemInfo.js.map
 var SoundModel = /** @class */ (function () {
     function SoundModel() {
     }
@@ -56280,6 +56295,7 @@ var DataModel = /** @class */ (function () {
 //# sourceMappingURL=DataModel.js.map
 var WX_SDK = /** @class */ (function () {
     function WX_SDK() {
+        this.url = 'http://192.168.2.40:8080/';
     }
     WX_SDK.getInstance = function () {
         if (WX_SDK._instance == null) {
@@ -56295,17 +56311,49 @@ var WX_SDK = /** @class */ (function () {
     };
     WX_SDK.prototype.login = function () {
         var wx = Laya.Browser.window.wx;
+        var code = '';
         wx.login({
             success: function (e) {
                 console.log(e);
+                code = e.code;
+                WX_SDK.getInstance().getTaken(code);
             }
         });
     };
-    WX_SDK.prototype.getTaken = function () {
+    WX_SDK.prototype.getTaken = function (code) {
         var wx = Laya.Browser.window.wx;
-        var url = '';
-        var header = {};
-        wx.request({});
+        var questUrl = '/oAuthToken/token';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            data: {
+                js_code: code,
+            },
+            success: function (res) {
+                console.log('success' + res);
+            },
+            fail: function (error) {
+                console.log('fail' + error);
+            }
+        });
+    };
+    WX_SDK.prototype.getCoin = function () {
+        var wx = Laya.Browser.window.wx;
+        var questUrl = '/copper/get-coppers';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            method: 'POST',
+            data: {
+                openid: "OPENID",
+            },
+            success: function (res) {
+                console.log('getCoinsuccess' + res);
+                GameData.coinNumber = res.data.total;
+                Global.dispatchEvent(GameEvent.GET_COIN_COMP);
+            },
+            fail: function (error) {
+                console.log('getCoinfail' + error);
+            }
+        });
     };
     WX_SDK.prototype.getLocation = function (callBack) {
         if (callBack === void 0) { callBack = null; }
@@ -56792,6 +56840,16 @@ var GameEvent = /** @class */ (function () {
     GameEvent.LOG_name = '';
     GameEvent.LOG_info = '';
     GameEvent.LOG_url = '';
+    GameEvent.Locker_seclect_Type = 0;
+    GameEvent.Locker_seclect_Id = 0;
+    // public static Locker_seclect_skin: string = '';
+    // public static ToPreapre_Data:ToPreapreDataInfo;
+    GameEvent.ToPreapre_Data = {
+        type: 0,
+        id: null,
+        skinSrc: ''
+    };
+    GameEvent.PREPARE_setItem = 'prepare_setItem';
     GameEvent.locker_id = 0;
     return GameEvent;
 }());
@@ -56854,7 +56912,6 @@ var GameSetting = /** @class */ (function () {
     GameSetting._instance = null;
     GameSetting.res_url = 'https://weixin-res.bbgameonline.com/Travel_Partner/';
     // public static res_url:'oss://weixin-trip'
-    GameSetting.coinNumber = 10;
     GameSetting.res_Arr = [];
     GameSetting.load_res_Arr = [
         { url: "res/atlas/load.atlas", type: Laya.Loader.ATLAS },
@@ -56872,7 +56929,11 @@ var GameData = /** @class */ (function () {
         }
         return GameData._instance;
     };
+    GameData.prototype.getCoinNum = function () {
+        WX_SDK.getInstance().getCoin();
+    };
     GameData._instance = null;
+    GameData.coinNumber = 0;
     GameData.userName = '一共7个字字字';
     GameData.storeDataArr = [];
     GameData.picDataArr = [
@@ -57580,7 +57641,7 @@ var ui;
                 }
                 LockerLogUI.prototype.createChildren = function () {
                     View.regComponent("LockerLog", LockerLog);
-                    View.regComponent("ui.log.locker.LockerListItemUI", ui.log.locker.LockerListItemUI);
+                    View.regComponent("LockerListItem", LockerListItem);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/locker/LockerLog");
                 };
@@ -57685,6 +57746,7 @@ var ui;
                 }
                 PrepareLogUI.prototype.createChildren = function () {
                     View.regComponent("PrepareLog", PrepareLog);
+                    View.regComponent("ButItem", ButItem);
                     _super.prototype.createChildren.call(this);
                     this.loadUI("log/prepare/PrepareLog");
                 };
@@ -58160,6 +58222,8 @@ var LogView = /** @class */ (function (_super) {
                 break;
             case 'Locker':
                 this.lockerLog.setIndex(GameEvent.locker_id);
+                this.lockerLog.lockerInit();
+                this.lockerLog.setButTouch_off();
                 this.lockerLog.visible = true;
                 this.lockerLog.popup();
                 break;
@@ -58168,6 +58232,54 @@ var LogView = /** @class */ (function (_super) {
     return LogView;
 }(LogViewUI));
 //# sourceMappingURL=LogView.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var ButItem = /** @class */ (function (_super) {
+    __extends(ButItem, _super);
+    function ButItem() {
+        var _this = _super.call(this) || this;
+        _this.seclect_Type = 0;
+        _this.seclect_Id = null;
+        return _this;
+    }
+    return ButItem;
+}(Laya.Sprite));
+//# sourceMappingURL=ButItem.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var LockerListItemUI = ui.log.locker.LockerListItemUI;
+var LockerListItem = /** @class */ (function (_super) {
+    __extends(LockerListItem, _super);
+    function LockerListItem() {
+        var _this = _super.call(this) || this;
+        _this.hes_use = false;
+        return _this;
+    }
+    return LockerListItem;
+}(LockerListItemUI));
+//# sourceMappingURL=LockerListItem.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -58190,6 +58302,7 @@ var LockerLog = /** @class */ (function (_super) {
         _this.lockerListArr_food = [];
         _this.lockerListArr_luck = [];
         _this.lockerListArr_prop = [];
+        _this.bagPos_Rec = [0, 0, 0, 0];
         _this.up_color = '#ffedd5';
         _this.down_color = '#56361f';
         _this.lockerLogInit();
@@ -58197,42 +58310,22 @@ var LockerLog = /** @class */ (function (_super) {
     }
     LockerLog.prototype.lockerLogInit = function () {
         this.tabGtoup.selectHandler = new Handler(this, this.onSelect);
-        this.lockerList_food.cacheContent = true;
-        this.lockerList_luck.cacheContent = true;
+        this.lockerList.cacheContent = true;
         this.lockerListArr_food = this.filterItemByKey(1);
+        this.lockerListArr_prop = this.filterItemByKey(2);
         this.lockerListArr_luck = this.filterItemByKey(3);
-        this.setListDetail(this.lockerListArr_food, 1);
-        this.lockerList_food.array = this.lockerListArr_food;
-        this.vSBar.showButtons = false;
+        this.lockerList.mouseHandler = new Handler(this, this.selectHandle);
+        this.lockerList.renderHandler = new Handler(this, this.setListDetail);
+        this.onSelect(0);
     };
-    LockerLog.prototype.setListDetail = function (arr, type) {
-        if (arr === void 0) { arr = []; }
-        var _itemList;
-        switch (type) {
-            case 1:
-                _itemList = this.lockerList_food.cells;
-                if (arr.length < 5) {
-                    this.lockerList_food.scrollBar.hide = true;
-                }
-                break;
-            case 2:
-                _itemList = this.lockerList_luck.cells;
-                if (arr.length < 5) {
-                    this.lockerList_luck.scrollBar.hide = true;
-                }
-                break;
-            case 3:
-                _itemList = this.lockerList_food.cells;
-                if (arr.length < 5) {
-                    this.lockerList_food.scrollBar.hide = true;
-                }
-                break;
-        }
-        for (var i = 0; i < arr.length; i++) {
-            _itemList[i].nameText.changeText(arr[i].name);
-            _itemList[i].descText1.changeText(arr[i].desc1);
-            _itemList[i].descText1.changeText(arr[i].desc2);
-        }
+    LockerLog.prototype.setButTouch_off = function () {
+        this.tabGtoup.mouseEnabled = false;
+    };
+    LockerLog.prototype.setListDetail = function (cell, index) {
+        cell.nameText.changeText(cell.dataSource.name);
+        cell.descText1.changeText(cell.dataSource.desc1);
+        cell.descText2.changeText(cell.dataSource.desc2);
+        cell.roleImg.skin = 'storeItem/' + cell.dataSource.res + '.png';
     };
     LockerLog.prototype.filterItemByKey = function (key) {
         var filter_arr = this.lockerListArr.filter(function (value, index, arr) {
@@ -58245,6 +58338,28 @@ var LockerLog = /** @class */ (function (_super) {
         });
         return filter_arr;
     };
+    LockerLog.prototype.selectHandle = function (e, index) {
+        // GameEvent.Locker_seclect_Type = this.tabGtoup.selectedIndex;
+        if (e.type == "mouseup") {
+            console.log(index);
+            if (GameEvent.ToPreapre_Data['id'] == index) {
+                console.log('重复');
+                GameEvent.ToPreapre_Data['skinSrc'] = '';
+                GameEvent.ToPreapre_Data['id'] = null;
+                this.bagPos_Rec[this.tabGtoup.selectedIndex] = 0;
+            }
+            else {
+                var skin = 'storeItem/' + e.target.dataSource.res + '.png';
+                GameEvent.ToPreapre_Data['skinSrc'] = skin;
+                GameEvent.ToPreapre_Data['id'] = index;
+                this.bagPos_Rec[this.tabGtoup.selectedIndex] = 1;
+            }
+            console.log(this.bagPos_Rec);
+            e.target.markImg.visible = false;
+            Global.dispatchEvent(GameEvent.PREPARE_setItem);
+            this.close();
+        }
+    };
     LockerLog.prototype.onSelect = function (index) {
         console.log("当前选择的标签页索引为 " + index);
         for (var i = 0; i < 4; i++) {
@@ -58252,30 +58367,52 @@ var LockerLog = /** @class */ (function (_super) {
             this.getChildByName('butText' + i).fontSize = 30;
         }
         this.closeAll();
+        this.lockerList.visible = true;
+        this.lockerList.alpha = 0;
+        if (this.bagPos_Rec[index] == 0) {
+            GameEvent.ToPreapre_Data['id'] = null;
+        }
+        console.log(this.bagPos_Rec);
         switch (index) {
             case 0:
-                this.lockerList_food.visible = true;
-                this.lockerList_food.alpha = 0;
-                this.showList(this.lockerList_food);
+                this.lockerList.array = this.lockerListArr_food;
+                this.lockerListArr_food.length > 0 ? this.nthImg.visible = false : this.nthImg.visible = true;
+                this.showList(this.lockerList);
                 break;
             case 1:
-                this.lockerList_luck.visible = true;
-                this.lockerList_luck.alpha = 0;
-                this.showList(this.lockerList_luck);
+                this.lockerList.array = this.lockerListArr_luck;
+                this.lockerListArr_luck.length > 0 ? this.nthImg.visible = false : this.nthImg.visible = true;
+                this.showList(this.lockerList);
+                break;
+            case 2:
+                this.lockerList.array = this.lockerListArr_prop;
+                this.lockerListArr_prop.length > 0 ? this.nthImg.visible = false : this.nthImg.visible = true;
+                this.showList(this.lockerList);
                 break;
         }
+        this.lockerList.refresh();
         this.getChildByName('butText' + index).color = this.down_color;
         this.getChildByName('butText' + index).fontSize = 34;
+        this.lockerList.array.length < 5 ? this.lockerList.scrollBar.hide = true : this.lockerList.scrollBar.hide = false;
     };
     LockerLog.prototype.closeAll = function () {
-        this.lockerList_food.visible = false;
-        this.lockerList_luck.visible = false;
+        this.lockerList.visible = false;
     };
     LockerLog.prototype.showList = function (obj) {
         Laya.Tween.to(obj, { alpha: 1 }, 400);
     };
     LockerLog.prototype.setIndex = function (id) {
         this.tabGtoup.selectedIndex = id;
+        // this.onSelect(id)
+    };
+    LockerLog.prototype.lockerInit = function () {
+        for (var i = 0; i < this.lockerList.cells.length; i++) {
+            this.lockerList.cells[i].markImg.visible = false;
+        }
+        if (GameEvent.ToPreapre_Data['id'] || GameEvent.ToPreapre_Data['id'] == 0) {
+            this.lockerList.cells[GameEvent.ToPreapre_Data['id']].markImg.visible = true;
+            // this.lockerList.cells[GameEvent.ToPreapre_Data['id']].hes_use=true;
+        }
     };
     return LockerLog;
 }(LockerLogUI));
@@ -58524,6 +58661,7 @@ var PrepareLog = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.b_X = 0;
         _this.e_X = 0;
+        _this.index_id = null;
         _this.dirState = 0;
         _this.prepareLogInit();
         return _this;
@@ -58534,8 +58672,13 @@ var PrepareLog = /** @class */ (function (_super) {
         this.bgPanel.hScrollBar.elasticDistance = 30; //设置橡皮筋极限距离。
         this.on(Laya.Event.CLICK, this, this.onTouchHandle);
         // this.bgPanel.hScrollBar.on(Laya.Event.CHANGE, this, this.onChange);
+        // this.addFood1.seclect_Type=0;
+        // this.addLuck1.seclect_Type=1;
+        // this.addProp1.seclect_Type=2;
+        // this.addProp2.seclect_Type=2;
         this.bgPanel.on(Laya.Event.MOUSE_DOWN, this, this.touchBegin);
         this.bgPanel.on(Laya.Event.MOUSE_UP, this, this.touchEnd);
+        Global.addEventListener(GameEvent.PREPARE_setItem, this, this.setItem);
     };
     PrepareLog.prototype.touchBegin = function (e) {
         this.b_X = e.stageX;
@@ -58563,11 +58706,21 @@ var PrepareLog = /** @class */ (function (_super) {
             }
         }
     };
-    PrepareLog.prototype.onChange = function (e) {
-        console.log(this.bgPanel.hScrollBar.value);
+    PrepareLog.prototype.setItem = function () {
+        this.selectItem.getChildByName('itemImg').skin = GameEvent.ToPreapre_Data['skinSrc'];
+        this.selectItem.getChildByName('itemImg').visible = true;
+        this.selectItem.seclect_Id = GameEvent.ToPreapre_Data['id'];
+        if (this.selectItem.seclect_Id || this.selectItem.seclect_Id == 0) {
+            this.selectItem.getChildByName('addImg').alpha = 0;
+        }
+        else {
+            this.selectItem.getChildByName('addImg').alpha = 1;
+        }
+        console.log(this.selectItem.seclect_Id);
     };
     PrepareLog.prototype.onTouchHandle = function (e) {
         var _target = e.target;
+        this.selectItem = _target;
         switch (_target) {
             case this.rightBut:
                 if (this.dirState == 0) {
@@ -58583,77 +58736,70 @@ var PrepareLog = /** @class */ (function (_super) {
                 break;
             case this.addFood1:
                 GameEvent.locker_id = 0;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addFood1.seclect_Id);
                 console.log('addFood1');
                 break;
             case this.addLuck1:
                 GameEvent.locker_id = 1;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addLuck1.seclect_Id);
                 console.log('addLuck1');
                 break;
             case this.addProp1:
                 GameEvent.locker_id = 2;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp1.seclect_Id);
                 console.log('addProp1');
                 break;
             case this.addProp2:
                 GameEvent.locker_id = 2;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp2.seclect_Id);
                 console.log('addProp2');
                 break;
             case this.setFood1:
                 GameEvent.locker_id = 0;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp2.seclect_Id);
                 console.log('setFood1');
                 break;
             case this.setFood2:
                 GameEvent.locker_id = 0;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp2.seclect_Id);
                 console.log('setFood2');
                 break;
             case this.setLock1:
                 GameEvent.locker_id = 1;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp2.seclect_Id);
                 console.log('setLock1');
                 break;
             case this.setLock2:
                 GameEvent.locker_id = 1;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp2.seclect_Id);
                 console.log('setLock2');
                 break;
             case this.setProp1:
                 GameEvent.locker_id = 2;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp2.seclect_Id);
                 console.log('setProp1');
                 break;
             case this.setProp2:
                 GameEvent.locker_id = 2;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp2.seclect_Id);
                 console.log('setProp2');
                 break;
             case this.setProp3:
                 GameEvent.locker_id = 2;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp2.seclect_Id);
                 console.log('setProp3');
                 break;
             case this.setProp4:
                 GameEvent.locker_id = 2;
-                GameEvent.LOG_name = 'Locker';
-                Global.dispatchEvent(GameEvent.SHOW_LOG);
+                this.showLocker(this.addProp2.seclect_Id);
                 console.log('setProp4');
                 break;
         }
+    };
+    PrepareLog.prototype.showLocker = function (num) {
+        GameEvent.ToPreapre_Data['id'] = num;
+        GameEvent.LOG_name = 'Locker';
+        Global.dispatchEvent(GameEvent.SHOW_LOG);
     };
     PrepareLog.prototype.moveTo_Table = function () {
         Laya.Tween.to(this.bgPanel.hScrollBar, { value: 757 }, 400, Laya.Ease.sineInOut, new Laya.Handler(this, function () {
@@ -59178,15 +59324,15 @@ var StoreLog1 = /** @class */ (function (_super) {
             _item = this._listItems[i];
             for (var j = 0; j < this.itemArr1[j].length; j++) {
                 // console.log(this.itemArr1[i][j])
-                if (this.itemArr1[i][j]) {
-                    child = _item.getChildByName("i_" + j);
+                child = _item.getChildByName("i_" + j);
+                if (i == 5 && j > 1) {
+                    child.visible = false; //隐藏最后两个
+                }
+                else {
                     child.m_label.changeText(this.itemArr1[i][j].name);
                     child.priceText.changeText(this.itemArr1[i][j].price);
                     child.itemImg.skin = 'storeItem/' + this.itemArr1[i][j].res + '.png';
                     child.item_id = i.toString() + j.toString();
-                }
-                if (i == 5 && j > 1) {
-                    child.visible = false; //隐藏最后两个
                 }
             }
         }
@@ -59428,6 +59574,7 @@ var CoinsRole = /** @class */ (function (_super) {
         return _this;
     }
     CoinsRole.prototype.coinInit = function () {
+        this.graphics.clear();
         var typeNum = RandomUtils.getInstance().limitInteger(1, 2);
         this.loadImage('GameScene/coin' + typeNum + '.png');
         this.alpha = 1;
@@ -59499,10 +59646,13 @@ var MainScene = /** @class */ (function (_super) {
             this.bgPanel.hScrollBar.value = 400;
             this.visible = true;
         }); //先定滚动初始位置，再显示
-        this.setCoin(GameSetting.coinNumber); //设定金币数量
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
         // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         this.on(Laya.Event.CLICK, this, this.touchHandle);
+        GameData.getInstance().getCoinNum();
+        Global.addEventListener(GameEvent.GET_COIN_COMP, this, function () {
+            this.setCoin(GameData.coinNumber); //设定金币数量
+        });
     };
     MainScene.prototype.touchHandle = function (e) {
         switch (e.target) {
@@ -59759,6 +59909,9 @@ var GameMain = /** @class */ (function () {
         this.logView = new LogView;
         this.logView.visible = false;
         Laya.stage.addChild(this.logView);
+        WX_SDK.getInstance().onShow(function () {
+            GameData.getInstance().getCoinNum();
+        });
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
         // SceneEvent.sceneID = 1;
