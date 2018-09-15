@@ -22,19 +22,17 @@ class GameEvent {
 
     public static Locker_seclect_Type: number = 0;
     public static Locker_seclect_Id: number = 0;
-    // public static Locker_seclect_skin: string = '';
-    // public static ToPreapre_Data:ToPreapreDataInfo;
     public static ToPreapre_Data: Object = {
         type: 0,
         id: null,
         skinSrc: ''
     }
+    public static CHANGE_WARNTIP:string='change_warntip';
 
     public static PREPARE_setItem: string = 'prepare_setItem';
 
     public static locker_id: number = 0;
 
-
-
-    public static GET_COIN_COMP:'get_coin_comp';
+    public static GET_COIN_COMP='get_coin_comp';
+    public static COLLECT_COIN_COMP='collect_coin_comp';
 }

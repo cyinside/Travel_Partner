@@ -55,19 +55,20 @@ var GameMain = /** @class */ (function () {
         }
         this.mainScene = new MainScene;
         GameConfig.setAlign_center(this.mainScene);
-        Laya.stage.addChild(this.mainScene);
+        // Laya.stage.addChild(this.mainScene);
         this.indoorScene = new IndoorScene;
         GameConfig.setAlign_center(this.indoorScene);
         this.indoorScene.alpha = 0;
+        this.drawScene = new DrawScene;
+        GameConfig.setAlign_center(this.drawScene);
+        Laya.stage.addChild(this.drawScene);
         this.logView = new LogView;
         this.logView.visible = false;
         Laya.stage.addChild(this.logView);
-        WX_SDK.getInstance().onShow(function () {
-            GameData.getInstance().getCoinNum();
-        });
+        // WX_SDK.getInstance().onShow(this.wxOnShowHandle);//进入小游戏时间处理
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
-        // SceneEvent.sceneID = 1;
+        // SceneEvent.sceneID = 3;
         // this.changeScene();
     };
     GameMain.prototype.changeScene = function () {
@@ -97,6 +98,17 @@ var GameMain = /** @class */ (function () {
                     }));
                 }
                 break;
+            case 3:
+                if (Laya.stage.contains(this.indoorScene)) {
+                    Laya.Tween.to(this.indoorScene, { alpha: 0 }, 400, Laya.Ease.sineIn, new Laya.Handler(this, function () {
+                        Laya.stage.removeChild(this.indoorScene);
+                        this.indoorScene.visible = false;
+                        this.drawScene.visible = true;
+                        Laya.stage.addChild(this.drawScene);
+                        Laya.Tween.to(this.drawScene, { alpha: 1 }, 400, Laya.Ease.sineIn);
+                    }));
+                }
+                break;
         }
     };
     GameMain.prototype.showLog = function () {
@@ -104,6 +116,9 @@ var GameMain = /** @class */ (function () {
     };
     GameMain.prototype.changeHandle = function () {
         console.log('changeHandle');
+    };
+    GameMain.prototype.wxOnShowHandle = function () {
+        GameData.getInstance().getCoinNum(); //获取金币
     };
     return GameMain;
 }());

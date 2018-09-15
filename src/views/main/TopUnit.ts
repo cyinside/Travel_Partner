@@ -7,7 +7,7 @@ class TopUnit extends TopUnitUI {
         this.settingBut.on(Laya.Event.CLICK, this, this.onTouchHandle);
     }
 
-    private sumNumer: number = 0;
+    private sumNumer: number = GameData.balanceNumber;
 
     public textTweem_UP() {
         Laya.Tween.to(this.sumText, { y: 0 }, 100, Laya.Ease.sineInOut, new Laya.Handler(this, this.textTweem_DROM));
@@ -20,6 +20,8 @@ class TopUnit extends TopUnitUI {
     public addSum() {
         this.sumNumer++;
         this.sumText.changeText(this.sumNumer.toString());
+
+        GameData.balanceNumber=this.sumNumer;
     }
 
     private onTouchHandle(e: Laya.Event) {

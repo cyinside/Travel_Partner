@@ -18,15 +18,16 @@ var GameEvent = /** @class */ (function () {
     GameEvent.LOG_url = '';
     GameEvent.Locker_seclect_Type = 0;
     GameEvent.Locker_seclect_Id = 0;
-    // public static Locker_seclect_skin: string = '';
-    // public static ToPreapre_Data:ToPreapreDataInfo;
     GameEvent.ToPreapre_Data = {
         type: 0,
         id: null,
         skinSrc: ''
     };
+    GameEvent.CHANGE_WARNTIP = 'change_warntip';
     GameEvent.PREPARE_setItem = 'prepare_setItem';
     GameEvent.locker_id = 0;
+    GameEvent.GET_COIN_COMP = 'get_coin_comp';
+    GameEvent.COLLECT_COIN_COMP = 'collect_coin_comp';
     return GameEvent;
 }());
 //# sourceMappingURL=GameEvent.js.map

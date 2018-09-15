@@ -56296,6 +56296,7 @@ var DataModel = /** @class */ (function () {
 var WX_SDK = /** @class */ (function () {
     function WX_SDK() {
         this.url = 'http://192.168.2.40:8080/';
+        this.textID = 1;
     }
     WX_SDK.getInstance = function () {
         if (WX_SDK._instance == null) {
@@ -56343,7 +56344,7 @@ var WX_SDK = /** @class */ (function () {
             url: WX_SDK.getInstance().url + questUrl,
             method: 'POST',
             data: {
-                openid: "OPENID",
+                openid: '1',
             },
             success: function (res) {
                 console.log('getCoinsuccess' + res);
@@ -56352,6 +56353,46 @@ var WX_SDK = /** @class */ (function () {
             },
             fail: function (error) {
                 console.log('getCoinfail' + error);
+            }
+        });
+    };
+    WX_SDK.prototype.collectCoin = function () {
+        console.log('collectCoin');
+        var wx = Laya.Browser.window.wx;
+        var questUrl = '/copper/collect?openid=1';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            method: 'GET',
+            data: {
+            // openid: 1,
+            },
+            success: function (res) {
+                console.log('collectCoin_success' + res.data.code);
+                var data = res.data;
+                if (data.code == 0) {
+                    Global.dispatchEvent(GameEvent.COLLECT_COIN_COMP);
+                }
+            },
+            fail: function (error) {
+                console.log('collectCoin_fail' + error);
+            }
+        });
+    };
+    WX_SDK.prototype.getDraw = function () {
+        var wx = Laya.Browser.window.wx;
+        var questUrl = '/luck-draw/get-data';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            method: 'POST',
+            data: {
+                openid: 1,
+            },
+            success: function (res) {
+                console.log('getDraw_success' + res.data.code);
+                var data = res.data;
+            },
+            fail: function (error) {
+                console.log('getDraw_fail' + error);
             }
         });
     };
@@ -56842,15 +56883,16 @@ var GameEvent = /** @class */ (function () {
     GameEvent.LOG_url = '';
     GameEvent.Locker_seclect_Type = 0;
     GameEvent.Locker_seclect_Id = 0;
-    // public static Locker_seclect_skin: string = '';
-    // public static ToPreapre_Data:ToPreapreDataInfo;
     GameEvent.ToPreapre_Data = {
         type: 0,
         id: null,
         skinSrc: ''
     };
+    GameEvent.CHANGE_WARNTIP = 'change_warntip';
     GameEvent.PREPARE_setItem = 'prepare_setItem';
     GameEvent.locker_id = 0;
+    GameEvent.GET_COIN_COMP = 'get_coin_comp';
+    GameEvent.COLLECT_COIN_COMP = 'collect_coin_comp';
     return GameEvent;
 }());
 //# sourceMappingURL=GameEvent.js.map
@@ -56880,6 +56922,7 @@ var GameSetting = /** @class */ (function () {
             { url: "res/atlas/prepareLog.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/storeItem.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/LockerLog.atlas", type: Laya.Loader.ATLAS },
+            { url: "res/atlas/DrawScene.atlas", type: Laya.Loader.ATLAS },
             { url: 'res/storeData.json', type: Laya.Loader.JSON },
             { url: 'main/BottomUnit.json', type: Laya.Loader.JSON },
             { url: 'main/MainScene.json', type: Laya.Loader.JSON },
@@ -56906,6 +56949,7 @@ var GameSetting = /** @class */ (function () {
             { url: 'indoor/IndoorScene.json', type: Laya.Loader.JSON },
             { url: 'indoor/FireAni.json', type: Laya.Loader.JSON },
             { url: 'log/LogView.json', type: Laya.Loader.JSON },
+            { url: 'draw/DrawScene.json', type: Laya.Loader.JSON },
             { url: 'music.mp3', type: Laya.Loader.SOUND }
         ];
     };
@@ -56917,6 +56961,8 @@ var GameSetting = /** @class */ (function () {
         { url: "res/atlas/load.atlas", type: Laya.Loader.ATLAS },
         { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
     ];
+    GameSetting.showWarnTip = false;
+    GameSetting.bagPos_Rec = [0, 0, 0, 0];
     return GameSetting;
 }());
 //# sourceMappingURL=GameSetting.js.map
@@ -56933,7 +56979,8 @@ var GameData = /** @class */ (function () {
         WX_SDK.getInstance().getCoin();
     };
     GameData._instance = null;
-    GameData.coinNumber = 0;
+    GameData.coinNumber = 0; //树上金币数量
+    GameData.balanceNumber = 0; //用户金币余额
     GameData.userName = '一共7个字字字';
     GameData.storeDataArr = [];
     GameData.picDataArr = [
@@ -57514,6 +57561,24 @@ var ui;
     })(Loading = ui.Loading || (ui.Loading = {}));
 })(ui || (ui = {}));
 (function (ui) {
+    var draw;
+    (function (draw) {
+        var DrawSceneUI = /** @class */ (function (_super) {
+            __extends(DrawSceneUI, _super);
+            function DrawSceneUI() {
+                return _super.call(this) || this;
+            }
+            DrawSceneUI.prototype.createChildren = function () {
+                View.regComponent("DrawScene", DrawScene);
+                _super.prototype.createChildren.call(this);
+                this.loadUI("draw/DrawScene");
+            };
+            return DrawSceneUI;
+        }(View));
+        draw.DrawSceneUI = DrawSceneUI;
+    })(draw = ui.draw || (ui.draw = {}));
+})(ui || (ui = {}));
+(function (ui) {
     var indoor;
     (function (indoor) {
         var Bottom2UnitUI = /** @class */ (function (_super) {
@@ -58053,6 +58118,96 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var DrawSceneUI = ui.draw.DrawSceneUI;
+var DrawScene = /** @class */ (function (_super) {
+    __extends(DrawScene, _super);
+    function DrawScene() {
+        var _this = _super.call(this) || this;
+        _this.drawSceneInit();
+        return _this;
+    }
+    DrawScene.prototype.drawSceneInit = function () {
+        this.height = GameConfig.gameHeight;
+        this.width = GameConfig.gameWidth;
+        var res_v = GameConfig.res_Type.toString() + 'x';
+        this.drawBg.skin = res_v + '/5.jpg';
+        var _y = 145;
+        if (GameConfig.res_Type == 3) {
+            this.posBox.y += _y;
+        }
+        this.getPrize_timeLine = new Laya.TimeLine;
+        this.getPrize_timeLine.to(this.turtleIcon, { x: 200 }, 100, Laya.Ease.sineInOut)
+            .to(this.turtleIcon, { x: 250 }, 100, Laya.Ease.sineInOut)
+            .to(this.turtleIcon, { x: 200 }, 100, Laya.Ease.sineInOut)
+            .to(this.turtleIcon, { x: 250 }, 100, Laya.Ease.sineInOut)
+            .to(this.turtleIcon, { x: 225 }, 300, Laya.Ease.sineInOut);
+        this.getPrize_timeLine.on(Laya.Event.COMPLETE, this, this.showResult);
+        this.coin1_timeLine = new Laya.TimeLine;
+        this.coin1_timeLine.to(this.coinArr._childs[0], { scaleX: 1.2, scaleY: 1.2, alpha: 1 }, 600, Laya.Ease.sineInOut).to(this.coinArr._childs[0], { scaleX: 1, scaleY: 1 }, 600, Laya.Ease.sineInOut);
+        this.coin2_timeLine = new Laya.TimeLine;
+        this.coin2_timeLine.to(this.coinArr._childs[1], { scaleX: 1.2, scaleY: 1.2, alpha: 1 }, 600, Laya.Ease.sineInOut).to(this.coinArr._childs[1], { scaleX: 1, scaleY: 1 }, 600, Laya.Ease.sineInOut);
+        this.coin3_timeLine = new Laya.TimeLine;
+        this.coin3_timeLine.to(this.coinArr._childs[2], { scaleX: 1.2, scaleY: 1.2, alpha: 1 }, 600, Laya.Ease.sineInOut).to(this.coinArr._childs[2], { scaleX: 1, scaleY: 1 }, 300, Laya.Ease.sineInOut);
+        this.coin3_timeLine.on(Laya.Event.COMPLETE, this, this.showResultText);
+        this.on(Laya.Event.CLICK, this, this.touchHandle);
+    };
+    DrawScene.prototype.touchHandle = function (e) {
+        var _target = e.target;
+        switch (_target) {
+            case this.box1:
+                this.startDraw();
+                break;
+        }
+    };
+    DrawScene.prototype.startDraw = function () {
+        WX_SDK.getInstance().getDraw();
+        // this.getPrizeTween();
+    };
+    DrawScene.prototype.showResult = function () {
+        this.box1.visible = false;
+        this.box2.visible = true;
+        this.coinTween();
+    };
+    DrawScene.prototype.getPrizeTween = function () {
+        this.getPrize_timeLine.play(0, false);
+    };
+    DrawScene.prototype.coinTween = function () {
+        this.coin1_timeLine.play(0, false);
+        Laya.timer.once(200, this, function () {
+            this.coin2_timeLine.play(0, false);
+        });
+        Laya.timer.once(400, this, function () {
+            this.coin3_timeLine.play(0, false);
+        });
+    };
+    DrawScene.prototype.showResultText = function () {
+        Laya.Tween.to(this.resultText, { alpha: 1 }, 800, Laya.Ease.sineInOut);
+    };
+    DrawScene.prototype.resetAll = function () {
+        for (var i = 0; i < this.coinArr._childs.length; i++) {
+            this.coinArr._childs[i].alpha = 0;
+            this.coinArr._childs[i].scale(0.6, 0.6);
+        }
+        this.coin1_timeLine.reset();
+        this.coin2_timeLine.reset();
+        this.coin3_timeLine.reset();
+    };
+    return DrawScene;
+}(DrawSceneUI));
+//# sourceMappingURL=DrawScene.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Bottom2UnitUI = ui.indoor.Bottom2UnitUI;
 var Bottom2Unit = /** @class */ (function (_super) {
     __extends(Bottom2Unit, _super);
@@ -58063,6 +58218,7 @@ var Bottom2Unit = /** @class */ (function (_super) {
     }
     Bottom2Unit.prototype.Bottom2UnitInit = function () {
         this.on(Laya.Event.CLICK, this, this.onTouchHandle);
+        Global.addEventListener(GameEvent.CHANGE_WARNTIP, this, this.showWarn);
     };
     Bottom2Unit.prototype.onTouchHandle = function (e) {
         var _but = e.target;
@@ -58084,6 +58240,9 @@ var Bottom2Unit = /** @class */ (function (_super) {
                 Global.dispatchEvent(GameEvent.SHOW_LOG);
                 break;
         }
+    };
+    Bottom2Unit.prototype.showWarn = function () {
+        this.warnTip.visible = GameSetting.showWarnTip;
     };
     return Bottom2Unit;
 }(Bottom2UnitUI));
@@ -58254,7 +58413,7 @@ var ButItem = /** @class */ (function (_super) {
         return _this;
     }
     return ButItem;
-}(Laya.Sprite));
+}(Laya.Box));
 //# sourceMappingURL=ButItem.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -58302,12 +58461,12 @@ var LockerLog = /** @class */ (function (_super) {
         _this.lockerListArr_food = [];
         _this.lockerListArr_luck = [];
         _this.lockerListArr_prop = [];
-        _this.bagPos_Rec = [0, 0, 0, 0];
         _this.up_color = '#ffedd5';
         _this.down_color = '#56361f';
         _this.lockerLogInit();
         return _this;
     }
+    // private bagPos_Rec:Array<number>=[0,0,0,0];
     LockerLog.prototype.lockerLogInit = function () {
         this.tabGtoup.selectHandler = new Handler(this, this.onSelect);
         this.lockerList.cacheContent = true;
@@ -58346,17 +58505,25 @@ var LockerLog = /** @class */ (function (_super) {
                 console.log('重复');
                 GameEvent.ToPreapre_Data['skinSrc'] = '';
                 GameEvent.ToPreapre_Data['id'] = null;
-                this.bagPos_Rec[this.tabGtoup.selectedIndex] = 0;
+                GameSetting.bagPos_Rec[this.tabGtoup.selectedIndex] = 0;
             }
             else {
                 var skin = 'storeItem/' + e.target.dataSource.res + '.png';
                 GameEvent.ToPreapre_Data['skinSrc'] = skin;
                 GameEvent.ToPreapre_Data['id'] = index;
-                this.bagPos_Rec[this.tabGtoup.selectedIndex] = 1;
+                GameSetting.bagPos_Rec[this.tabGtoup.selectedIndex] = 1;
             }
-            console.log(this.bagPos_Rec);
+            console.log(GameSetting.bagPos_Rec);
             e.target.markImg.visible = false;
             Global.dispatchEvent(GameEvent.PREPARE_setItem);
+            if (GameSetting.bagPos_Rec[0] == 0) {
+                GameSetting.showWarnTip = true;
+                Global.dispatchEvent(GameEvent.CHANGE_WARNTIP); //书包食物拦为空时发送显示警示请求
+            }
+            else {
+                GameSetting.showWarnTip = false;
+                Global.dispatchEvent(GameEvent.CHANGE_WARNTIP);
+            }
             this.close();
         }
     };
@@ -58369,10 +58536,10 @@ var LockerLog = /** @class */ (function (_super) {
         this.closeAll();
         this.lockerList.visible = true;
         this.lockerList.alpha = 0;
-        if (this.bagPos_Rec[index] == 0) {
+        if (GameSetting.bagPos_Rec[index] == 0) {
             GameEvent.ToPreapre_Data['id'] = null;
         }
-        console.log(this.bagPos_Rec);
+        console.log(GameSetting.bagPos_Rec);
         switch (index) {
             case 0:
                 this.lockerList.array = this.lockerListArr_food;
@@ -59633,13 +59800,13 @@ var MainScene = /** @class */ (function (_super) {
         this.bg1.skin = res_v + '/1.jpg';
         this.bg2.skin = res_v + '/2.jpg';
         this.bg3.skin = res_v + '/3.jpg';
-        var _x = 150;
+        var _y = 150;
         if (GameConfig.res_Type == 3) {
             this.topUnit.top = this.topUnit.top * 3.5;
-            this.coinBox.top = this.coinBox.top + _x;
-            this.waveView.y = this.waveView.y + _x;
-            this.tipsAni.y = this.tipsAni.y + _x;
-            this.indoorRect.y = this.indoorRect.y + _x;
+            this.coinBox.top = this.coinBox.top + _y;
+            this.waveView.y = this.waveView.y + _y;
+            this.tipsAni.y = this.tipsAni.y + _y;
+            this.indoorRect.y = this.indoorRect.y + _y;
         }
         console.log(this.topUnit.top);
         Laya.timer.once(300, this, function () {
@@ -59647,12 +59814,12 @@ var MainScene = /** @class */ (function (_super) {
             this.visible = true;
         }); //先定滚动初始位置，再显示
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
-        // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         this.on(Laya.Event.CLICK, this, this.touchHandle);
-        GameData.getInstance().getCoinNum();
-        Global.addEventListener(GameEvent.GET_COIN_COMP, this, function () {
-            this.setCoin(GameData.coinNumber); //设定金币数量
-        });
+        // GameData.getInstance().getCoinNum();//初始获取金币数量
+        // Global.addEventListener(GameEvent.GET_COIN_COMP, this, function () {
+        //     this.setCoin(GameData.coinNumber);//设定金币数量
+        // })
+        Global.addEventListener(GameEvent.COLLECT_COIN_COMP, this, this.addCoinsNum);
     };
     MainScene.prototype.touchHandle = function (e) {
         switch (e.target) {
@@ -59731,7 +59898,7 @@ var MainScene = /** @class */ (function (_super) {
                 console.log(this.coinNum);
                 _coin.changeCoin();
                 this.startTween(_coin);
-                this.addCoinsNum();
+                this.collect_Coin();
             }
         }
         else {
@@ -59744,8 +59911,11 @@ var MainScene = /** @class */ (function (_super) {
             role.recycleCoin(role);
         }));
     };
+    MainScene.prototype.collect_Coin = function () {
+        WX_SDK.getInstance().collectCoin(); //发送收集金币请求
+    };
     MainScene.prototype.addCoinsNum = function () {
-        this.topUnit.textTweem_UP();
+        this.topUnit.textTweem_UP(); //请求成功改写余额
     };
     return MainScene;
 }(MainSceneUI));
@@ -59768,7 +59938,7 @@ var TopUnit = /** @class */ (function (_super) {
     __extends(TopUnit, _super);
     function TopUnit() {
         var _this = _super.call(this) || this;
-        _this.sumNumer = 0;
+        _this.sumNumer = GameData.balanceNumber;
         // this.topUnitInit();
         _this.settingBut.mouseEnabled = true;
         _this.settingBut.on(Laya.Event.CLICK, _this, _this.onTouchHandle);
@@ -59784,6 +59954,7 @@ var TopUnit = /** @class */ (function (_super) {
     TopUnit.prototype.addSum = function () {
         this.sumNumer++;
         this.sumText.changeText(this.sumNumer.toString());
+        GameData.balanceNumber = this.sumNumer;
     };
     TopUnit.prototype.onTouchHandle = function (e) {
         var _but = e.target;
@@ -59902,19 +60073,20 @@ var GameMain = /** @class */ (function () {
         }
         this.mainScene = new MainScene;
         GameConfig.setAlign_center(this.mainScene);
-        Laya.stage.addChild(this.mainScene);
+        // Laya.stage.addChild(this.mainScene);
         this.indoorScene = new IndoorScene;
         GameConfig.setAlign_center(this.indoorScene);
         this.indoorScene.alpha = 0;
+        this.drawScene = new DrawScene;
+        GameConfig.setAlign_center(this.drawScene);
+        Laya.stage.addChild(this.drawScene);
         this.logView = new LogView;
         this.logView.visible = false;
         Laya.stage.addChild(this.logView);
-        WX_SDK.getInstance().onShow(function () {
-            GameData.getInstance().getCoinNum();
-        });
+        // WX_SDK.getInstance().onShow(this.wxOnShowHandle);//进入小游戏时间处理
         Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         Global.addEventListener(SceneEvent.CHANGE_SCENE, this, this.changeScene);
-        // SceneEvent.sceneID = 1;
+        // SceneEvent.sceneID = 3;
         // this.changeScene();
     };
     GameMain.prototype.changeScene = function () {
@@ -59944,6 +60116,17 @@ var GameMain = /** @class */ (function () {
                     }));
                 }
                 break;
+            case 3:
+                if (Laya.stage.contains(this.indoorScene)) {
+                    Laya.Tween.to(this.indoorScene, { alpha: 0 }, 400, Laya.Ease.sineIn, new Laya.Handler(this, function () {
+                        Laya.stage.removeChild(this.indoorScene);
+                        this.indoorScene.visible = false;
+                        this.drawScene.visible = true;
+                        Laya.stage.addChild(this.drawScene);
+                        Laya.Tween.to(this.drawScene, { alpha: 1 }, 400, Laya.Ease.sineIn);
+                    }));
+                }
+                break;
         }
     };
     GameMain.prototype.showLog = function () {
@@ -59951,6 +60134,9 @@ var GameMain = /** @class */ (function () {
     };
     GameMain.prototype.changeHandle = function () {
         console.log('changeHandle');
+    };
+    GameMain.prototype.wxOnShowHandle = function () {
+        GameData.getInstance().getCoinNum(); //获取金币
     };
     return GameMain;
 }());

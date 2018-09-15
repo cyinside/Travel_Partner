@@ -2,7 +2,7 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":21,
-    "selecteID":47,
+    "selecteID":38,
     "referenceLines":[
         {
             "value":503,
@@ -333,7 +333,7 @@
                                 {
                                     "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":130,"width":109,"var":"setFood2","runtime":"ButItem","mouseEnabled":true,"height":109},
+                                    "props":{"y":0,"x":130,"width":109,"var":"setFood2","runtime":"ButItem","mouseEnabled":true,"height":107},
                                     "nodeParent":21,
                                     "label":"Box(setFood2)",
                                     "isOpen":false,
@@ -371,7 +371,7 @@
                                 {
                                     "x":60,
                                     "type":"Box",
-                                    "props":{"y":1,"x":310,"width":113,"var":"setLock1","runtime":"ButItem","mouseEnabled":true,"height":108},
+                                    "props":{"y":1,"x":310,"width":113,"var":"setLock1","runtime":"ButItem","mouseEnabled":true,"height":106},
                                     "nodeParent":21,
                                     "label":"Box(setLock1)",
                                     "isOpen":false,
@@ -410,7 +410,7 @@
                                 {
                                     "x":60,
                                     "type":"Box",
-                                    "props":{"y":1,"x":440,"width":122,"var":"setLock2","runtime":"ButItem","mouseEnabled":true,"height":113},
+                                    "props":{"y":1,"x":440,"width":114,"var":"setLock2","runtime":"ButItem","mouseEnabled":true,"height":107},
                                     "nodeParent":21,
                                     "label":"Box(setLock2)",
                                     "isOpen":false,
@@ -448,7 +448,7 @@
                                 {
                                     "x":60,
                                     "type":"Box",
-                                    "props":{"y":231,"x":18,"width":111,"var":"setProp1","runtime":"ButItem","mouseEnabled":true,"height":108},
+                                    "props":{"y":231,"x":18,"width":111,"var":"setProp1","runtime":"ButItem","mouseEnabled":true,"height":105},
                                     "nodeParent":21,
                                     "label":"Box(setProp1)",
                                     "isOpen":false,

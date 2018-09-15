@@ -17,6 +17,10 @@ class GameSetting {
         { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
     ];
 
+    public  static showWarnTip:boolean=false;
+
+    public static bagPos_Rec:Array<number>=[0,0,0,0];
+
     public setRes() {
         var res_v: string = GameConfig.res_Type.toString() + 'x';
         GameSetting.res_Arr = [
@@ -34,6 +38,7 @@ class GameSetting {
             { url: "res/atlas/prepareLog.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/storeItem.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/LockerLog.atlas", type: Laya.Loader.ATLAS },
+            { url: "res/atlas/DrawScene.atlas", type: Laya.Loader.ATLAS },
             { url: 'res/storeData.json', type: Laya.Loader.JSON },
 
             { url: 'main/BottomUnit.json', type: Laya.Loader.JSON },
@@ -54,7 +59,6 @@ class GameSetting {
             { url: 'log/prepare/PrepareLog.json', type: Laya.Loader.JSON },
             { url: 'log/locker/LockerLog.json', type: Laya.Loader.JSON },
             { url: 'log/locker/LockerListItem.json', type: Laya.Loader.JSON },
-
             { url: 'main/WaveView.json', type: Laya.Loader.JSON },
             { url: 'main/Tips.json', type: Laya.Loader.JSON },
             { url: 'indoor/Tips1.ani', type: Laya.Loader.JSON },
@@ -62,6 +66,7 @@ class GameSetting {
             { url: 'indoor/IndoorScene.json', type: Laya.Loader.JSON },
             { url: 'indoor/FireAni.json', type: Laya.Loader.JSON },
             { url: 'log/LogView.json', type: Laya.Loader.JSON },
+            { url: 'draw/DrawScene.json', type: Laya.Loader.JSON },
 
             { url: 'music.mp3', type: Laya.Loader.SOUND }
         ]

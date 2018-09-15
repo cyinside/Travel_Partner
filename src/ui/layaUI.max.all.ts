@@ -25,12 +25,35 @@ module ui.Loading {
     }
 }
 
+module ui.draw {
+    export class DrawSceneUI extends View {
+		public drawBg:Laya.Image;
+		public posBox:Laya.Box;
+		public turtleIcon:Laya.Image;
+		public box1:Laya.Box;
+		public box2:Laya.Box;
+		public resultText:Laya.Label;
+		public coinArr:Laya.Box;
+
+        constructor(){ super()}
+        createChildren():void {
+        			View.regComponent("DrawScene",DrawScene);
+
+            super.createChildren();
+            this.loadUI("draw/DrawScene");
+
+        }
+
+    }
+}
+
 module ui.indoor {
     export class Bottom2UnitUI extends View {
 		public prepareBut:Laya.Image;
 		public bookBut:Laya.Button;
 		public outsideBut:Laya.Image;
 		public storeBut:Laya.Image;
+		public warnTip:Laya.Image;
 
         constructor(){ super()}
         createChildren():void {

@@ -7,6 +7,7 @@ class Bottom2Unit extends Bottom2UnitUI {
 
     public Bottom2UnitInit() {
         this.on(Laya.Event.CLICK, this, this.onTouchHandle)
+        Global.addEventListener(GameEvent.CHANGE_WARNTIP, this, this.showWarn);
     }
 
     private onTouchHandle(e: Laya.Event) {
@@ -29,5 +30,9 @@ class Bottom2Unit extends Bottom2UnitUI {
                 Global.dispatchEvent(GameEvent.SHOW_LOG);
                 break;
         }
+    }
+
+    private showWarn() {
+        this.warnTip.visible = GameSetting.showWarnTip;
     }
 }

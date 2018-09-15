@@ -1,6 +1,7 @@
 var WX_SDK = /** @class */ (function () {
     function WX_SDK() {
         this.url = 'http://192.168.2.40:8080/';
+        this.textID = 1;
     }
     WX_SDK.getInstance = function () {
         if (WX_SDK._instance == null) {
@@ -48,7 +49,7 @@ var WX_SDK = /** @class */ (function () {
             url: WX_SDK.getInstance().url + questUrl,
             method: 'POST',
             data: {
-                openid: "OPENID",
+                openid: '1',
             },
             success: function (res) {
                 console.log('getCoinsuccess' + res);
@@ -57,6 +58,46 @@ var WX_SDK = /** @class */ (function () {
             },
             fail: function (error) {
                 console.log('getCoinfail' + error);
+            }
+        });
+    };
+    WX_SDK.prototype.collectCoin = function () {
+        console.log('collectCoin');
+        var wx = Laya.Browser.window.wx;
+        var questUrl = '/copper/collect?openid=1';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            method: 'GET',
+            data: {
+            // openid: 1,
+            },
+            success: function (res) {
+                console.log('collectCoin_success' + res.data.code);
+                var data = res.data;
+                if (data.code == 0) {
+                    Global.dispatchEvent(GameEvent.COLLECT_COIN_COMP);
+                }
+            },
+            fail: function (error) {
+                console.log('collectCoin_fail' + error);
+            }
+        });
+    };
+    WX_SDK.prototype.getDraw = function () {
+        var wx = Laya.Browser.window.wx;
+        var questUrl = '/luck-draw/get-data';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            method: 'POST',
+            data: {
+                openid: 1,
+            },
+            success: function (res) {
+                console.log('getDraw_success' + res.data.code);
+                var data = res.data;
+            },
+            fail: function (error) {
+                console.log('getDraw_fail' + error);
             }
         });
     };

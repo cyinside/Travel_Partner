@@ -1,4 +1,4 @@
-class ButItem extends Laya.Sprite {
+class ButItem extends Laya.Box {
     public constructor() {
         super();
     }

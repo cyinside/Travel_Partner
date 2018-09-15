@@ -15,6 +15,7 @@ class WX_SDK {
     }
 
     private url: string = 'http://192.168.2.40:8080/';
+    private textID: number = 1
     public login() {
         var wx = Laya.Browser.window.wx;
         var code: string = '';
@@ -50,20 +51,61 @@ class WX_SDK {
         var questUrl = '/copper/get-coppers';
         wx.request({
             url: WX_SDK.getInstance().url + questUrl,
-            method:'POST',
+            method: 'POST',
             data: {
-                openid: "OPENID",
+                openid: '1',
             },
             success: function (res) {
                 console.log('getCoinsuccess' + res);
-                GameData.coinNumber=res.data.total;
+                GameData.coinNumber = res.data.total;
                 Global.dispatchEvent(GameEvent.GET_COIN_COMP);
             },
             fail: function (error) {
-                console.log('getCoinfail' + error)
+                console.log('getCoinfail' + error);
             }
         })
+    }
 
+    public collectCoin() {
+        console.log('collectCoin');
+        var wx = Laya.Browser.window.wx;
+        var questUrl = '/copper/collect?openid=1';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            method: 'GET',
+            data: {
+                // openid: 1,
+            },
+            success: function (res) {
+                console.log('collectCoin_success' + res.data.code);
+                var data = res.data;
+                if (data.code == 0) {
+                    Global.dispatchEvent(GameEvent.COLLECT_COIN_COMP);
+                }
+            },
+            fail: function (error) {
+                console.log('collectCoin_fail' + error);
+            }
+        });
+    }
+
+    public getDraw(){
+        var wx = Laya.Browser.window.wx;
+        var questUrl = '/luck-draw/get-data';
+        wx.request({
+            url: WX_SDK.getInstance().url + questUrl,
+            method: 'POST',
+            data: {
+                openid: 1,
+            },
+            success: function (res) {
+                console.log('getDraw_success' + res.data.code);
+                var data = res.data;
+            },
+            fail: function (error) {
+                console.log('getDraw_fail' + error);
+            }
+        });        
     }
 
     public getLocation(callBack: Function = null): any {

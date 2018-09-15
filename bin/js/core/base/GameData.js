@@ -11,7 +11,8 @@ var GameData = /** @class */ (function () {
         WX_SDK.getInstance().getCoin();
     };
     GameData._instance = null;
-    GameData.coinNumber = 0;
+    GameData.coinNumber = 0; //树上金币数量
+    GameData.balanceNumber = 0; //用户金币余额
     GameData.userName = '一共7个字字字';
     GameData.storeDataArr = [];
     GameData.picDataArr = [

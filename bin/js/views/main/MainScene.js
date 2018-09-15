@@ -32,13 +32,13 @@ var MainScene = /** @class */ (function (_super) {
         this.bg1.skin = res_v + '/1.jpg';
         this.bg2.skin = res_v + '/2.jpg';
         this.bg3.skin = res_v + '/3.jpg';
-        var _x = 150;
+        var _y = 150;
         if (GameConfig.res_Type == 3) {
             this.topUnit.top = this.topUnit.top * 3.5;
-            this.coinBox.top = this.coinBox.top + _x;
-            this.waveView.y = this.waveView.y + _x;
-            this.tipsAni.y = this.tipsAni.y + _x;
-            this.indoorRect.y = this.indoorRect.y + _x;
+            this.coinBox.top = this.coinBox.top + _y;
+            this.waveView.y = this.waveView.y + _y;
+            this.tipsAni.y = this.tipsAni.y + _y;
+            this.indoorRect.y = this.indoorRect.y + _y;
         }
         console.log(this.topUnit.top);
         Laya.timer.once(300, this, function () {
@@ -46,12 +46,12 @@ var MainScene = /** @class */ (function (_super) {
             this.visible = true;
         }); //先定滚动初始位置，再显示
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
-        // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         this.on(Laya.Event.CLICK, this, this.touchHandle);
-        GameData.getInstance().getCoinNum();
-        Global.addEventListener(GameEvent.GET_COIN_COMP, this, function () {
-            this.setCoin(GameData.coinNumber); //设定金币数量
-        });
+        // GameData.getInstance().getCoinNum();//初始获取金币数量
+        // Global.addEventListener(GameEvent.GET_COIN_COMP, this, function () {
+        //     this.setCoin(GameData.coinNumber);//设定金币数量
+        // })
+        Global.addEventListener(GameEvent.COLLECT_COIN_COMP, this, this.addCoinsNum);
     };
     MainScene.prototype.touchHandle = function (e) {
         switch (e.target) {
@@ -130,7 +130,7 @@ var MainScene = /** @class */ (function (_super) {
                 console.log(this.coinNum);
                 _coin.changeCoin();
                 this.startTween(_coin);
-                this.addCoinsNum();
+                this.collect_Coin();
             }
         }
         else {
@@ -143,8 +143,11 @@ var MainScene = /** @class */ (function (_super) {
             role.recycleCoin(role);
         }));
     };
+    MainScene.prototype.collect_Coin = function () {
+        WX_SDK.getInstance().collectCoin(); //发送收集金币请求
+    };
     MainScene.prototype.addCoinsNum = function () {
-        this.topUnit.textTweem_UP();
+        this.topUnit.textTweem_UP(); //请求成功改写余额
     };
     return MainScene;
 }(MainSceneUI));

@@ -20,12 +20,12 @@ var LockerLog = /** @class */ (function (_super) {
         _this.lockerListArr_food = [];
         _this.lockerListArr_luck = [];
         _this.lockerListArr_prop = [];
-        _this.bagPos_Rec = [0, 0, 0, 0];
         _this.up_color = '#ffedd5';
         _this.down_color = '#56361f';
         _this.lockerLogInit();
         return _this;
     }
+    // private bagPos_Rec:Array<number>=[0,0,0,0];
     LockerLog.prototype.lockerLogInit = function () {
         this.tabGtoup.selectHandler = new Handler(this, this.onSelect);
         this.lockerList.cacheContent = true;
@@ -64,17 +64,25 @@ var LockerLog = /** @class */ (function (_super) {
                 console.log('重复');
                 GameEvent.ToPreapre_Data['skinSrc'] = '';
                 GameEvent.ToPreapre_Data['id'] = null;
-                this.bagPos_Rec[this.tabGtoup.selectedIndex] = 0;
+                GameSetting.bagPos_Rec[this.tabGtoup.selectedIndex] = 0;
             }
             else {
                 var skin = 'storeItem/' + e.target.dataSource.res + '.png';
                 GameEvent.ToPreapre_Data['skinSrc'] = skin;
                 GameEvent.ToPreapre_Data['id'] = index;
-                this.bagPos_Rec[this.tabGtoup.selectedIndex] = 1;
+                GameSetting.bagPos_Rec[this.tabGtoup.selectedIndex] = 1;
             }
-            console.log(this.bagPos_Rec);
+            console.log(GameSetting.bagPos_Rec);
             e.target.markImg.visible = false;
             Global.dispatchEvent(GameEvent.PREPARE_setItem);
+            if (GameSetting.bagPos_Rec[0] == 0) {
+                GameSetting.showWarnTip = true;
+                Global.dispatchEvent(GameEvent.CHANGE_WARNTIP); //书包食物拦为空时发送显示警示请求
+            }
+            else {
+                GameSetting.showWarnTip = false;
+                Global.dispatchEvent(GameEvent.CHANGE_WARNTIP);
+            }
             this.close();
         }
     };
@@ -87,10 +95,10 @@ var LockerLog = /** @class */ (function (_super) {
         this.closeAll();
         this.lockerList.visible = true;
         this.lockerList.alpha = 0;
-        if (this.bagPos_Rec[index] == 0) {
+        if (GameSetting.bagPos_Rec[index] == 0) {
             GameEvent.ToPreapre_Data['id'] = null;
         }
-        console.log(this.bagPos_Rec);
+        console.log(GameSetting.bagPos_Rec);
         switch (index) {
             case 0:
                 this.lockerList.array = this.lockerListArr_food;

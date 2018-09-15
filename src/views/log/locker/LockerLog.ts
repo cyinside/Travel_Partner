@@ -9,7 +9,7 @@ class LockerLog extends LockerLogUI {
     private lockerListArr_food: Array<any> = [];
     private lockerListArr_luck: Array<any> = [];
     private lockerListArr_prop: Array<any> = [];
-    private bagPos_Rec:Array<number>=[0,0,0,0];
+    // private bagPos_Rec:Array<number>=[0,0,0,0];
     private lockerLogInit() {
         this.tabGtoup.selectHandler = new Handler(this, this.onSelect);
         this.lockerList.cacheContent = true;
@@ -58,19 +58,27 @@ class LockerLog extends LockerLogUI {
                 GameEvent.ToPreapre_Data['skinSrc'] = '';
                 GameEvent.ToPreapre_Data['id'] = null;
 
-                this.bagPos_Rec[this.tabGtoup.selectedIndex]=0;
+                GameSetting.bagPos_Rec[this.tabGtoup.selectedIndex]=0;
             } else {
                 var skin = 'storeItem/' + e.target.dataSource.res + '.png';
 
                 GameEvent.ToPreapre_Data['skinSrc'] = skin;
                 GameEvent.ToPreapre_Data['id'] = index;
 
-                this.bagPos_Rec[this.tabGtoup.selectedIndex]=1;
+                GameSetting.bagPos_Rec[this.tabGtoup.selectedIndex]=1;
             }
 
-            console.log(this.bagPos_Rec)
+            console.log(GameSetting.bagPos_Rec)
             e.target.markImg.visible = false;
             Global.dispatchEvent(GameEvent.PREPARE_setItem);
+
+            if(GameSetting.bagPos_Rec[0]==0){
+                GameSetting.showWarnTip=true;
+                Global.dispatchEvent(GameEvent.CHANGE_WARNTIP);//书包食物拦为空时发送显示警示请求
+            }else{
+                GameSetting.showWarnTip=false;
+                Global.dispatchEvent(GameEvent.CHANGE_WARNTIP);
+            }
 
             this.close();
         }
@@ -89,10 +97,10 @@ class LockerLog extends LockerLogUI {
         this.lockerList.visible = true;
         this.lockerList.alpha = 0;
 
-        if(this.bagPos_Rec[index]==0){
+        if(GameSetting.bagPos_Rec[index]==0){
         GameEvent.ToPreapre_Data['id']=null;
         }
-            console.log(this.bagPos_Rec)
+            console.log(GameSetting.bagPos_Rec)
 
         switch (index) {
             case 0:

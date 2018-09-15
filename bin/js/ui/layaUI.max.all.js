@@ -33,6 +33,24 @@ var ui;
     })(Loading = ui.Loading || (ui.Loading = {}));
 })(ui || (ui = {}));
 (function (ui) {
+    var draw;
+    (function (draw) {
+        var DrawSceneUI = /** @class */ (function (_super) {
+            __extends(DrawSceneUI, _super);
+            function DrawSceneUI() {
+                return _super.call(this) || this;
+            }
+            DrawSceneUI.prototype.createChildren = function () {
+                View.regComponent("DrawScene", DrawScene);
+                _super.prototype.createChildren.call(this);
+                this.loadUI("draw/DrawScene");
+            };
+            return DrawSceneUI;
+        }(View));
+        draw.DrawSceneUI = DrawSceneUI;
+    })(draw = ui.draw || (ui.draw = {}));
+})(ui || (ui = {}));
+(function (ui) {
     var indoor;
     (function (indoor) {
         var Bottom2UnitUI = /** @class */ (function (_super) {

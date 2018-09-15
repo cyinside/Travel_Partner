@@ -8,7 +8,9 @@ class GameData {
 
     private static _instance = null;
 
-    public static coinNumber: number = 0;
+    public static coinNumber: number = 0;//树上金币数量
+
+    public static balanceNumber:number = 0;//用户金币余额
 
     public static userName: string = '一共7个字字字';
 

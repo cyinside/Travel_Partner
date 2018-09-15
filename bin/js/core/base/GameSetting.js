@@ -24,6 +24,7 @@ var GameSetting = /** @class */ (function () {
             { url: "res/atlas/prepareLog.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/storeItem.atlas", type: Laya.Loader.ATLAS },
             { url: "res/atlas/LockerLog.atlas", type: Laya.Loader.ATLAS },
+            { url: "res/atlas/DrawScene.atlas", type: Laya.Loader.ATLAS },
             { url: 'res/storeData.json', type: Laya.Loader.JSON },
             { url: 'main/BottomUnit.json', type: Laya.Loader.JSON },
             { url: 'main/MainScene.json', type: Laya.Loader.JSON },
@@ -50,6 +51,7 @@ var GameSetting = /** @class */ (function () {
             { url: 'indoor/IndoorScene.json', type: Laya.Loader.JSON },
             { url: 'indoor/FireAni.json', type: Laya.Loader.JSON },
             { url: 'log/LogView.json', type: Laya.Loader.JSON },
+            { url: 'draw/DrawScene.json', type: Laya.Loader.JSON },
             { url: 'music.mp3', type: Laya.Loader.SOUND }
         ];
     };
@@ -61,6 +63,8 @@ var GameSetting = /** @class */ (function () {
         { url: "res/atlas/load.atlas", type: Laya.Loader.ATLAS },
         { url: 'Loading/LoadingView.json', type: Laya.Loader.JSON },
     ];
+    GameSetting.showWarnTip = false;
+    GameSetting.bagPos_Rec = [0, 0, 0, 0];
     return GameSetting;
 }());
 //# sourceMappingURL=GameSetting.js.map

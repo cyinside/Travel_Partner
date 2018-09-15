@@ -7,11 +7,13 @@ R 53D134F8 1.jpg
 R 0DA4F289 2.jpg
 R F78A0D20 3.jpg
 R 44A8569B 4.jpg
+R 558F72F9 5.jpg
 D 3x
 R 0A2E8851 1.jpg
 R 82D90510 2.jpg
 R 870650DB 3.jpg
 R 73438298 4.jpg
+R E5C3396A 5.jpg
 D comp
 P D12221A9 bg.png
 P 9401CC40 blank.png
@@ -46,6 +48,16 @@ P B9680947 vscroll$up.png
 P 7E990267 vscroll.png
 P E466EB1C vslider$bar.png
 P 2BFF7046 vslider.png
+D DrawScene
+P 598439A1 backIcon.png
+P 42FEC55E coin0.png
+P 0ECA84BE coin1.png
+P E83E94AF drawBut.png
+P DFEFD306 goldenIcon.png
+R 7C63875B prizeList.png
+P 4490DBDE prizeListBut.png
+P BC8B155D shakeIcon.png
+P CDA886D5 turtleIcon.png
 D fire
 P 355117D5 fire0.png
 P 6900E6CD fire1.png

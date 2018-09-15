@@ -20,5 +20,5 @@ var ButItem = /** @class */ (function (_super) {
         return _this;
     }
     return ButItem;
-}(Laya.Sprite));
+}(Laya.Box));
 //# sourceMappingURL=ButItem.js.map

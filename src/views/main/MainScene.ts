@@ -19,13 +19,13 @@ class MainScene extends MainSceneUI {
         this.bg2.skin = res_v + '/2.jpg';
         this.bg3.skin = res_v + '/3.jpg';
 
-        var _x: number = 150;
+        var _y: number = 150;
         if (GameConfig.res_Type == 3) {
             this.topUnit.top = this.topUnit.top * 3.5;
-            this.coinBox.top = this.coinBox.top + _x;
-            this.waveView.y = this.waveView.y + _x;
-            this.tipsAni.y = this.tipsAni.y + _x;
-            this.indoorRect.y = this.indoorRect.y + _x;
+            this.coinBox.top = this.coinBox.top + _y;
+            this.waveView.y = this.waveView.y + _y;
+            this.tipsAni.y = this.tipsAni.y + _y;
+            this.indoorRect.y = this.indoorRect.y + _y;
         }
 
         console.log(this.topUnit.top);
@@ -35,17 +35,16 @@ class MainScene extends MainSceneUI {
             this.visible = true;
         })//先定滚动初始位置，再显示
 
-
-
         Laya.loader.load("main/LeafView.part", Handler.create(this, this.onAssetsLoaded), null, Loader.JSON);
 
-        // Global.addEventListener(GameEvent.SHOW_LOG, this, this.showLog);
         this.on(Laya.Event.CLICK, this, this.touchHandle);
 
-        GameData.getInstance().getCoinNum();//初始获取金币数量
-        Global.addEventListener(GameEvent.GET_COIN_COMP, this, function () {
-            this.setCoin(GameData.coinNumber);//设定金币数量
-        })
+        // GameData.getInstance().getCoinNum();//初始获取金币数量
+        // Global.addEventListener(GameEvent.GET_COIN_COMP, this, function () {
+        //     this.setCoin(GameData.coinNumber);//设定金币数量
+        // })
+
+        Global.addEventListener(GameEvent.COLLECT_COIN_COMP,this,this.addCoinsNum);
     }
 
     private touchHandle(e: Laya.Event) {
@@ -137,7 +136,7 @@ class MainScene extends MainSceneUI {
                 _coin.changeCoin();
                 this.startTween(_coin);
 
-                this.addCoinsNum();
+                this.collect_Coin();
             }
         } else {
             // this.coinBox.mouseEnabled=false;
@@ -151,22 +150,11 @@ class MainScene extends MainSceneUI {
         }));
     }
 
-    public addCoinsNum() {
-        this.topUnit.textTweem_UP();
+    public collect_Coin() {
+        WX_SDK.getInstance().collectCoin();//发送收集金币请求
     }
 
-    // private showLog() {
-    //     var name = GameEvent.LOG_name;
-    //     switch (name) {
-    //         case 'Store':
-    //             this.storeLog.visible = true;
-    //             this.storeLog.popup()
-    //             break;
-    //         case 'Setting':
-    //             this.settingLog.visible = true;
-    //             this.settingLog.popup()
-    //             break;
-    //     }
-    // }
-
+    public addCoinsNum(){
+        this.topUnit.textTweem_UP();//请求成功改写余额
+    }
 }

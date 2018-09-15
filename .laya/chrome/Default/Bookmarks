@@ -1,5 +1,5 @@
 {
-   "checksum": "9b01b808fbac05639a8a5c54380496c7",
+   "checksum": "e5232bcd883bff6c24c33f3bd3a2b2ca",
    "roots": {
       "bookmark_bar": {
          "children": [ {
@@ -15,14 +15,23 @@
             "date_added": "13180434310451073",
             "id": "8",
             "meta_info": {
-               "last_visited_desktop": "13181389963488384"
+               "last_visited_desktop": "13181472566247954"
             },
             "name": "总览 | BBGame OfficeAuto",
             "type": "url",
             "url": "http://oa.bbgameonline.com/"
+         }, {
+            "date_added": "13181461999169141",
+            "id": "10",
+            "meta_info": {
+               "last_visited_desktop": "13181461999169927"
+            },
+            "name": "iOS通过加速计计算摇一摇次数 - 简书",
+            "type": "url",
+            "url": "https://www.jianshu.com/p/d838a0068eac"
          } ],
          "date_added": "13179900662885240",
-         "date_modified": "13180434310451073",
+         "date_modified": "13181461999169141",
          "id": "1",
          "name": "书签栏",
          "type": "folder"

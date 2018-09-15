@@ -16,7 +16,7 @@ var TopUnit = /** @class */ (function (_super) {
     __extends(TopUnit, _super);
     function TopUnit() {
         var _this = _super.call(this) || this;
-        _this.sumNumer = 0;
+        _this.sumNumer = GameData.balanceNumber;
         // this.topUnitInit();
         _this.settingBut.mouseEnabled = true;
         _this.settingBut.on(Laya.Event.CLICK, _this, _this.onTouchHandle);
@@ -32,6 +32,7 @@ var TopUnit = /** @class */ (function (_super) {
     TopUnit.prototype.addSum = function () {
         this.sumNumer++;
         this.sumText.changeText(this.sumNumer.toString());
+        GameData.balanceNumber = this.sumNumer;
     };
     TopUnit.prototype.onTouchHandle = function (e) {
         var _but = e.target;

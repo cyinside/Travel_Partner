@@ -21,6 +21,7 @@ var Bottom2Unit = /** @class */ (function (_super) {
     }
     Bottom2Unit.prototype.Bottom2UnitInit = function () {
         this.on(Laya.Event.CLICK, this, this.onTouchHandle);
+        Global.addEventListener(GameEvent.CHANGE_WARNTIP, this, this.showWarn);
     };
     Bottom2Unit.prototype.onTouchHandle = function (e) {
         var _but = e.target;
@@ -42,6 +43,9 @@ var Bottom2Unit = /** @class */ (function (_super) {
                 Global.dispatchEvent(GameEvent.SHOW_LOG);
                 break;
         }
+    };
+    Bottom2Unit.prototype.showWarn = function () {
+        this.warnTip.visible = GameSetting.showWarnTip;
     };
     return Bottom2Unit;
 }(Bottom2UnitUI));

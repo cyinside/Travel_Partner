@@ -1,3 +1,24 @@
-2018/09/14-16:11:37.276 32259 Reusing MANIFEST /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/MANIFEST-000001
-2018/09/14-16:11:37.276 32259 Recovering log #64
-2018/09/14-16:11:37.277 32259 Reusing old log /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/000064.log 
+2018/09/15-09:29:42.165 32259 Reusing MANIFEST /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/MANIFEST-000001
+2018/09/15-09:29:42.166 32259 Recovering log #64
+2018/09/15-09:29:42.166 32259 Reusing old log /Users/cyy/cyycode/Laya/Travel_Partner/.laya/chrome/Default/Session Storage/000064.log 
+2018/09/15-11:10:42.397 76135 Level-0 table #68: started
+2018/09/15-11:10:42.398 76135 Level-0 table #68: 20687 bytes OK
+2018/09/15-11:10:42.400 76135 Delete type=0 #64
+2018/09/15-14:24:24.428 76135 Level-0 table #70: started
+2018/09/15-14:24:24.428 76135 Level-0 table #70: 18742 bytes OK
+2018/09/15-14:24:24.431 76135 Delete type=0 #67
+2018/09/15-14:24:24.433 76135 Compacting 4@0 + 1@1 files
+2018/09/15-14:24:24.440 76135 Generated table #71@0: 3206 keys, 116007 bytes
+2018/09/15-14:24:24.440 76135 Compacted 4@0 + 1@1 files => 116007 bytes
+2018/09/15-14:24:24.441 76135 compacted to: files[ 0 1 1 0 0 0 0 ]
+2018/09/15-14:24:24.441 76135 Delete type=2 #62
+2018/09/15-14:24:24.442 76135 Delete type=2 #60
+2018/09/15-14:24:24.443 76135 Delete type=2 #70
+2018/09/15-14:24:24.443 76135 Delete type=2 #65
+2018/09/15-14:24:24.443 76135 Delete type=2 #68
+2018/09/15-17:12:42.999 76135 Level-0 table #73: started
+2018/09/15-17:12:43.000 76135 Level-0 table #73: 20485 bytes OK
+2018/09/15-17:12:43.002 76135 Delete type=0 #69
+2018/09/15-17:50:53.025 76135 Level-0 table #75: started
+2018/09/15-17:50:53.026 76135 Level-0 table #75: 20568 bytes OK
+2018/09/15-17:50:53.028 76135 Delete type=0 #72
